@@ -8,7 +8,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..600,0..1,0&display=block">
 <style>
 /* Layout: barra superior con marca + navegación por vistas; área de trabajo de 1320px; vistas de celular en marco de teléfono.
@@ -414,6 +414,47 @@ tbody tr:hover{background:color-mix(in oklab, var(--surface-2) 55%, transparent)
 .goal:first-of-type{border-top:0}
 .goal .gh{display:flex; justify-content:space-between; gap:8px; align-items:center; font-size:13px; margin-bottom:6px}
 
+
+/* Roles, agenda del profesional y captura de notas */
+.rolesel{border:0; background:none; font-weight:700; font-size:13px; color:var(--ink); padding:0 18px 0 0; margin:0; max-width:190px; cursor:pointer}
+.rolesel:focus-visible{outline:2px solid var(--primary)}
+.me .who{display:flex; flex-direction:column}
+.tn.dim{opacity:.18; filter:grayscale(.7)}
+.tn.dim:hover{transform:none; box-shadow:none}
+.mylist{display:flex; flex-direction:column; gap:10px}
+.myt{display:flex; gap:14px; align-items:center; padding:14px 16px; flex-wrap:wrap; animation:rise .45s var(--ease) backwards; animation-delay:calc(var(--i)*50ms)}
+.myh{width:58px; flex:none}
+.myh b{display:block; font-size:17px}
+.myh small{color:var(--subtle); font-size:11.5px}
+.mybar{width:4px; align-self:stretch; border-radius:2px; flex:none}
+.myt .grow{flex:1; min-width:180px}
+.myt .grow b{display:block; font-size:14px}
+.myt .grow small{color:var(--muted); font-size:12.5px}
+.capture{animation:rise .35s var(--ease)}
+.drop{display:flex; flex-direction:column; gap:8px; align-items:center; text-align:center}
+.drop .btn{width:100%}
+.scan{position:relative; border-radius:var(--r3); overflow:hidden; border:1px solid var(--line); background:var(--surface-2)}
+.scan img{display:block; width:100%; max-height:420px; object-fit:cover}
+.scan .noimg{height:260px; display:grid; place-items:center; color:var(--subtle)}
+.scan .noimg .ms{font-size:56px}
+.scan .beam{position:absolute; left:0; right:0; height:80px; top:-80px; background:linear-gradient(to bottom, transparent, color-mix(in oklab, var(--primary) 40%, transparent), transparent); animation:beam 1.3s ease-in-out infinite}
+@keyframes beam{to{top:100%}}
+.scan .scanlbl{position:absolute; left:50%; bottom:12px; transform:translateX(-50%); background:var(--surface); box-shadow:var(--sh2); height:30px}
+.review{display:flex; flex-direction:column; gap:10px}
+.thumb{width:54px; height:68px; border-radius:8px; overflow:hidden; border:1px solid var(--line-2); padding:0; background:var(--surface-2); flex:none; transition:transform .2s var(--ease)}
+.thumb:hover{transform:scale(1.06)}
+.thumb img{width:100%; height:100%; object-fit:cover; display:block}
+.doubts{display:flex; flex-direction:column; gap:2px; padding:8px 10px; border-radius:var(--r2); background:var(--warn-soft)}
+.dbt{display:flex; gap:6px; align-items:center; padding:6px 0; border-top:1px dashed color-mix(in oklab, var(--warn) 30%, transparent); transition:opacity .3s}
+.dbt:first-of-type{border-top:0}
+.dbt span{flex:1; font-size:13px}
+.dbt b{background:var(--surface); padding:1px 5px; border-radius:4px; color:var(--warn)}
+.dbt.ok b{color:var(--ok)}
+.rev{display:flex; gap:9px; align-items:flex-start; font-size:12.5px; color:var(--muted); cursor:pointer; line-height:1.4}
+.rev .chk{margin-top:1px}
+.live{min-height:84px; width:100%; padding:10px 12px; border-radius:var(--r2); background:var(--surface-2); font-size:13px; color:var(--muted); text-align:left}
+.note-warn{font-size:12px; color:var(--warn); background:var(--warn-soft); padding:8px 10px; border-radius:var(--r2)}
+
 /* Toast */
 .toast{position:fixed; left:50%; bottom:calc(22px + env(safe-area-inset-bottom,0px)); transform:translate(-50%,30px); background:var(--ink); color:var(--bg); padding:11px 16px 11px 12px; border-radius:var(--r3); display:flex; gap:10px; align-items:center; font-weight:600; font-size:13px; opacity:0; pointer-events:none; transition:opacity .3s, transform .35s var(--ease); z-index:80; max-width:calc(100% - 32px); box-shadow:var(--sh3)}
 .toast.on{opacity:1; transform:translate(-50%,0)}
@@ -422,7 +463,7 @@ tbody tr:hover{background:color-mix(in oklab, var(--surface-2) 55%, transparent)
 @media (max-width:1180px){ .kpis{grid-template-columns:repeat(3,minmax(0,1fr))} .g-2,.g-2e{grid-template-columns:minmax(0,1fr)} .ag-wrap{grid-template-columns:minmax(0,1fr)} }
 @media (max-width:900px){
   .wrap{padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px))}
-  .gsearch.top-s,.me .who{display:none} .me{margin-left:auto}
+  .gsearch.top-s,.me .who label,.proto{display:none} .rolesel{max-width:150px} .me{margin-left:auto}
   .leg{grid-template-columns:minmax(0,1fr)} .plist{max-height:260px; min-height:0}
   .stage{grid-template-columns:minmax(0,1fr)} .explain{order:-1; padding-top:0}
   h1{font-size:25px}
@@ -446,7 +487,7 @@ tbody tr:hover{background:color-mix(in oklab, var(--surface-2) 55%, transparent)
       <span class="proto">Prototipo interno</span>
       <div class="gsearch top-s"><span class="ms" aria-hidden="true">search</span><label class="sr" for="gs">Buscar paciente</label><input id="gs" placeholder="Buscar paciente, área u obra social" autocomplete="off"><div class="results" id="gs-res"></div></div>
       <button class="iconbtn" id="bell" aria-label="Pendientes de la presentación"><span class="ms" aria-hidden="true">notifications</span><span class="count num" id="bell-n">0</span></button>
-      <div class="me"><span class="av pro">D</span><div class="who"><b>Dirección</b><span>Datos ficticios</span></div></div>
+      <div class="me"><span class="av pro" id="me-av">D</span><div class="who"><label for="role" class="eyebrow" style="display:block;font-size:10px">Ver como</label><select id="role" class="rolesel"><option value="dir">Dirección (ve todo)</option></select></div></div>
     </div>
     <nav class="nav" id="nav" aria-label="Vistas">
       <button data-v="tablero"><span class="ms" aria-hidden="true">space_dashboard</span>Tablero</button>
@@ -647,7 +688,7 @@ const patsOf = proId => PATIENTS.filter(p => p.areas.some(a => p.pros[a] === pro
 const turnoName = t => t.pid ? patById(t.pid).n : t.wl;
 
 const S = {
-  view:'tablero', heat:'sem', agDay:TODAY_IDX, armed:null, selT:null,
+  view:'tablero', role:'dir', agPro:'', heat:'sem', agDay:TODAY_IDX, armed:null, selT:null,
   legPid:null, legTab:'evo', legF:'all', legQ:'',
   osSel:'IOMA', osF:'all', osQ:'', osDisc:'', review:false, generated:null, packed:{}, reminded:{},
   liq:{}, eqF:'all', alertsDone:{}, called:{},
@@ -729,7 +770,7 @@ function initSearch(){
   const run = () => {
     const q = inp.value.trim().toLowerCase();
     if(!q){ box.classList.remove('on'); return }
-    const hits = PATIENTS.filter(p => (p.n+' '+p.os+' '+p.areas.map(a=>AREAS[a].n).join(' ')).toLowerCase().includes(q)).slice(0,6);
+    const hits = legBase().filter(p => (p.n+' '+p.os+' '+p.areas.map(a=>AREAS[a].n).join(' ')).toLowerCase().includes(q)).slice(0,6);
     box.innerHTML = hits.length ? hits.map((p,i) => `<button data-pid="${p.id}" class="${i===0?'on':''}"><span class="av pat">${p.short}</span><span><b style="display:block;font-size:13px">${p.n}</b><small class="muted">${p.os} · ${p.areas.map(a=>AREAS[a].s).join(' + ')}</small></span></button>`).join('')
       : `<div class="empty" style="padding:14px">Sin resultados para “${esc(inp.value)}”</div>`;
     box.classList.add('on');
@@ -816,23 +857,24 @@ A['admision-ok'] = () => { S.admCount=(S.admCount||0)+1; WAITLIST.push({id:'w'+D
 
 /* ===== Consultorios y agenda ===== */
 R.agenda = function(){
-  const day = S.agDay, list = TURNOS.filter(t=>t.day===day);
+  if(S.role!=='dir') return agendaPro();
+  const day = S.agDay, list = TURNOS.filter(t=>t.day===day), mineN = S.agPro ? list.filter(t=>t.pro===S.agPro).length : 0;
   const slots = HOURS.length*ROOMS.length, freeN = slots - list.length;
   const sel = S.selT ? TURNOS.find(t=>t.id===S.selT) : null;
   $('#v-agenda').innerHTML = `
   <div class="vhead stg">
     <div><div class="eyebrow">${ico('calendar_month')} Programación diaria</div><h1>Consultorios y agenda</h1><p>Turnos de 45 minutos en 7 consultorios. Marcá asistencia, asigná familias en espera y mirá los huecos libres.</p></div>
-    <div class="row"><span class="chip neu num">${list.length} turnos · ${freeN} libres</span><button class="btn pri" data-act="newturn">${ico('add')}Nuevo turno</button></div>
+    <div class="row"><span class="chip neu num">${S.agPro ? mineN+" turnos de "+proById(S.agPro).n : list.length+" turnos · "+freeN+" libres"}</span><button class="btn pri" data-act="newturn">${ico('add')}Nuevo turno</button></div>
   </div>
   <div class="ag-tools stg"><div class="seg" role="group" aria-label="Día">${DAYS.map(d=>`<button data-act="agday" data-d="${d.k}" aria-pressed="${d.k===day}">${d.s}${d.k===TODAY_IDX?' · hoy':''}</button>`).join('')}</div>
-    <div class="row">${Object.keys(AREAS).map(areaTag).join('')}</div></div>
+    <div class="row"><label class="sr" for="agpro">Filtrar por profesional</label><select class="inp" id="agpro" style="width:auto;height:36px"><option value="">Todos los profesionales</option>${PROS.map(p=>`<option value="${p.id}" ${S.agPro===p.id?"selected":""}>${p.n} · ${AREAS[p.area].s}</option>`).join("")}</select></div></div>
   <div class="ag-wrap">
     <div class="card flat stg" style="padding:0;overflow:hidden"><div class="scrollx ${S.armed?'armed':''}" id="calbox" style="max-height:calc(100vh - 250px);min-height:420px;overflow:auto">
       <div class="cal"><div class="hd"></div>${ROOMS.map(r=>`<div class="hd">Consultorio ${r}<small>${PROS.filter(p=>p.room===r).map(p=>AREAS[p.area].s).join(' · ')||'Libre uso'}</small></div>`).join('')}
       ${HOURS.map(h=>`<div class="hr num">${h}:00</div>`+ROOMS.map(r=>{ const t=list.find(x=>x.room===r&&x.hour===h);
         if(!t) return `<div class="sl"><button class="free" data-act="free" data-r="${r}" data-h="${h}">${ico('add')}${S.armed?'Asignar':'Libre'}</button></div>`;
         const pro=proById(t.pro);
-        return `<div class="sl"><button class="tn ${t.st==='aus'?'aus':''} ${S.selT===t.id?'sel':''} ${t.isNew?'new':''}" data-act="turno" data-t="${t.id}" style="background:var(--a-${t.area}-bg);color:var(--a-${t.area})"><b>${turnoName(t)}</b><small>${AREAS[t.area].s} · ${pro.n}</small>${t.st!=='pend'?`<span class="st ${t.st}">${ico(t.st==='pres'?'check':'close')}</span>`:''}</button></div>`}).join('')).join('')}
+        return `<div class="sl"><button class="tn ${S.agPro&&t.pro!==S.agPro?'dim':''} ${t.st==='aus'?'aus':''} ${S.selT===t.id?'sel':''} ${t.isNew?'new':''}" data-act="turno" data-t="${t.id}" style="background:var(--a-${t.area}-bg);color:var(--a-${t.area})"><b>${turnoName(t)}</b><small>${AREAS[t.area].s} · ${pro.n}</small>${t.st!=='pend'?`<span class="st ${t.st}">${ico(t.st==='pres'?'check':'close')}</span>`:''}</button></div>`}).join('')).join('')}
       </div></div></div>
     <div class="grid stg" style="gap:14px">
       <div class="card" id="tdet">${sel ? turnoDetail(sel) : `<div class="eyebrow">Turno seleccionado</div><p class="muted" style="margin-top:8px">Tocá un turno para ver el detalle y marcar asistencia.</p>`}</div>
@@ -850,7 +892,7 @@ function turnoDetail(t){
   <div class="eyebrow" style="margin-top:16px">Asistencia</div>
   <div class="row" style="margin-top:8px"><button class="btn sm ${t.st==='pres'?'pri':''}" data-act="st" data-st="pres" data-t="${t.id}">${ico('check_circle')}Presente</button><button class="btn sm ${t.st==='aus'?'acc':''}" data-act="st" data-st="aus" data-t="${t.id}">${ico('cancel')}Ausente</button>${t.st!=='pend'?`<button class="btn sm ghost" data-act="st" data-st="pend" data-t="${t.id}">Deshacer</button>`:''}</div>
   <p class="muted" style="font-size:12px;margin-top:12px">${ico('info')} La asistencia arma sola la planilla mensual de la obra social.</p>
-  ${p?`<div class="row" style="margin-top:14px"><button class="btn sm ghost" data-act="open-leg" data-pid="${p.id}">${ico('folder_shared')}Ver legajo</button>${t.pro==='pr1'?`<button class="btn sm ghost" data-act="go-nota" data-t="${t.id}">${ico('edit_note')}Cargar nota</button>`:''}</div>`:''}`;
+  ${p?`<div class="row" style="margin-top:14px"><button class="btn sm ghost" data-act="open-leg" data-pid="${p.id}">${ico('folder_shared')}Ver legajo</button>${t.pro===S.role?`<button class="btn sm ghost" data-act="go-nota" data-t="${t.id}">${ico('edit_note')}Cargar nota</button>`:''}</div>`:''}`;
 }
 A.agday = b => { S.agDay=+b.dataset.d; S.selT=null; R.agenda() };
 A.turno = b => { S.selT=b.dataset.t; $$('.tn.sel').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); const box=$('#tdet'); box.innerHTML=turnoDetail(TURNOS.find(t=>t.id===S.selT)); box.classList.remove('flash'); void box.offsetWidth; box.classList.add('flash') };
@@ -869,13 +911,13 @@ A['go-nota'] = b => { const t=TURNOS.find(x=>x.id===b.dataset.t); S.nota=null; n
 
 /* ===== Legajo ===== */
 R.legajo = function(){
-  if(!S.legPid) S.legPid = PATIENTS.find(p=>riskOf(p)==='bad').id;
+  if(!S.legPid || !legBase().some(p=>p.id===S.legPid)) S.legPid = (legBase().find(p=>riskOf(p)==='bad') || legBase()[0]).id;
   $('#v-legajo').innerHTML = `
-  <div class="vhead stg"><div><div class="eyebrow">${ico('folder_shared')} Historia y seguimiento</div><h1>Pacientes y legajos</h1><p>Legajo único por paciente: evolución, documentos, equipo, pagos y comunicación interna.</p></div></div>
+  <div class="vhead stg"><div><div class="eyebrow">${ico('folder_shared')} Historia y seguimiento</div><h1>Pacientes y legajos</h1><p>${S.role==='dir' ? 'Legajo único por paciente: evolución, documentos, equipo, pagos y comunicación interna.' : 'Ves solo a tus '+legBase().length+' pacientes.'}</p></div></div>
   <div class="leg">
     <div class="card stg" style="padding:16px">
       <label class="sr" for="lq">Buscar paciente</label><div class="gsearch" style="max-width:none">${ico('search')}<input id="lq" placeholder="Buscar paciente u obra social" value="${esc(S.legQ)}" autocomplete="off"></div>
-      <div class="seg" role="group" aria-label="Filtro" style="margin-top:10px;width:100%"><button style="flex:1" data-act="legf" data-f="all" aria-pressed="${S.legF==='all'}">Todos (${PATIENTS.length})</button><button style="flex:1" data-act="legf" data-f="risk" aria-pressed="${S.legF==='risk'}">Con alerta (${PATIENTS.filter(p=>riskOf(p)!=='ok').length})</button></div>
+      <div class="seg" role="group" aria-label="Filtro" style="margin-top:10px;width:100%"><button style="flex:1" data-act="legf" data-f="all" aria-pressed="${S.legF==='all'}">Todos (${legBase().length})</button><button style="flex:1" data-act="legf" data-f="risk" aria-pressed="${S.legF==='risk'}">Con alerta (${legBase().filter(p=>riskOf(p)!=='ok').length})</button></div>
       <div class="plist" id="plist">${plistHTML()}</div>
     </div>
     <div class="card stg" id="pview"></div>
@@ -885,7 +927,7 @@ R.legajo = function(){
 };
 function plistHTML(){
   const q = S.legQ.toLowerCase();
-  const list = PATIENTS.filter(p => (S.legF==='all' || riskOf(p)!=='ok') && (!q || (p.n+' '+p.os).toLowerCase().includes(q)));
+  const list = legBase().filter(p => (S.legF==='all' || riskOf(p)!=='ok') && (!q || (p.n+' '+p.os).toLowerCase().includes(q)));
   return list.map(p=>`<button data-act="pick" data-pid="${p.id}" aria-current="${p.id===S.legPid}"><span class="av pat">${p.short}</span><span class="grow"><b>${p.n}</b><small>${p.os} · ${p.areas.map(a=>AREAS[a].s).join(' + ')}</small></span><span class="dot ${riskOf(p)}"></span></button>`).join('') || '<div class="empty">Sin resultados</div>';
 }
 const riskTxt = {ok:'Avanza', warn:'En meseta', bad:'Riesgo alto'};
@@ -904,7 +946,7 @@ function renderPatient(first){
     <div class="chead" style="margin-top:22px"><div><h3>Semáforo actitudinal</h3><p>Últimas 8 sesiones, cargado por los profesionales</p></div></div>
     ${['Participación','Regulación emocional','Compromiso familiar'].map((l,r)=>`<div class="attrow"><span class="muted">${l}</span>${p.att[r].slice(-8).map((k,i)=>`<i class="${k}" style="--i:${i+r*8}" title="${k==='ok'?'Bien':k==='warn'?'Regular':'Difícil'}"></i>`).join('')}</div>`).join('')}
     <div class="chead" style="margin-top:22px"><div><h3>Evoluciones recientes</h3></div></div>
-    <div class="tl">${p.notes.slice().reverse().slice(0,4).map((n,i)=>`<div class="note ${n.fresh&&i===0?'new':''}" style="--c:var(--a-${n.area})"><div class="nh"><span><b style="color:var(--ink)">${AREAS[n.area].n}</b> · ${n.who}</span><span>${n.d}</span></div>${esc(n.t)}</div>`).join('')}</div>`;
+    <div class="tl">${p.notes.slice().reverse().slice(0,4).map((n,i)=>`<div class="note ${n.fresh&&i===0?'new':''}" style="--c:var(--a-${n.area})"><div class="nh"><span><b style="color:var(--ink)">${AREAS[n.area].n}</b> · ${n.who}</span><span>${n.d}</span></div>${esc(n.t).replace(/\n/g,'<br>')}${n.src?`<div class="row" style="margin-top:8px"><span class="chip neu">${ico(n.src==='foto'?'photo_camera':'mic')}Transcripto con IA · revisado</span>${n.imgId!=null?`<button class="btn sm ghost" data-act="note-img" data-img="${n.imgId}">${ico('image')}Ver foto original</button>`:''}</div>`:''}</div>`).join('')}</div>`;
   if(S.legTab==='docs') body = p.docs.map((d,i)=>{ const s=docStatus(d.v), req=p.req[i]; return `<div class="li"><span class="ic-sq ${s.k}">${ico(s.k==='ok'?'verified':s.k==='warn'?'schedule':'error')}</span><div class="grow"><b>${d.t}</b><small>${s.l}</small></div>${s.k==='ok'?`<button class="btn sm ghost" data-act="pdf">${ico('visibility')}Ver</button>`:`<button class="btn sm ${req?'done':'pri'}" data-act="renew" data-i="${i}" ${req?'disabled':''}>${req?ico('check')+'Pedida':'Pedir renovación'}</button>`}</div>`}).join('')
     + `<div class="li"><span class="ic-sq ${p.sept.inf?'ok':'warn'}">${ico('summarize')}</span><div class="grow"><b>Informe mensual de septiembre</b><small>${p.sept.inf?'Aprobado y firmado':'Falta la firma del profesional'}</small></div><button class="btn sm ghost" data-act="pdf">${ico('visibility')}Ver</button></div>
        <div class="li"><span class="ic-sq ${p.sept.fam?'ok':'warn'}">${ico('draw')}</span><div class="grow"><b>Planilla de asistencia de septiembre</b><small>${p.sept.fam?'Firmada por la familia':'Falta la firma de la familia'}</small></div></div>`;
@@ -933,7 +975,7 @@ A.paylink = b => { const p=patById(S.legPid); p.pay[b.dataset.i].link=1; renderP
 A['open-fam'] = b => { S.famPid=b.dataset.pid; S.fam={conf:false,res:null,showRes:false,paid:false,sheet:null,drawn:false}; go('familia') };
 function sendChat(){
   const i=$('#chat-in'); const v=i.value.trim(); if(!v){ i.classList.add('shake'); setTimeout(()=>i.classList.remove('shake'),450); return }
-  patById(S.legPid).chat.push({w:'Profesional 1', t:v, at:'Ahora', me:true}); renderPatient(); $('#chat-in').focus(); toast('Mensaje enviado al equipo','forum');
+  patById(S.legPid).chat.push({w:S.role==='dir'?'Dirección':proById(S.role).n, t:v, at:'Ahora', me:true}); renderPatient(); $('#chat-in').focus(); toast('Mensaje enviado al equipo','forum');
 }
 
 /* ===== Presentación a obras sociales ===== */
@@ -1085,61 +1127,165 @@ const DICT = {
   taller:'Juego grupal de turnos. Esperó su turno en cuatro de cinco rondas y resolvió un conflicto con palabras.'
 };
 
-/* --- Nota de sesión (Profesional 1, TO) --- */
-const todayPr1 = () => TURNOS.filter(t=>t.pro==='pr1' && t.day===TODAY_IDX && t.pid).sort((a,b)=>a.hour-b.hour);
-function notaInit(pid){
-  const list = todayPr1(); const t = list.find(x=>x.pid===pid) || list.find(x=>!x.noted) || list[0];
-  S.nota = {tid:t.id, v:[null,null,null], txt:'', saved:false, t0:Date.now()};
+/* --- Nota de sesión: foto, audio o texto, con revisión obligatoria --- */
+const myPro = () => S.role==='dir' ? 'pr1' : S.role;
+const NOTE_IMGS = [];
+function myDayTurns(){
+  const all = TURNOS.filter(t=>t.pro===myPro() && t.pid);
+  let d = TODAY_IDX;
+  if(!all.some(t=>t.day===d)){ const ds=[...new Set(all.map(t=>t.day))].sort((a,b)=>Math.abs(a-TODAY_IDX)-Math.abs(b-TODAY_IDX)); if(ds.length) d=ds[0] }
+  return {day:d, list:all.filter(t=>t.day===d).sort((a,b)=>a.hour-b.hour)};
 }
+const newNota = tid => ({tid, v:[null,null,null], vSrc:[false,false,false], txt:'', saved:false, t0:Date.now(), mode:'foto', phase:'idle', img:null, demo:true, doubts:[], reviewed:false, ordered:false});
+function notaInit(pid){ const {list}=myDayTurns(); const t=list.find(x=>x.pid===pid)||list.find(x=>!x.noted)||list[0]; S.nota = t ? newNota(t.id) : null }
 let notaTimer;
 R.nota = function(){
   if(!S.nota) notaInit();
-  $('#v-nota').innerHTML = `<div class="stage">${phone('15:02','')}${explain('Celular del profesional','Nota de sesión en menos de dos minutos','Si cargar una sesión lleva más que eso, nadie lo hace y el sistema queda vacío. Por eso son tres toques y un dictado.',['Elegí un paciente del día.','Marcá los tres indicadores.','Tocá “Dictar la nota” y guardá. El reloj mide cuánto tardaste.','Abrí el legajo del paciente: la nota y los indicadores ya están ahí.'])}</div>`;
+  $('#v-nota').innerHTML = `<div class="stage">${phone('15:02','')}${explain('Celular del profesional','La nota como la tomes: foto, audio o texto','El profesional sigue anotando en papel o hablando, como hace hoy. La IA lo pasa a texto y el profesional lo revisa antes de que entre al legajo.',['Elegí un paciente del día y tocá “Usar foto de ejemplo”: es una hoja de la planilla de CTP escrita a mano.','La IA lee el texto y también los semáforos marcados en el papel.','Revisá las palabras dudosas y confirmá la revisión. Sin ese paso no se puede guardar.','Probá también Audio: transcribe tal cual y, si querés, lo ordena sin inventar nada.','En el legajo queda el texto con la foto original adjunta.'])}</div>`;
   notaBody();
   clearInterval(notaTimer); notaTimer = setInterval(()=>{ const el=$('#ntimer'); if(!el||!S.nota||S.nota.saved) return; const s=Math.floor((Date.now()-S.nota.t0)/1000); el.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0') }, 500);
 };
+function notaReady(N){
+  if(N.v.includes(null)) return [false,'Marcá los tres indicadores para guardar'];
+  if(N.mode==='escribir') return [true,'Listo para guardar'];
+  if(N.phase!=='done') return [false, N.mode==='foto'?'Cargá la foto de tu hoja':'Grabá el audio de la sesión'];
+  if(N.doubts.some(d=>!d.ok)) return [false,'Revisá las palabras dudosas'];
+  if(!N.reviewed) return [false,'Confirmá que revisaste la transcripción'];
+  return [true,'Listo para guardar'];
+}
+function updSave(){ const N=S.nota, [ok,msg]=notaReady(N), sv=$('[data-act="nota-save"]'); if(!sv) return; sv.disabled=!ok; $('#nhint').textContent=msg }
 function notaBody(){
-  const N = S.nota, t = TURNOS.find(x=>x.id===N.tid), p = patById(t.pid), list = todayPr1(), b = $('#sbody');
+  const N = S.nota, b = $('#sbody'), pro = proById(myPro());
+  if(!N){ b.innerHTML = `<div class="empty" style="padding-top:90px">${ico('event_busy')}<p style="margin-top:8px">${pro.n} no tiene turnos esta semana.</p></div>`; return }
+  const t = TURNOS.find(x=>x.id===N.tid), p = patById(t.pid), {day,list} = myDayTurns();
   if(N.saved){
-    b.innerHTML = `<div class="success">${checkSVG(84)}<h2 style="font-size:21px">Nota guardada</h2><p class="muted">Ya está en el legajo de ${p.n} y suma a su semáforo.</p><span class="timer" style="margin-top:6px">${ico('timer')}Tardaste ${N.time}</span></div>
+    b.innerHTML = `<div class="success">${checkSVG(84)}<h2 style="font-size:21px">Nota guardada</h2><p class="muted">Ya está en el legajo de ${p.n}${N.mode==='foto'?', con la foto original adjunta':''}.</p><span class="timer" style="margin-top:6px">${ico('timer')}Tardaste ${N.time}</span></div>
       <button class="btn pri lg block" data-act="nota-next">${ico('arrow_forward')}Siguiente paciente</button><button class="btn lg block" data-act="open-leg" data-pid="${p.id}">${ico('folder_shared')}Ver legajo</button>`;
     confetti($('#scr')); return;
   }
-  const ready = !N.v.includes(null);
+  const [ok,msg] = notaReady(N);
   b.innerHTML = `
-    <div class="mhead"><div><small class="subtle" style="font-weight:700">Profesional 1 · TO</small><h2>Hoy, miércoles 21</h2></div><span class="timer">${ico('timer')}<span id="ntimer" class="num">0:00</span></span></div>
-    <div class="pchips" role="group" aria-label="Pacientes de hoy">${list.map(x=>`<button data-act="nota-pick" data-t="${x.id}" aria-pressed="${x.id===N.tid}" class="${x.noted?'done':''}"><small>${x.hour}:00${x.noted?' · ✓':''}</small><b>${patById(x.pid).n.replace('Paciente','Pac.')}</b></button>`).join('')}</div>
+    <div class="mhead"><div><small class="subtle" style="font-weight:700">${pro.n} · ${AREAS[pro.area].s}</small><h2>${day===TODAY_IDX?'Hoy, miércoles 21':DAYS[day].l}</h2></div><span class="timer">${ico('timer')}<span id="ntimer" class="num">0:00</span></span></div>
+    <div class="pchips" role="group" aria-label="Pacientes del día">${list.map(x=>`<button data-act="nota-pick" data-t="${x.id}" aria-pressed="${x.id===N.tid}" class="${x.noted?'done':''}"><small>${x.hour}:00${x.noted?' · ✓':''}</small><b>${patById(x.pid).n.replace('Paciente','Pac.')}</b></button>`).join('')}</div>
     <div class="mcard row" style="flex-wrap:nowrap"><span class="av pat">${p.short}</span><div style="flex:1;min-width:0"><b>${p.n}</b><small class="muted" style="display:block">${t.hour}:00 · Consultorio ${t.room} · ${p.os}</small></div><span class="chip ok">${ico('check')}Presente</span></div>
-    <div class="mcard">${SEMS.map((l,i)=>`<div class="sem"><b>${l}</b><div class="opts">${LABELS.map(([k,lab])=>`<button class="${k}" data-act="nota-v" data-i="${i}" data-k="${k}" aria-pressed="${N.v[i]===k}"><i></i>${lab}</button>`).join('')}</div></div>`).join('')}</div>
-    <button class="mic" id="mic" data-act="dictar">${ico('mic')}<span class="wave"><i></i><i></i><i></i><i></i><i></i></span><span id="mic-l">Dictar la nota</span></button>
-    <label class="sr" for="ntxt">Nota de la sesión</label><textarea class="inp" id="ntxt" placeholder="Escribí o dictá cómo fue la sesión">${esc(N.txt)}</textarea>
-    <button class="btn pri lg block" data-act="nota-save" ${ready?'':'disabled'}>${ico('save')}Guardar nota</button>
-    <p class="muted" style="text-align:center;font-size:12px">${ready?'Listo para guardar':'Marcá los tres indicadores para guardar'}</p>`;
-  const ta = $('#ntxt'); ta.addEventListener('input', ()=>{ N.txt = ta.value });
+    <div class="seg" role="group" aria-label="Cómo cargás la nota" style="display:flex">${[['foto','photo_camera','Foto'],['audio','mic','Audio'],['escribir','keyboard','Escribir']].map(([k,ic,l])=>`<button style="flex:1;display:flex;gap:5px;align-items:center;justify-content:center" data-act="nota-mode" data-k="${k}" aria-pressed="${N.mode===k}">${ico(ic)}${l}</button>`).join('')}</div>
+    <div id="capture" class="capture">${captureHTML(N, t)}</div>
+    <div class="mcard">${SEMS.map((l,i)=>`<div class="sem"><b>${l}${N.vSrc[i]?` <span class="chip acc" style="height:20px;margin-left:4px;font-size:10.5px">${ico('document_scanner')}Leído de tu hoja</span>`:''}</b><div class="opts">${LABELS.map(([k,lab])=>`<button class="${k}" data-act="nota-v" data-i="${i}" data-k="${k}" aria-pressed="${N.v[i]===k}"><i></i>${lab}</button>`).join('')}</div></div>`).join('')}</div>
+    <button class="btn pri lg block" data-act="nota-save" ${ok?'':'disabled'}>${ico('save')}Guardar nota</button>
+    <p class="muted" id="nhint" style="text-align:center;font-size:12px">${msg}</p>`;
+  const ta = $('#ntxt'); if(ta) ta.addEventListener('input', ()=>{ N.txt = ta.value });
+  const fi = $('#ph-in'); if(fi) fi.addEventListener('change', e=>photoFile(e.target.files && e.target.files[0]));
 }
-A['nota-pick'] = b => { S.nota = {tid:b.dataset.t, v:[null,null,null], txt:'', saved:false, t0:Date.now()}; notaBody() };
-A['nota-v'] = b => { S.nota.txt = $('#ntxt').value; S.nota.v[+b.dataset.i] = b.dataset.k; const ready = !S.nota.v.includes(null);
+function captureHTML(N, t){
+  if(N.mode==='escribir') return `<label class="sr" for="ntxt">Nota de la sesión</label><textarea class="inp" id="ntxt" placeholder="Escribí cómo fue la sesión">${esc(N.txt)}</textarea>`;
+  if(N.mode==='foto'){
+    if(N.phase==='idle') return `<div class="mcard drop">
+        <span class="ic-sq ok" style="width:44px;height:44px">${ico('document_scanner')}</span>
+        <b>Sacale una foto a tu hoja de notas</b><small class="muted">Con la planilla de CTP también se leen los semáforos que marcaste a mano.</small>
+        <label class="btn pri block" for="ph-in" style="margin-top:4px">${ico('photo_camera')}Sacar o subir foto</label>
+        <input type="file" id="ph-in" accept="image/*" capture="environment" class="sr">
+        <button class="btn block" data-act="photo-demo">${ico('image')}Usar foto de ejemplo</button></div>`;
+    if(N.phase==='scan') return `<div class="scan">${N.img?`<img src="${N.img}" alt="Foto de la hoja de notas">`:`<div class="noimg">${ico('description')}</div>`}<i class="beam"></i><span class="chip neu scanlbl"><span class="spin"></span>Leyendo la hoja…</span></div>`;
+  }
+  if(N.mode==='audio'){
+    if(N.phase==='idle') return `<div class="mcard drop"><button class="mic" id="mic" data-act="dictar" style="width:100%">${ico('mic')}<span class="wave"><i></i><i></i><i></i><i></i><i></i></span><span id="mic-l">Grabar resumen de la sesión</span></button>
+      <small class="muted">${ico('info')} Se graba tu resumen al terminar, no la sesión con el paciente.</small></div>`;
+    if(N.phase==='rec') return `<div class="mcard drop"><button class="mic rec" id="mic" style="width:100%">${ico('mic')}<span class="wave"><i></i><i></i><i></i><i></i><i></i></span><span id="mic-l">Escuchando…</span></button><div class="live" id="live"></div></div>`;
+  }
+  // revisión (foto o audio)
+  return `<div class="mcard review">
+    <div class="row" style="justify-content:space-between;flex-wrap:nowrap;align-items:flex-start"><div><b style="display:flex;gap:6px;align-items:center">${ico('auto_awesome')}Transcripción con IA</b><small class="muted">${N.mode==='foto'?'Texto tal cual figura en tu hoja':'Tal cual lo dijiste'}</small></div>
+      ${N.mode==='foto'&&N.img?`<button class="thumb" data-act="nota-img" aria-label="Ver foto original"><img src="${N.img}" alt=""></button>`:N.mode==='audio'?`<span class="chip neu">${ico('graphic_eq')}0:48</span>`:''}</div>
+    ${N.mode==='foto'&&!N.demo?`<p class="note-warn">${ico('info')} En el prototipo el texto es de ejemplo. La versión real lee tu foto.</p>`:''}
+    ${N.doubts.length?`<div class="doubts"><small class="muted">La IA no está segura de ${N.doubts.length===1?'una palabra':N.doubts.length+' palabras'}. Revisala${N.doubts.length===1?'':'s'}:</small>${N.doubts.map((d,i)=>`<div class="dbt ${d.ok?'ok':''}" id="dbt-${i}"><span>«<b>${esc(d.w)}</b>»</span><button class="btn sm ${d.ok?'done':''}" data-act="dbt-ok" data-i="${i}">${d.ok?ico('check')+'Revisada':'Está bien'}</button>${d.ok?'':`<button class="btn sm ghost" data-act="dbt-fix" data-i="${i}">Corregir</button>`}</div>`).join('')}</div>`:''}
+    <label class="sr" for="ntxt">Texto de la nota</label><textarea class="inp" id="ntxt">${esc(N.txt)}</textarea>
+    ${N.mode==='audio'?`<button class="btn sm ${N.ordered?'done':''}" data-act="nota-order" ${N.ordered?'disabled':''} style="align-self:flex-start">${N.ordered?ico('check')+'Ordenado por temas':ico('format_list_bulleted')+'Ordenar con IA, sin agregar nada'}</button>`:''}
+    <label class="rev" for="nrev"><input type="checkbox" class="chk" id="nrev" data-act="nota-rev" ${N.reviewed?'checked':''}><span>Revisé la transcripción y es fiel a lo que ${N.mode==='foto'?'escribí':'dije'}.</span></label>
+    <button class="btn ghost sm" data-act="nota-retake" style="align-self:flex-start">${ico('restart_alt')}Volver a cargar</button></div>`;
+}
+const DEMO_MARKS = {good:['ok','ok','ok'], flat:['ok','warn','ok'], bad:['warn','bad','warn']};
+function pickDoubts(text, n){
+  const ws = text.replace(/[.,;:]/g,'').split(/\s+/).filter(w=>w.length>=7);
+  if(!ws.length) return [];
+  const idx = n===1 ? [Math.floor(ws.length*.6)] : [Math.floor(ws.length*.2), Math.floor(ws.length*.7)];
+  return [...new Set(idx.map(i=>ws[Math.min(i,ws.length-1)]))].map(w=>({w, ok:false}));
+}
+async function demoSheet(p, text, marks){
+  try{
+    try{ await document.fonts.load('32px "Caveat"') }catch(e){}
+    const c = document.createElement('canvas'); c.width = 720; c.height = 960; const x = c.getContext('2d');
+    x.fillStyle = '#cfc5b4'; x.fillRect(0,0,720,960);
+    x.save(); x.translate(360,480); x.rotate(-0.022); x.translate(-330,-455);
+    x.shadowColor = 'rgba(0,0,0,.28)'; x.shadowBlur = 26; x.shadowOffsetY = 10; x.fillStyle = '#fdfaf1'; x.fillRect(0,0,660,910); x.shadowColor = 'transparent';
+    x.fillStyle = '#4c735f'; x.fillRect(0,0,660,62); x.fillStyle = '#fff'; x.font = '700 22px "Plus Jakarta Sans", sans-serif'; x.fillText('CTP · Nota de sesión', 26, 39);
+    x.font = '600 13px "Plus Jakarta Sans", sans-serif'; x.textAlign = 'right'; x.fillText('Planilla de consultorio', 634, 38); x.textAlign = 'left';
+    const ln = (a,b,c2,d) => { x.beginPath(); x.moveTo(a,b); x.lineTo(c2,d); x.stroke() };
+    x.strokeStyle = '#cfc6b8'; x.lineWidth = 1; x.fillStyle = '#5c564e'; x.font = '600 14px "Plus Jakarta Sans", sans-serif';
+    x.fillText('Paciente', 26, 108); ln(96,112,380,112); x.fillText('Fecha', 404, 108); ln(452,112,634,112);
+    const ink = '#22386b', hand = s => s + 'px Caveat, "Segoe Print", "Comic Sans MS", cursive';
+    x.fillStyle = ink; x.font = hand(32); x.fillText(p.n, 108, 106); x.fillText('21/10/26', 464, 106);
+    const cols = [[300,'Bien'],[410,'Regular'],[525,'Difícil']], keys = ['ok','warn','bad'];
+    SEMS.forEach((l,r)=>{ const y = 158 + r*48;
+      x.fillStyle = '#5c564e'; x.font = '600 14px "Plus Jakarta Sans", sans-serif'; x.fillText(l, 26, y+16);
+      cols.forEach(([cx,lab],k)=>{ x.strokeStyle = '#9b9183'; x.lineWidth = 1.5; x.strokeRect(cx, y, 20, 20); x.fillStyle = '#5c564e'; x.font = '500 13px "Plus Jakarta Sans", sans-serif'; x.fillText(lab, cx+28, y+15);
+        if(marks[r]===keys[k]){ x.strokeStyle = ink; x.lineWidth = 3; x.lineCap = 'round'; ln(cx-3,y-2,cx+23,y+23); ln(cx+22,y-3,cx-1,y+22) } });
+    });
+    x.fillStyle = '#5c564e'; x.font = '600 14px "Plus Jakarta Sans", sans-serif'; x.fillText('Observaciones', 26, 330);
+    x.strokeStyle = '#d9d0c1'; x.lineWidth = 1; for(let y=380; y<=870; y+=46) ln(26,y,634,y);
+    x.fillStyle = ink; x.font = hand(30); let line = '', y = 372;
+    text.split(' ').forEach(w=>{ const tryL = line ? line+' '+w : w; if(x.measureText(tryL).width > 596){ x.fillText(line, 32 + Math.random()*4, y); line = w; y += 46 } else line = tryL });
+    if(line) x.fillText(line, 32, y);
+    x.restore();
+    return c.toDataURL('image/jpeg', .82);
+  }catch(e){ return null }
+}
+function startScan(N, img, demo){
+  N.img = img; N.demo = demo; N.phase = 'scan'; notaBody();
+  setTimeout(()=>{
+    const t = TURNOS.find(x=>x.id===N.tid), p = patById(t.pid);
+    N.txt = DICT[t.area] || DICT.to; N.doubts = pickDoubts(N.txt, 2); N.reviewed = false; N.phase = 'done';
+    if(demo){ N.v = DEMO_MARKS[p.mood].slice(); N.vSrc = [true,true,true] }
+    notaBody(); toast(demo ? 'Hoja leída: texto y semáforos cargados. Revisalos.' : 'Foto cargada. Revisá la transcripción.', 'document_scanner');
+  }, reduce ? 50 : 1900);
+}
+A['photo-demo'] = async b => { const N=S.nota, t=TURNOS.find(x=>x.id===N.tid), p=patById(t.pid); b.disabled=true; b.innerHTML='<span class="spin"></span>Preparando foto…';
+  const img = await demoSheet(p, DICT[t.area]||DICT.to, DEMO_MARKS[p.mood]); startScan(N, img, true) };
+function photoFile(f){ if(!f) return; const r = new FileReader(); r.onload = () => startScan(S.nota, r.result, false); r.readAsDataURL(f) }
+A['nota-mode'] = b => { const N=S.nota; N.txt=$('#ntxt')?$('#ntxt').value:N.txt; if(N.mode===b.dataset.k) return; Object.assign(N,{mode:b.dataset.k, phase:'idle', img:null, doubts:[], reviewed:false, ordered:false, txt:''}); N.vSrc=[false,false,false]; notaBody() };
+A['nota-retake'] = () => { const N=S.nota; Object.assign(N,{phase:'idle', img:null, doubts:[], reviewed:false, ordered:false, txt:''}); N.vSrc=[false,false,false]; notaBody() };
+A['nota-img'] = () => drawer('Foto original', `<img src="${S.nota.img}" alt="Foto de la hoja de notas" style="width:100%;border-radius:12px;border:1px solid var(--line)"><p class="muted" style="font-size:12.5px">La foto queda adjunta a la nota en el legajo, como respaldo de la transcripción.</p>`);
+A['dbt-ok'] = b => { const d=S.nota.doubts[+b.dataset.i]; d.ok=true; S.nota.txt=$('#ntxt').value; const row=$('#dbt-'+b.dataset.i); row.classList.add('ok'); b.className='btn sm done'; b.innerHTML=ico('check')+'Revisada'; const fx=row.querySelector('[data-act="dbt-fix"]'); if(fx) fx.remove(); updSave() };
+A['dbt-fix'] = b => { const d=S.nota.doubts[+b.dataset.i], ta=$('#ntxt'), i=ta.value.indexOf(d.w); ta.focus(); if(i>=0) ta.setSelectionRange(i, i+d.w.length); d.ok=true; const row=$('#dbt-'+b.dataset.i); row.classList.add('ok'); const okb=row.querySelector('[data-act="dbt-ok"]'); okb.className='btn sm done'; okb.innerHTML=ico('check')+'Corregí en el texto'; b.remove(); updSave(); toast('Escribí la palabra correcta sobre la selección','edit') };
+A['nota-rev'] = el => { S.nota.reviewed = el.checked; updSave() };
+A['nota-order'] = b => { const N=S.nota, ta=$('#ntxt'); const base = ta.value.replace(/^(Bueno, eh, |Eh, )/,'').replace(/ Eh, nada más\.?$/,'');
+  const s = base.match(/[^.]+\./g) || [base];
+  N.txt = `Actividad: ${s[0].trim()}\nRespuesta: ${s.slice(1, Math.max(2, s.length-1)).join(' ').trim()}\nPara casa y próximos pasos: ${s.length>2 ? s[s.length-1].trim() : 'sin indicaciones.'}`;
+  N.ordered = true; N.reviewed = false; notaBody(); toast('Ordenado por temas. Revisá que no falte nada.','format_list_bulleted') };
+A['nota-pick'] = b => { S.nota = newNota(b.dataset.t); notaBody() };
+A['nota-v'] = b => { const N=S.nota; if($('#ntxt')) N.txt=$('#ntxt').value; N.v[+b.dataset.i]=b.dataset.k; N.vSrc[+b.dataset.i]=false;
   $$(`[data-act="nota-v"][data-i="${b.dataset.i}"]`).forEach(x=>x.setAttribute('aria-pressed', x===b));
-  const sv=$('[data-act="nota-save"]'); sv.disabled=!ready; sv.nextElementSibling.textContent = ready?'Listo para guardar':'Marcá los tres indicadores para guardar' };
-A.dictar = b => {
-  if(b.classList.contains('rec')) return; const t = TURNOS.find(x=>x.id===S.nota.tid), full = DICT[t.area] || DICT.to, ta = $('#ntxt');
-  b.classList.add('rec'); $('#mic-l').textContent = 'Escuchando…'; ta.value = ''; let i = 0;
-  setTimeout(function tick(){ i = Math.min(full.length, i + (reduce?full.length:3)); ta.value = full.slice(0,i); S.nota.txt = ta.value; ta.scrollTop = ta.scrollHeight;
-    if(i < full.length) setTimeout(tick, 24); else { b.classList.remove('rec'); $('#mic-l').textContent = 'Dictado listo · tocá para repetir'; toast('Dictado transcripto y ordenado','mic') } }, reduce?0:500);
+  const chip=b.closest('.sem').querySelector('b .chip'); if(chip) chip.remove(); updSave() };
+A.dictar = () => {
+  const N=S.nota, t=TURNOS.find(x=>x.id===N.tid), full='Bueno, eh, '+(DICT[t.area]||DICT.to)+' Eh, nada más.';
+  N.phase='rec'; notaBody(); const live=$('#live'); let i=0;
+  setTimeout(function tick(){ i=Math.min(full.length, i+(reduce?full.length:3)); if(live) live.textContent=full.slice(0,i);
+    if(i<full.length) setTimeout(tick, 22); else { N.txt=full; N.doubts=pickDoubts(full,1); N.reviewed=false; N.phase='done'; notaBody(); toast('Audio transcripto. Revisalo antes de guardar.','mic') } }, reduce?0:400);
 };
 A['nota-save'] = b => {
-  const N = S.nota, t = TURNOS.find(x=>x.id===N.tid), p = patById(t.pid);
-  N.txt = $('#ntxt').value.trim() || 'Sesión sin observaciones.';
+  const N=S.nota, t=TURNOS.find(x=>x.id===N.tid), p=patById(t.pid), pro=proById(myPro());
+  N.txt = ($('#ntxt') ? $('#ntxt').value : N.txt).trim() || 'Sesión sin observaciones.';
   busyBtn(b,'Guardando…',600,()=>{
-    p.notes.push({d:'21 oct', who:'Profesional 1', area:t.area, t:N.txt, fresh:true});
+    let imgId = null; if(N.mode==='foto' && N.img){ NOTE_IMGS.push(N.img); imgId = NOTE_IMGS.length-1 }
+    p.notes.push({d:'21 oct', who:pro.n, area:t.area, t:N.txt, fresh:true, src:N.mode==='escribir'?null:N.mode, imgId});
     N.v.forEach((k,i)=>p.att[i].push(k)); t.st='pres'; t.noted=true;
-    const s = Math.floor((Date.now()-N.t0)/1000); N.time = Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); N.saved = true; S.legPid = p.id; S.legTab='evo'; notaBody();
+    const s=Math.floor((Date.now()-N.t0)/1000); N.time=Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); N.saved=true; S.legPid=p.id; S.legTab='evo'; notaBody();
   });
 };
-A['nota-next'] = () => { const next = todayPr1().find(x=>!x.noted); if(!next){ toast('Ya cargaste las notas de todos los pacientes de hoy','task_alt'); return } S.nota = {tid:next.id, v:[null,null,null], txt:'', saved:false, t0:Date.now()}; notaBody() };
+A['nota-next'] = () => { const next=myDayTurns().list.find(x=>!x.noted); if(!next){ toast('Ya cargaste las notas de todos los pacientes del día','task_alt'); return } S.nota=newNota(next.id); notaBody() };
+A['note-img'] = b => drawer('Foto original de la nota', `<img src="${NOTE_IMGS[+b.dataset.img]}" alt="Foto de la hoja de notas" style="width:100%;border-radius:12px;border:1px solid var(--line)"><p class="muted" style="font-size:12.5px">Respaldo de la transcripción revisada por el profesional.</p>`);
 
 /* --- Firmas del profesional --- */
-function firmaDocs(){ const out=[]; patsOf('pr1').forEach(p=>{ out.push({pid:p.id, t:'Planilla de asistencia'}); out.push({pid:p.id, t:'Informe mensual'}) }); return out }
+function firmaDocs(){ const out=[]; patsOf(myPro()).forEach(p=>{ out.push({pid:p.id, t:'Planilla de asistencia'}); out.push({pid:p.id, t:'Informe mensual'}) }); return out }
 R.firmas = function(){
   $('#v-firmas').innerHTML = `<div class="stage">${phone('19:40','')}${explain('Celular del profesional','Todas las firmas del mes de una vez','Hoy cada profesional firma en papel planillas e informes, uno por uno. Acá el sistema los arma con la asistencia real y se firman juntos.',['Revisá la lista o quitá algún documento.','Tocá “Firmar” y confirmá con el código que llega por WhatsApp.','Pasá a Obras sociales: los expedientes de estos pacientes ya figuran firmados.'])}</div>`;
   firmaBody();
@@ -1149,8 +1295,8 @@ function firmaBody(){
   if(F.signed && F.step!=='done'){ b.innerHTML = `<div class="success">${checkSVG(84)}<h2 style="font-size:21px">Septiembre está firmado</h2><p class="muted">No tenés documentos pendientes. Te avisamos cuando cierre octubre.</p></div><button class="btn lg block" data-go="obras">${ico('inventory_2')}Ver presentación</button>`; return }
   if(F.step==='done'){ b.innerHTML = `<div class="success">${checkSVG(84)}<h2 style="font-size:21px">${F.n} documentos firmados</h2><p class="muted">Recepción ya los ve en la presentación de septiembre.</p></div><button class="btn pri lg block" data-act="firma-go">${ico('inventory_2')}Ver presentación a obras sociales</button>`; confetti($('#scr')); return }
   b.innerHTML = `
-    <div class="mhead"><div><small class="subtle" style="font-weight:700">Profesional 1 · TO</small><h2>Firmas de septiembre</h2></div><span class="chip acc">Cierra 5 nov</span></div>
-    <div class="mcard row" style="flex-wrap:nowrap"><input type="checkbox" class="chk" id="fall" data-act="firma-all" ${F.sel.size===docs.length?'checked':''}><label for="fall" style="flex:1"><b>Seleccionar todos</b><small class="muted" style="display:block">${patsOf('pr1').length} pacientes · planilla e informe</small></label><b class="num" id="fcount">${F.sel.size}/${docs.length}</b></div>
+    <div class="mhead"><div><small class="subtle" style="font-weight:700">${proById(myPro()).n} · ${AREAS[proById(myPro()).area].s}</small><h2>Firmas de septiembre</h2></div><span class="chip acc">Cierra 5 nov</span></div>
+    <div class="mcard row" style="flex-wrap:nowrap"><input type="checkbox" class="chk" id="fall" data-act="firma-all" ${F.sel.size===docs.length?'checked':''}><label for="fall" style="flex:1"><b>Seleccionar todos</b><small class="muted" style="display:block">${patsOf(myPro()).length} pacientes · planilla e informe</small></label><b class="num" id="fcount">${F.sel.size}/${docs.length}</b></div>
     <div class="mcard" style="padding:4px 14px">${docs.map((d,i)=>{ const p=patById(d.pid); return `<label class="doc"><input type="checkbox" class="chk" data-act="firma-one" data-i="${i}" ${F.sel.has(i)?'checked':''}><span class="ic-sq neu" style="width:30px;height:30px">${ico(d.t.startsWith('Planilla')?'fact_check':'summarize')}</span><span class="grow"><b>${p.n}</b><small>${d.t} · ${p.os}</small></span></label>`}).join('')}</div>
     <div class="fixbot"><button class="btn pri lg block" id="fsign" data-act="firma-sign" ${F.sel.size?'':'disabled'}>${ico('draw')}Firmar ${F.sel.size} documentos</button></div>
     ${F.step==='code'?codeSheet():''}`;
@@ -1233,6 +1379,38 @@ A['fam-res'] = () => { S.fam.showRes=!S.fam.showRes; famBody() };
 A['fam-slot'] = b => { S.fam.res=b.dataset.s; S.fam.conf=true; S.fam.showRes=false; famBody(); toast('Turno pasado al '+b.dataset.s.toLowerCase()+'. Se liberó el horario anterior.','event_repeat') };
 A['fam-pay'] = b => busyBtn(b,'Procesando pago…',1100,()=>{ S.fam.paid=true; famPat().pay[2].st='Pagado'; famBody(); toast('Pago recibido. Comprobante enviado por mail.','paid') });
 
+/* ===== Roles: Dirección ve todo; cada profesional ve solo lo suyo ===== */
+const ADMIN_VIEWS = ['tablero','obras','equipo'];
+const legBase = () => S.role==='dir' ? PATIENTS : patsOf(S.role);
+function agendaPro(){
+  const pro = proById(S.role), day = S.agDay, mine = TURNOS.filter(t=>t.pro===pro.id), list = mine.filter(t=>t.day===day).sort((a,b)=>a.hour-b.hour);
+  $('#v-agenda').innerHTML = `
+  <div class="vhead stg"><div><div class="eyebrow">${ico('calendar_month')} Mi agenda</div><h1>${day===TODAY_IDX?'Hoy, miércoles 21':DAYS[day].l}</h1><p>${pro.n} · ${AREAS[pro.area].n}. ${list.length} ${list.length===1?'turno':'turnos'} este día y ${mine.length} en la semana.</p></div>
+    <span class="chip neu" style="height:30px">${ico('lock')}Ves solo tus turnos</span></div>
+  <div class="ag-tools stg"><div class="seg" role="group" aria-label="Día">${DAYS.map(d=>`<button data-act="agday" data-d="${d.k}" aria-pressed="${d.k===day}">${d.s}${d.k===TODAY_IDX?' · hoy':''} <span class="subtle num">(${mine.filter(t=>t.day===d.k).length})</span></button>`).join('')}</div></div>
+  <div class="mylist stg">${list.length ? list.map((t,i)=>{ const p = t.pid ? patById(t.pid) : null; return `<div class="card myt" style="--i:${i}">
+      <div class="myh num"><b>${t.hour}:00</b><small>a ${t.hour}:45</small></div><span class="mybar" style="background:var(--a-${t.area})"></span>
+      <div class="grow"><b>${turnoName(t)}</b><small>${AREAS[t.area].n} · Consultorio ${t.room}${p?' · '+p.os:''}</small></div>
+      <div class="row">${t.st==='pend' ? `<button class="btn sm" data-act="st" data-st="pres" data-t="${t.id}">${ico('check_circle')}Presente</button><button class="btn sm" data-act="st" data-st="aus" data-t="${t.id}">${ico('cancel')}Ausente</button>` : `<span class="chip ${t.st==='pres'?'ok':'bad'}">${ico(t.st==='pres'?'check':'close')}${t.st==='pres'?'Presente':'Ausente'}</span>`}
+        ${p ? `<button class="btn sm ${t.noted?'done':'pri'}" data-act="go-nota" data-t="${t.id}" ${t.noted?'disabled':''}>${t.noted?ico('check')+'Nota cargada':ico('edit_note')+'Cargar nota'}</button><button class="btn sm ghost" data-act="open-leg" data-pid="${p.id}">Legajo</button>` : ''}</div></div>` }).join('')
+    : `<div class="card empty">${ico('event_available')}<p style="margin-top:6px">No tenés turnos este día.</p></div>`}</div>
+  <p class="muted" style="font-size:12.5px;margin-top:16px">${ico('info')} Dirección y Recepción ven la agenda completa de los 7 consultorios. Los cambios de turno se piden a Recepción.</p>`;
+}
+function applyRole(){
+  const isDir = S.role==='dir', pro = isDir ? null : proById(S.role);
+  $$('#nav [data-v]').forEach(b => b.hidden = !isDir && ADMIN_VIEWS.includes(b.dataset.v));
+  $('#bell').hidden = !isDir;
+  $('#me-av').textContent = isDir ? 'D' : pro.n.replace('Profesional ','P');
+  $('#me-av').className = 'av ' + (isDir ? 'pro' : 'pat');
+}
+function setRole(v){
+  S.role = v; S.nota = null; S.firma = {sel:null, step:'list', signed:false}; S.selT = null; S.agPro = ''; S.legQ = ''; S.legF = 'all';
+  applyRole();
+  const next = (v!=='dir' && ADMIN_VIEWS.includes(S.view)) ? 'agenda' : S.view;
+  go(next);
+  toast(v==='dir' ? 'Viendo como Dirección: acceso a todo' : `Viendo como ${proById(v).n}: solo sus turnos y pacientes`, 'switch_account');
+}
+
 /* ===== Eventos e inicio ===== */
 document.addEventListener('click', e => {
   const g = e.target.closest('[data-go]'); if(g){ go(g.dataset.go); return }
@@ -1259,6 +1437,10 @@ window.addEventListener('resize', () => { moveLine($('#nav')); const t = $('.tab
 $('#bell').addEventListener('click', () => go('obras'));
 
 initSearch();
+$('#role').insertAdjacentHTML('beforeend', PROS.map(p=>`<option value="${p.id}">${p.n} · ${AREAS[p.area].s}</option>`).join(''));
+$('#role').addEventListener('change', e => setRole(e.target.value));
+document.addEventListener('change', e => { if(e.target.id==='agpro'){ S.agPro = e.target.value; R.agenda() } });
+applyRole();
 refreshBadge();
 let start = 'tablero'; try{ const h = location.hash.slice(1); if(VIEWS.includes(h)) start = h }catch(e){}
 go(start);
