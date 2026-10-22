@@ -1,0 +1,1270 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>CTP Prototipo Interno</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..600,0..1,0&display=block">
+<style>
+/* Layout: barra superior con marca + navegación por vistas; área de trabajo de 1320px; vistas de celular en marco de teléfono.
+   Paleta y tipografía del sistema de Stitch (salvia, terracota, avena), con formas más rectas y animaciones propias. */
+:root{
+  --bg:#FBF8F4; --surface:#FFFFFF; --surface-2:#F6EFE6; --surface-3:#EFE6DA; --ink:#2E2924; --muted:#5C564E; --subtle:#8E877E; --line:#EFE8DE; --line-2:#E3D9CC;
+  --primary:#4C735F; --primary-deep:#345A48; --primary-ink:#FFFFFF; --primary-soft:#E8F0EB;
+  --accent:#D66847; --accent-deep:#A04022; --accent-soft:#F8ECE7; --mustard:#B8802C; --mustard-soft:#FCF5E8;
+  --ok:#3E7958; --ok-soft:#E3EFE7; --warn:#A8721B; --warn-soft:#FCF2DF; --bad:#C9483F; --bad-soft:#FBE5E2;
+  --a-to:#3A5949; --a-to-bg:#E8F0EB; --a-fono:#615C87; --a-fono-bg:#F0EEF7; --a-psico:#3F6378; --a-psico-bg:#E6EEF3;
+  --a-psicoped:#8F6208; --a-psicoped-bg:#FCF3E2; --a-apoyo:#A04022; --a-apoyo-bg:#F8ECE7; --a-arte:#94456A; --a-arte-bg:#F7E9EF; --a-taller:#2F6B63; --a-taller-bg:#E3F0EE;
+  --frame:#2E2924; --overlay:rgba(46,41,36,.32);
+  --f:"Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r1:6px; --r2:10px; --r3:14px; --r4:18px;
+  --sh1:0 1px 2px rgba(84,71,57,.05), 0 2px 8px -2px rgba(84,71,57,.06);
+  --sh2:0 10px 28px -8px rgba(84,71,57,.16), 0 3px 8px -2px rgba(84,71,57,.06);
+  --sh3:0 24px 60px -16px rgba(46,41,36,.32);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#1A1714; --surface:#221E1A; --surface-2:#2B2621; --surface-3:#342E28; --ink:#F3ECE3; --muted:#B3A99D; --subtle:#8C8378; --line:#38312A; --line-2:#463E35;
+  --primary:#8FC2A6; --primary-deep:#A6D0B8; --primary-ink:#10231A; --primary-soft:#22352B;
+  --accent:#F08E6D; --accent-deep:#F5A88D; --accent-soft:#3B241C; --mustard:#F0C070; --mustard-soft:#3A2E17;
+  --ok:#74C394; --ok-soft:#1C3326; --warn:#F0C070; --warn-soft:#3A2E17; --bad:#F08A80; --bad-soft:#3E201D;
+  --a-to:#A6D0B8; --a-to-bg:#22352B; --a-fono:#C2BCEB; --a-fono-bg:#2A2838; --a-psico:#A9CBE0; --a-psico-bg:#1F2D35;
+  --a-psicoped:#F0C98A; --a-psicoped-bg:#3A2E17; --a-apoyo:#F5A88D; --a-apoyo-bg:#3B241C; --a-arte:#EBA8C8; --a-arte-bg:#3A2230; --a-taller:#9AD6CC; --a-taller-bg:#1C3330;
+  --frame:#0B0A08; --overlay:rgba(0,0,0,.55);
+  --sh1:0 1px 2px rgba(0,0,0,.3); --sh2:0 10px 28px -8px rgba(0,0,0,.5); --sh3:0 24px 60px -16px rgba(0,0,0,.7); color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#1A1714; --surface:#221E1A; --surface-2:#2B2621; --surface-3:#342E28; --ink:#F3ECE3; --muted:#B3A99D; --subtle:#8C8378; --line:#38312A; --line-2:#463E35;
+  --primary:#8FC2A6; --primary-deep:#A6D0B8; --primary-ink:#10231A; --primary-soft:#22352B;
+  --accent:#F08E6D; --accent-deep:#F5A88D; --accent-soft:#3B241C; --mustard:#F0C070; --mustard-soft:#3A2E17;
+  --ok:#74C394; --ok-soft:#1C3326; --warn:#F0C070; --warn-soft:#3A2E17; --bad:#F08A80; --bad-soft:#3E201D;
+  --a-to:#A6D0B8; --a-to-bg:#22352B; --a-fono:#C2BCEB; --a-fono-bg:#2A2838; --a-psico:#A9CBE0; --a-psico-bg:#1F2D35;
+  --a-psicoped:#F0C98A; --a-psicoped-bg:#3A2E17; --a-apoyo:#F5A88D; --a-apoyo-bg:#3B241C; --a-arte:#EBA8C8; --a-arte-bg:#3A2230; --a-taller:#9AD6CC; --a-taller-bg:#1C3330;
+  --frame:#0B0A08; --overlay:rgba(0,0,0,.55);
+  --sh1:0 1px 2px rgba(0,0,0,.3); --sh2:0 10px 28px -8px rgba(0,0,0,.5); --sh3:0 24px 60px -16px rgba(0,0,0,.7); color-scheme:dark }
+
+*{box-sizing:border-box}
+html,body{height:100%} body{margin:0} img{max-width:100%} [hidden]{display:none!important}
+body{background:var(--bg); color:var(--ink); font-family:var(--f); font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0; font-weight:700; letter-spacing:-.018em; text-wrap:balance}
+h1{font-size:30px; line-height:1.15} h2{font-size:17px} h3{font-size:15px} h4{font-size:13.5px}
+p{margin:0}
+button,input,select,textarea{font:inherit; color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--primary); outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)} .subtle{color:var(--subtle)}
+.eyebrow{font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--subtle)}
+.ms{font-family:"Material Symbols Rounded"; font-weight:normal; font-style:normal; font-size:20px; line-height:1; display:inline-block; letter-spacing:normal; text-transform:none; white-space:nowrap; direction:ltr; -webkit-font-feature-settings:'liga'; font-feature-settings:'liga'; font-variation-settings:'FILL' 0,'wght' 450,'GRAD' 0,'opsz' 24; flex:none}
+.ms.fill{font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+/* ---------- Barra superior ---------- */
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:40; background:var(--surface)}
+.top{position:sticky; top:env(safe-area-inset-top,0px); z-index:30; background:color-mix(in oklab, var(--surface) 92%, transparent); backdrop-filter:saturate(1.4) blur(12px); -webkit-backdrop-filter:saturate(1.4) blur(12px); border-bottom:1px solid var(--line)}
+.wrap{max-width:1320px; margin:0 auto; padding-left:max(24px, env(safe-area-inset-left,0px)); padding-right:max(24px, env(safe-area-inset-right,0px))}
+.top-row{display:flex; align-items:center; gap:16px; padding-block:12px 8px}
+.brand{display:flex; align-items:center; gap:10px; flex:none}
+.logo{width:36px; height:36px; border-radius:var(--r2); background:var(--primary); color:var(--primary-ink); display:grid; place-items:center; font-weight:800; font-size:11.5px; letter-spacing:.06em}
+.brand b{display:block; font-size:15px; line-height:1.1}
+.brand span{font-size:11.5px; color:var(--muted)}
+.proto{font-size:10.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-deep); background:var(--accent-soft); padding:4px 8px; border-radius:var(--r1)}
+.gsearch{position:relative; flex:1; max-width:420px; margin-left:auto}
+.gsearch .ms{position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--subtle); font-size:19px}
+.gsearch input{width:100%; height:40px; border:1px solid var(--line-2); background:var(--bg); border-radius:var(--r2); padding:0 12px 0 40px; transition:border-color .2s, box-shadow .2s, background .2s}
+.gsearch input:focus{outline:none; border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-soft); background:var(--surface)}
+.results{position:absolute; top:46px; left:0; right:0; background:var(--surface); border:1px solid var(--line); border-radius:var(--r3); box-shadow:var(--sh2); padding:6px; display:none; z-index:5}
+.results.on{display:block; animation:pop-in .18s var(--ease)}
+.results button{display:flex; width:100%; gap:10px; align-items:center; border:0; background:none; padding:8px; border-radius:var(--r2); text-align:left}
+.results button:hover,.results button.on{background:var(--surface-2)}
+.iconbtn{position:relative; width:40px; height:40px; border-radius:var(--r2); border:1px solid var(--line-2); background:var(--surface); display:grid; place-items:center; color:var(--muted); transition:background .2s, transform .15s}
+.iconbtn:hover{background:var(--surface-2); color:var(--ink)}
+.iconbtn:active{transform:scale(.94)}
+.count{position:absolute; top:-6px; right:-6px; min-width:19px; height:19px; padding:0 5px; border-radius:var(--r1); background:var(--accent); color:#fff; font-size:10.5px; font-weight:800; display:grid; place-items:center}
+.count.bump{animation:bump .45s var(--ease)}
+.me{display:flex; align-items:center; gap:10px; flex:none}
+.me b{display:block; font-size:13px; line-height:1.2}
+.me span{font-size:11px; color:var(--muted)}
+.nav{display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; padding-block:2px 0; position:relative}
+.nav button{position:relative; border:0; background:none; padding:10px 14px 12px; color:var(--muted); font-weight:500; white-space:nowrap; display:flex; gap:7px; align-items:center; font-size:13.5px; transition:color .2s}
+.nav button .ms{font-size:19px}
+.nav button:hover{color:var(--ink)}
+.nav button[aria-current="page"]{color:var(--primary-deep); font-weight:700}
+.nav .sep{align-self:center; width:1px; height:20px; background:var(--line-2); margin:0 8px}
+.nav .grp{align-self:center; font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--subtle); padding-right:4px; white-space:nowrap}
+.navline{position:absolute; bottom:0; height:2.5px; border-radius:2px 2px 0 0; background:var(--primary); transition:left .35s var(--ease), width .35s var(--ease)}
+
+/* ---------- Estructura de vista ---------- */
+main{padding-block:28px 72px}
+.view{display:none}
+.view.on{display:block}
+.vhead{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:22px}
+.vhead p{color:var(--muted); margin-top:6px; max-width:60ch}
+.vhead .eyebrow{display:flex; align-items:center; gap:6px; margin-bottom:8px; color:var(--primary)}
+.row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.grid{display:grid; gap:16px}
+.g-2{grid-template-columns:minmax(0,1.65fr) minmax(0,1fr)}
+.g-2e{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r4); padding:20px; box-shadow:var(--sh1)}
+.card.flat{box-shadow:none}
+.chead{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px; flex-wrap:wrap}
+.chead p{color:var(--muted); font-size:12.5px; margin-top:3px}
+
+/* Entrada escalonada */
+.stg > *{animation:rise .5s var(--ease) backwards; animation-delay:calc(var(--i,0) * 45ms)}
+@keyframes rise{from{opacity:0; transform:translateY(12px)}}
+@keyframes pop-in{from{opacity:0; transform:translateY(-4px) scale(.98)}}
+@keyframes bump{40%{transform:scale(1.35)}}
+@keyframes flash{0%{background:var(--accent-soft)} 100%{background:transparent}}
+@keyframes shake{20%,60%{transform:translateX(-4px)} 40%,80%{transform:translateX(4px)}}
+.flash{animation:flash 1.4s ease}
+.shake{animation:shake .4s}
+
+/* ---------- Componentes ---------- */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:7px; height:38px; padding:0 16px; border-radius:var(--r2); border:1px solid var(--line-2); background:var(--surface); font-weight:600; font-size:13px; white-space:nowrap; transition:background .2s, border-color .2s, transform .12s, box-shadow .2s, color .2s}
+.btn .ms{font-size:18px}
+.btn:hover{background:var(--surface-2)}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5; cursor:not-allowed; transform:none}
+.btn.pri{background:var(--primary); border-color:var(--primary); color:var(--primary-ink)}
+.btn.pri:hover{background:var(--primary-deep); border-color:var(--primary-deep); box-shadow:0 6px 16px -6px color-mix(in oklab, var(--primary) 70%, transparent)}
+.btn.acc{background:var(--accent); border-color:var(--accent); color:#fff}
+.btn.acc:hover{filter:brightness(1.05)}
+.btn.ghost{border-color:transparent; background:none; color:var(--primary-deep)}
+.btn.ghost:hover{background:var(--primary-soft)}
+.btn.soft-acc{color:var(--accent-deep); border-color:color-mix(in oklab, var(--accent) 30%, transparent); background:var(--surface)}
+.btn.soft-acc:hover{background:var(--accent-soft)}
+.btn.sm{height:30px; padding:0 11px; font-size:12px; border-radius:var(--r1)}
+.btn.lg{height:48px; padding:0 20px; font-size:15px; border-radius:var(--r3)}
+.btn.block{width:100%}
+.btn.done{background:var(--ok-soft); border-color:transparent; color:var(--ok)}
+.btn .spin{width:15px; height:15px; border:2px solid currentColor; border-right-color:transparent; border-radius:50%; animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chip{display:inline-flex; align-items:center; gap:5px; height:24px; padding:0 8px; border-radius:var(--r1); font-size:11.5px; font-weight:700; white-space:nowrap; transition:background .3s, color .3s}
+.chip .ms{font-size:15px}
+.chip.ok{background:var(--ok-soft); color:var(--ok)} .chip.warn{background:var(--warn-soft); color:var(--warn)} .chip.bad{background:var(--bad-soft); color:var(--bad)}
+.chip.neu{background:var(--surface-2); color:var(--muted)} .chip.acc{background:var(--accent-soft); color:var(--accent-deep)}
+.area{display:inline-flex; align-items:center; height:22px; padding:0 7px; border-radius:var(--r1); font-size:11px; font-weight:700; white-space:nowrap}
+.dot{width:8px; height:8px; border-radius:50%; flex:none; display:inline-block}
+.dot.ok{background:var(--ok)} .dot.warn{background:var(--warn)} .dot.bad{background:var(--bad)} .dot.neu{background:var(--line-2)}
+.dot.pulse{box-shadow:0 0 0 0 color-mix(in oklab, var(--bad) 60%, transparent); animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 7px transparent} 100%{box-shadow:0 0 0 0 transparent}}
+.av{width:36px; height:36px; border-radius:var(--r2); display:grid; place-items:center; font-weight:800; font-size:12px; flex:none; background:var(--surface-2); color:var(--muted); letter-spacing:.02em}
+.av.lg{width:64px; height:64px; border-radius:var(--r3); font-size:20px}
+.av.pat{background:var(--accent-soft); color:var(--accent-deep)}
+.av.pro{background:var(--primary-soft); color:var(--primary-deep)}
+.track{height:6px; border-radius:3px; background:var(--surface-3); overflow:hidden}
+.track > i{display:block; height:100%; width:0; border-radius:3px; background:var(--primary); transition:width 1s var(--ease)}
+.track.warn > i{background:var(--mustard)} .track.bad > i{background:var(--accent)}
+.seg{display:inline-flex; padding:3px; gap:2px; background:var(--surface-2); border-radius:var(--r2)}
+.seg button{border:0; background:none; height:30px; padding:0 12px; border-radius:var(--r1); font-weight:600; font-size:12.5px; color:var(--muted); transition:background .2s, color .2s, box-shadow .2s; white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface); color:var(--ink); box-shadow:var(--sh1)}
+.inp{width:100%; height:40px; border:1px solid var(--line-2); background:var(--surface); border-radius:var(--r2); padding:0 12px; transition:border-color .2s, box-shadow .2s}
+.inp:focus{outline:none; border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-soft)}
+textarea.inp{height:auto; min-height:96px; padding:10px 12px; resize:vertical; line-height:1.5}
+select.inp{padding-right:30px}
+.chk{appearance:none; -webkit-appearance:none; width:18px; height:18px; border-radius:5px; border:1.5px solid var(--line-2); background:var(--surface); display:inline-grid; place-items:center; margin:0; transition:background .2s, border-color .2s; flex:none}
+.chk::after{content:""; width:9px; height:5px; border:2px solid var(--primary-ink); border-top:0; border-right:0; transform:rotate(-45deg) scale(0); margin-top:-2px; transition:transform .2s var(--ease)}
+.chk:checked{background:var(--primary); border-color:var(--primary)}
+.chk:checked::after{transform:rotate(-45deg) scale(1)}
+.chk:disabled{opacity:.4}
+.empty{padding:28px; text-align:center; color:var(--muted)}
+.scrollx{overflow-x:auto}
+table{border-collapse:collapse; width:100%}
+th{font-size:10.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--subtle); text-align:left; padding:12px 12px; background:var(--surface-2); white-space:nowrap}
+td{padding:14px 12px; border-top:1px solid var(--line); vertical-align:middle; font-size:13px}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:color-mix(in oklab, var(--surface-2) 55%, transparent)}
+.cs{display:flex; flex-direction:column; gap:4px; align-items:flex-start}
+.cs small{color:var(--muted); font-size:11.5px; line-height:1.3}
+
+/* KPI */
+.kpis{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px}
+.kpi{position:relative; overflow:hidden}
+.kpi .ic{width:38px; height:38px; border-radius:var(--r2); display:grid; place-items:center}
+.kpi .ic .ms{font-size:21px}
+.kpi .v{font-size:28px; font-weight:800; letter-spacing:-.025em; line-height:1.1; margin-top:14px}
+.kpi .v small{font-size:13px; font-weight:600; color:var(--muted); letter-spacing:0; margin-left:4px}
+.kpi .l{font-size:12.5px; color:var(--muted); margin-top:2px}
+.kpi .d{display:flex; align-items:center; gap:4px; font-size:12px; font-weight:600; margin-top:12px}
+.kpi .d .ms{font-size:16px}
+.kpi .khead{display:flex; justify-content:space-between; align-items:flex-start; gap:8px}
+.kpi:hover{box-shadow:var(--sh2); transform:translateY(-2px)}
+.kpi{transition:box-shadow .25s, transform .25s var(--ease)}
+
+/* Mapa de calor */
+.heat{display:grid; grid-template-columns:76px repeat(11,minmax(30px,1fr)); gap:4px; min-width:560px}
+.heat .hh{font-size:11px; color:var(--subtle); text-align:center; font-weight:600}
+.heat .rr{font-size:12px; font-weight:700; display:flex; align-items:center; gap:6px; color:var(--muted)}
+.heat .c{height:30px; border-radius:var(--r1); transition:transform .15s, box-shadow .15s; animation:fade-in .5s backwards; animation-delay:calc(var(--i)*6ms)}
+.heat .c:hover{transform:scale(1.12); box-shadow:var(--sh2); z-index:1; position:relative}
+@keyframes fade-in{from{opacity:0}}
+.legend{display:flex; gap:8px; align-items:center; font-size:11.5px; color:var(--muted); margin-top:12px; flex-wrap:wrap}
+.legend i{width:20px; height:10px; border-radius:3px; display:inline-block}
+
+/* Listas de filas */
+.li{display:flex; align-items:center; gap:12px; padding:12px 0; border-top:1px solid var(--line)}
+.li:first-child{border-top:0; padding-top:4px}
+.li .grow{flex:1; min-width:0}
+.li .grow b{display:block; font-size:13.5px}
+.li .grow small{display:block; color:var(--muted); font-size:12px}
+.ic-sq{width:34px; height:34px; border-radius:var(--r2); display:grid; place-items:center; flex:none}
+.ic-sq .ms{font-size:19px}
+.ic-sq.bad{background:var(--bad-soft); color:var(--bad)} .ic-sq.warn{background:var(--warn-soft); color:var(--warn)} .ic-sq.ok{background:var(--ok-soft); color:var(--ok)} .ic-sq.neu{background:var(--surface-2); color:var(--muted)}
+.bars{display:flex; flex-direction:column; gap:12px}
+.bars .b{display:grid; grid-template-columns:160px minmax(0,1fr) 46px; gap:12px; align-items:center; font-size:13px}
+.bars .b span:last-child{text-align:right; font-weight:700}
+
+/* Agenda */
+.ag-wrap{display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:16px; align-items:start}
+.ag-tools{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:14px}
+.cal{display:grid; grid-template-columns:62px repeat(7,minmax(108px,1fr)); min-width:860px}
+.cal .hd{position:sticky; top:0; background:var(--surface-2); padding:10px 8px; font-size:12px; font-weight:700; border-bottom:1px solid var(--line); z-index:1}
+.cal .hd small{display:block; font-weight:500; color:var(--subtle); font-size:11px}
+.cal .hr{padding:10px 8px 0; font-size:11.5px; color:var(--subtle); font-weight:600; border-top:1px solid var(--line)}
+.cal .hr.now{color:var(--accent)}
+.cal .sl{border-top:1px solid var(--line); border-left:1px solid var(--line); padding:4px; min-height:64px}
+.tn{position:relative; width:100%; height:100%; min-height:56px; border:0; border-radius:var(--r2); padding:6px 8px 6px 11px; text-align:left; display:flex; flex-direction:column; gap:1px; font-size:11.5px; overflow:hidden; transition:transform .18s var(--ease), box-shadow .2s, opacity .3s}
+.tn::before{content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:currentColor; opacity:.85}
+.tn b{font-size:12.5px; color:var(--ink)}
+.tn small{color:var(--muted); font-size:11px}
+.tn .st{position:absolute; top:6px; right:6px; width:18px; height:18px; border-radius:5px; display:grid; place-items:center}
+.tn .st .ms{font-size:14px}
+.tn .st.pres{background:var(--ok); color:#fff} .tn .st.aus{background:var(--bad); color:#fff}
+.tn:hover{transform:translateY(-2px); box-shadow:var(--sh2)}
+.tn.sel{box-shadow:0 0 0 2px var(--primary-deep), var(--sh2)}
+.tn.aus{opacity:.55}
+.tn.aus b{text-decoration:line-through}
+.tn.new{animation:drop-in .55s var(--ease)}
+@keyframes drop-in{0%{transform:scale(.6); opacity:0} 70%{transform:scale(1.04)} 100%{transform:none; opacity:1}}
+.free{width:100%; height:100%; min-height:56px; border:1.5px dashed var(--line-2); border-radius:var(--r2); background:none; color:var(--subtle); font-size:11.5px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px; opacity:0; transition:opacity .2s, border-color .2s, background .2s, color .2s}
+.sl:hover .free{opacity:1}
+.armed .free{opacity:1; border-color:var(--accent); color:var(--accent-deep); background:color-mix(in oklab, var(--accent-soft) 60%, transparent); animation:breathe 1.6s ease-in-out infinite}
+@keyframes breathe{50%{background:var(--accent-soft)}}
+.free:hover{border-color:var(--primary); color:var(--primary-deep)}
+.wl{display:flex; flex-direction:column; gap:8px}
+.wl .w{display:flex; gap:10px; align-items:center; padding:10px; border:1px solid var(--line); border-radius:var(--r3); background:var(--surface); transition:border-color .2s, background .2s, transform .2s, opacity .3s}
+.wl .w.on{border-color:var(--accent); background:var(--accent-soft)}
+.wl .w .grow{flex:1; min-width:0}
+.wl .w b{display:block; font-size:13px}
+.wl .w small{display:block; font-size:11.5px; color:var(--muted)}
+.wl .w.out{transform:translateX(30px); opacity:0}
+
+/* Drawer */
+.scrim{position:fixed; inset:0; background:var(--overlay); opacity:0; pointer-events:none; transition:opacity .3s; z-index:60}
+.scrim.on{opacity:1; pointer-events:auto}
+.drawer{position:fixed; top:0; right:0; bottom:0; width:min(420px,100%); background:var(--surface); box-shadow:var(--sh3); z-index:61; transform:translateX(105%); transition:transform .38s var(--ease); display:flex; flex-direction:column; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); padding-right:env(safe-area-inset-right,0px)}
+.drawer.on{transform:none}
+.drawer .dh{display:flex; justify-content:space-between; align-items:center; padding:18px 20px; border-bottom:1px solid var(--line)}
+.drawer .db{flex:1; overflow:auto; padding:20px; display:flex; flex-direction:column; gap:16px}
+.drawer .df{padding:16px 20px; border-top:1px solid var(--line); display:flex; gap:8px}
+.kv{display:grid; grid-template-columns:auto 1fr; gap:8px 16px; font-size:13px}
+.kv dt{color:var(--muted)} .kv dd{margin:0; font-weight:600; text-align:right}
+.calc{background:var(--surface-2); border-radius:var(--r3); padding:14px 16px}
+.calc .ln{display:flex; justify-content:space-between; padding:6px 0; font-size:13px}
+.calc .ln.tot{border-top:1px dashed var(--line-2); margin-top:4px; padding-top:10px; font-weight:800; font-size:15px}
+
+/* Legajo */
+.leg{display:grid; grid-template-columns:290px minmax(0,1fr); gap:16px; align-items:start}
+.plist{display:flex; flex-direction:column; gap:2px; max-height:calc(100vh - 290px); min-height:320px; overflow:auto; margin:10px -8px 0; padding:0 4px}
+.plist button{display:flex; align-items:center; gap:10px; border:0; background:none; padding:8px; border-radius:var(--r2); text-align:left; transition:background .15s}
+.plist button:hover{background:var(--surface-2)}
+.plist button[aria-current="true"]{background:var(--primary-soft)}
+.plist .grow{flex:1; min-width:0}
+.plist b{display:block; font-size:13px}
+.plist small{display:block; font-size:11.5px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.phead{display:flex; gap:16px; align-items:center; flex-wrap:wrap}
+.phead .grow{flex:1; min-width:220px}
+.phead .grow p{color:var(--muted); margin-top:3px}
+.tabs{position:relative; display:flex; gap:2px; border-bottom:1px solid var(--line); margin:20px 0 18px; overflow-x:auto; scrollbar-width:none}
+.tabs button{border:0; background:none; padding:10px 12px; font-weight:600; color:var(--muted); white-space:nowrap; display:flex; gap:6px; align-items:center; transition:color .2s}
+.tabs button[aria-selected="true"]{color:var(--ink)}
+.tabs .navline{bottom:0}
+.tabp{animation:rise .35s var(--ease)}
+.obj{display:grid; grid-template-columns:minmax(0,1fr) 140px 54px; gap:14px; align-items:center; padding:12px 0; border-top:1px solid var(--line)}
+.obj:first-child{border-top:0}
+.obj .t{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+.gas{font-weight:800; font-size:17px; text-align:right}
+.spark path.ln{stroke-dasharray:400; stroke-dashoffset:400; animation:draw 1.1s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.attrow{display:grid; grid-template-columns:170px repeat(8,16px); gap:8px; align-items:center; font-size:12.5px; padding:5px 0}
+.attrow i{width:16px; height:16px; border-radius:4px; display:block; animation:pop-dot .35s var(--ease) backwards; animation-delay:calc(var(--i)*35ms)}
+@keyframes pop-dot{from{transform:scale(0)}}
+.attrow i.ok{background:var(--ok)} .attrow i.warn{background:var(--mustard)} .attrow i.bad{background:var(--accent)}
+.tl{display:flex; flex-direction:column; gap:10px}
+.note{border:1px solid var(--line); border-left:3px solid var(--c, var(--primary)); border-radius:var(--r2); padding:12px 14px; background:var(--surface)}
+.note .nh{display:flex; justify-content:space-between; gap:8px; font-size:11.5px; color:var(--muted); margin-bottom:4px}
+.note.new{animation:drop-in .5s var(--ease)}
+.chat{display:flex; flex-direction:column; gap:10px; max-height:380px; overflow:auto; padding:2px}
+.msg{max-width:80%; padding:10px 13px; border-radius:var(--r3); background:var(--surface-2); animation:rise .3s var(--ease) backwards}
+.msg.me{align-self:flex-end; background:var(--primary-soft)}
+.msg small{display:flex; gap:8px; justify-content:space-between; font-size:11px; color:var(--muted); font-weight:700; margin-bottom:3px}
+.msg .at{color:var(--primary-deep); font-weight:700}
+.compose{display:flex; gap:8px; margin-top:12px}
+
+/* Obras sociales */
+.alertpill{display:inline-flex; gap:7px; align-items:center; height:26px; padding:0 10px; border-radius:var(--r1); background:var(--bad-soft); color:var(--bad); font-size:11px; font-weight:800; letter-spacing:.05em; text-transform:uppercase}
+.pct{font-size:11px; font-weight:800; background:color-mix(in oklab, var(--primary-ink) 20%, transparent); padding:2px 6px; border-radius:5px}
+.oscards{display:grid; grid-template-columns:repeat(5,minmax(200px,1fr)); gap:12px; overflow-x:auto; padding:3px 3px 10px; margin:0 -3px}
+.oscard{text-align:left; border:1.5px solid var(--line); background:var(--surface); border-radius:var(--r4); padding:16px; display:flex; flex-direction:column; gap:10px; box-shadow:var(--sh1); transition:transform .2s var(--ease), border-color .2s, box-shadow .2s; cursor:pointer}
+.oscard:hover{transform:translateY(-3px); box-shadow:var(--sh2)}
+.oscard[aria-pressed="true"]{border-color:var(--primary-deep); box-shadow:0 0 0 3px var(--primary-soft), var(--sh2)}
+.oscard .h{display:flex; justify-content:space-between; gap:8px; align-items:flex-start}
+.oscard .n{display:flex; justify-content:space-between; align-items:baseline; font-size:12.5px; color:var(--muted)}
+.oscard .n b{font-size:16px; color:var(--ink)}
+.fbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; padding:12px 14px; margin-top:16px}
+.fbar .gsearch{margin-left:0; max-width:280px}
+.fchips{display:flex; gap:6px; flex-wrap:wrap}
+.fchips button{height:32px; padding:0 12px; border-radius:var(--r2); border:1px solid var(--line-2); background:var(--surface); font-weight:600; font-size:12.5px; color:var(--muted); transition:all .2s}
+.fchips button[aria-pressed="true"]{background:var(--primary); border-color:var(--primary); color:var(--primary-ink)}
+.fchips button.act[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff}
+.ostable{min-width:1080px}
+.pat{display:flex; gap:10px; align-items:center}
+.linkbtn{border:0; background:none; padding:0; color:var(--accent-deep); font-size:11.5px; font-weight:700; display:inline-flex; gap:3px; align-items:center}
+.linkbtn .ms{font-size:15px}
+.tfoot{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:12px 16px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted)}
+.abar{position:sticky; bottom:calc(14px + env(safe-area-inset-bottom,0px)); margin-top:18px; display:flex; gap:18px; align-items:center; flex-wrap:wrap; padding:14px 18px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r4); box-shadow:var(--sh3); z-index:5}
+.abar .m{display:flex; gap:12px; align-items:center; flex:1; min-width:240px}
+.abar .m b{font-size:15.5px; display:block}
+.abar .m small{color:var(--muted)}
+.abar label{display:flex; gap:9px; align-items:center; font-size:13px; color:var(--muted); max-width:300px; cursor:pointer}
+.banner{display:flex; gap:12px; align-items:center; padding:14px 16px; border-radius:var(--r3); background:var(--ok-soft); color:var(--ok); font-weight:600; margin-bottom:18px; animation:drop-in .5s var(--ease)}
+
+/* Equipo */
+.eqtable{min-width:960px}
+.eqtable tbody tr{cursor:pointer}
+.mini{height:6px; width:90px; border-radius:3px; background:var(--surface-3); overflow:hidden; display:inline-block; vertical-align:middle; margin-right:8px}
+.mini i{display:block; height:100%; background:var(--primary); border-radius:3px; transition:width .9s var(--ease)}
+
+/* Teléfono */
+.stage{display:grid; grid-template-columns:minmax(0,400px) minmax(0,1fr); gap:44px; align-items:start}
+.phone{width:100%; max-width:400px; background:var(--frame); border-radius:44px; padding:10px; box-shadow:var(--sh3)}
+.screen{position:relative; background:var(--bg); border-radius:35px; height:800px; overflow:hidden; display:flex; flex-direction:column}
+.sbar{display:flex; justify-content:space-between; align-items:center; padding:14px 26px 6px; font-size:12.5px; font-weight:700; flex:none}
+.sbar .isl{width:96px; height:26px; border-radius:14px; background:var(--frame)}
+.sbody{flex:1; overflow:auto; padding:4px 16px 24px; display:flex; flex-direction:column; gap:12px; scrollbar-width:none}
+.sbody::-webkit-scrollbar{display:none}
+.mhead{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:6px 0 4px}
+.mhead h2{font-size:20px}
+.explain{max-width:420px; padding-top:24px}
+.explain h2{font-size:24px; margin:10px 0}
+.explain p{color:var(--muted); margin-bottom:14px; line-height:1.6}
+.explain ol{margin:0; padding-left:20px; color:var(--muted); display:flex; flex-direction:column; gap:8px; line-height:1.55}
+.mcard{background:var(--surface); border:1px solid var(--line); border-radius:var(--r3); padding:14px}
+.pchips{display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; margin:0 -16px; padding:0 16px 2px}
+.pchips button{flex:none; border:1px solid var(--line-2); background:var(--surface); border-radius:var(--r2); padding:8px 12px; text-align:left; transition:all .2s; min-width:92px}
+.pchips button small{display:block; font-size:11px; color:var(--subtle); font-weight:600}
+.pchips button b{font-size:13px}
+.pchips button[aria-pressed="true"]{border-color:var(--primary); background:var(--primary-soft)}
+.pchips button.done{opacity:.6}
+.sem{padding:12px 0; border-top:1px solid var(--line)}
+.sem:first-child{border-top:0; padding-top:2px}
+.sem > b{display:block; font-size:13px; margin-bottom:8px}
+.opts{display:grid; grid-template-columns:repeat(3,1fr); gap:6px}
+.opts button{height:40px; border-radius:var(--r2); border:1.5px solid var(--line-2); background:var(--surface); font-weight:700; font-size:12.5px; color:var(--muted); display:flex; align-items:center; justify-content:center; gap:6px; transition:all .2s var(--ease)}
+.opts button i{width:10px; height:10px; border-radius:3px; display:block}
+.opts button.ok i{background:var(--ok)} .opts button.warn i{background:var(--mustard)} .opts button.bad i{background:var(--accent)}
+.opts button[aria-pressed="true"].ok{border-color:var(--ok); background:var(--ok-soft); color:var(--ok)}
+.opts button[aria-pressed="true"].warn{border-color:var(--mustard); background:var(--warn-soft); color:var(--warn)}
+.opts button[aria-pressed="true"].bad{border-color:var(--accent); background:var(--accent-soft); color:var(--accent-deep)}
+.opts button[aria-pressed="true"]{transform:scale(1.03)}
+.mic{height:52px; border:0; border-radius:var(--r3); background:var(--accent-soft); color:var(--accent-deep); font-weight:800; display:flex; align-items:center; justify-content:center; gap:10px; transition:background .2s}
+.mic .wave{display:none; gap:3px; align-items:center; height:20px}
+.mic .wave i{width:3px; border-radius:2px; background:currentColor; animation:wave .9s ease-in-out infinite; height:6px}
+.mic .wave i:nth-child(2){animation-delay:.1s} .mic .wave i:nth-child(3){animation-delay:.2s} .mic .wave i:nth-child(4){animation-delay:.3s} .mic .wave i:nth-child(5){animation-delay:.4s}
+@keyframes wave{50%{height:20px}}
+.mic.rec{background:var(--bad-soft); color:var(--bad)}
+.mic.rec .wave{display:flex}
+.mic.rec .ms{display:none}
+.timer{display:inline-flex; gap:4px; align-items:center; font-weight:800; font-size:12.5px; height:28px; padding:0 9px; border-radius:var(--r1); background:var(--surface-2)}
+.timer .ms{font-size:16px}
+.sheet{position:absolute; inset:0; z-index:10; display:flex; flex-direction:column; justify-content:flex-end; background:var(--overlay); animation:fade-in .25s}
+.sheet .sh{background:var(--surface); border-radius:24px 24px 0 0; padding:10px 18px 22px; max-height:92%; overflow:auto; animation:slide-up .38s var(--ease); display:flex; flex-direction:column; gap:12px}
+.sheet .grab{width:40px; height:4px; border-radius:2px; background:var(--line-2); margin:0 auto 4px}
+@keyframes slide-up{from{transform:translateY(100%)}}
+.codeinp{display:grid; grid-template-columns:repeat(6,1fr); gap:6px}
+.codeinp input{height:52px; border-radius:var(--r2); border:1.5px solid var(--line-2); background:var(--surface); text-align:center; font-size:22px; font-weight:800; transition:border-color .2s, transform .15s}
+.codeinp input:focus{outline:none; border-color:var(--primary); transform:translateY(-2px)}
+.success{display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; padding:34px 8px 20px}
+.success svg .c{stroke-dasharray:180; stroke-dashoffset:180; animation:draw .7s var(--ease) forwards}
+.success svg .k{stroke-dasharray:50; stroke-dashoffset:50; animation:draw .45s .5s var(--ease) forwards}
+.confetti{position:absolute; inset:0; pointer-events:none; overflow:hidden}
+.confetti i{position:absolute; top:-10px; width:7px; height:11px; border-radius:2px; animation:fall 1.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(820px) rotate(540deg); opacity:.2}}
+.doc{display:flex; gap:12px; align-items:center; padding:11px 0; border-top:1px solid var(--line)}
+.doc:first-child{border-top:0}
+.doc .grow{flex:1; min-width:0}
+.doc b{display:block; font-size:13px}
+.doc small{display:block; font-size:11.5px; color:var(--muted)}
+.fixbot{position:sticky; bottom:-24px; margin:0 -16px -24px; padding:12px 16px 20px; background:linear-gradient(to top, var(--bg) 70%, transparent)}
+.hero{background:var(--primary); color:var(--primary-ink); border-radius:var(--r4); padding:18px; position:relative; overflow:hidden}
+.hero::after{content:""; position:absolute; right:-30px; top:-40px; width:150px; height:150px; border-radius:40px; background:color-mix(in oklab, var(--primary-ink) 10%, transparent); transform:rotate(20deg)}
+.hero p{opacity:.85; font-size:13px}
+.hero h3{font-size:20px; margin:4px 0 10px}
+.hero .track{background:color-mix(in oklab, var(--primary-ink) 25%, transparent)}
+.hero .track > i{background:var(--primary-ink)}
+.cta{border:1.5px solid var(--accent); background:var(--accent-soft)}
+.sig{width:100%; height:160px; border:1.5px dashed var(--line-2); border-radius:var(--r3); background:var(--surface); display:block; touch-action:none; cursor:crosshair}
+.slots{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px}
+.goal{padding:10px 0; border-top:1px solid var(--line)}
+.goal:first-of-type{border-top:0}
+.goal .gh{display:flex; justify-content:space-between; gap:8px; align-items:center; font-size:13px; margin-bottom:6px}
+
+/* Toast */
+.toast{position:fixed; left:50%; bottom:calc(22px + env(safe-area-inset-bottom,0px)); transform:translate(-50%,30px); background:var(--ink); color:var(--bg); padding:11px 16px 11px 12px; border-radius:var(--r3); display:flex; gap:10px; align-items:center; font-weight:600; font-size:13px; opacity:0; pointer-events:none; transition:opacity .3s, transform .35s var(--ease); z-index:80; max-width:calc(100% - 32px); box-shadow:var(--sh3)}
+.toast.on{opacity:1; transform:translate(-50%,0)}
+.toast .ms{color:var(--primary-soft); font-size:20px}
+
+@media (max-width:1180px){ .kpis{grid-template-columns:repeat(3,minmax(0,1fr))} .g-2,.g-2e{grid-template-columns:minmax(0,1fr)} .ag-wrap{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:900px){
+  .wrap{padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px))}
+  .gsearch.top-s,.me .who{display:none} .me{margin-left:auto}
+  .leg{grid-template-columns:minmax(0,1fr)} .plist{max-height:260px; min-height:0}
+  .stage{grid-template-columns:minmax(0,1fr)} .explain{order:-1; padding-top:0}
+  h1{font-size:25px}
+}
+@media (max-width:560px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))} .brand span,.proto{display:none}
+  .phone{padding:0; background:none; box-shadow:none; border-radius:0} .screen{border-radius:var(--r4); border:1px solid var(--line); height:720px}
+  .bars .b{grid-template-columns:110px minmax(0,1fr) 40px} .obj{grid-template-columns:minmax(0,1fr) 50px} .obj svg{display:none}
+  .attrow{grid-template-columns:110px repeat(8,14px); gap:6px} .attrow i{width:14px; height:14px}
+}
+@media (prefers-reduced-motion: reduce){ *,*::before,*::after{animation-duration:.01ms!important; animation-delay:0s!important; animation-iteration-count:1!important; transition-duration:.01ms!important} }
+
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <div class="brand"><span class="logo" aria-hidden="true">CTP</span><div><b>CTP</b><span>Consultorio Terapéutico Psicofísico</span></div></div>
+      <span class="proto">Prototipo interno</span>
+      <div class="gsearch top-s"><span class="ms" aria-hidden="true">search</span><label class="sr" for="gs">Buscar paciente</label><input id="gs" placeholder="Buscar paciente, área u obra social" autocomplete="off"><div class="results" id="gs-res"></div></div>
+      <button class="iconbtn" id="bell" aria-label="Pendientes de la presentación"><span class="ms" aria-hidden="true">notifications</span><span class="count num" id="bell-n">0</span></button>
+      <div class="me"><span class="av pro">D</span><div class="who"><b>Dirección</b><span>Datos ficticios</span></div></div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Vistas">
+      <button data-v="tablero"><span class="ms" aria-hidden="true">space_dashboard</span>Tablero</button>
+      <button data-v="agenda"><span class="ms" aria-hidden="true">calendar_month</span>Agenda</button>
+      <button data-v="legajo"><span class="ms" aria-hidden="true">folder_shared</span>Legajos</button>
+      <button data-v="obras"><span class="ms" aria-hidden="true">inventory_2</span>Obras sociales</button>
+      <button data-v="equipo"><span class="ms" aria-hidden="true">groups</span>Equipo</button>
+      <span class="sep"></span><span class="grp">Celular</span>
+      <button data-v="nota"><span class="ms" aria-hidden="true">edit_note</span>Nota de sesión</button>
+      <button data-v="firmas"><span class="ms" aria-hidden="true">draw</span>Firmas</button>
+      <button data-v="familia"><span class="ms" aria-hidden="true">family_restroom</span>Familias</button>
+      <span class="navline"></span>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <section class="view" id="v-tablero" aria-label="Tablero"></section>
+  <section class="view" id="v-agenda" aria-label="Agenda"></section>
+  <section class="view" id="v-legajo" aria-label="Legajos"></section>
+  <section class="view" id="v-obras" aria-label="Obras sociales"></section>
+  <section class="view" id="v-equipo" aria-label="Equipo"></section>
+  <section class="view" id="v-nota" aria-label="Nota de sesión"></section>
+  <section class="view" id="v-firmas" aria-label="Firmas"></section>
+  <section class="view" id="v-familia" aria-label="Familias"></section>
+</main>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Detalle"></aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+/* ===== Datos de muestra (anonimizados) — misma forma que tendrán las tablas reales ===== */
+const TODAY = new Date('2026-10-21T12:00:00');
+const TODAY_IDX = 2; // miércoles dentro de la semana 19–23 oct
+const DAYS = [{k:0,s:'Lun 19',l:'Lunes 19'},{k:1,s:'Mar 20',l:'Martes 20'},{k:2,s:'Mié 21',l:'Miércoles 21'},{k:3,s:'Jue 22',l:'Jueves 22'},{k:4,s:'Vie 23',l:'Viernes 23'}];
+const HOURS = [9,10,11,12,13,14,15,16,17,18,19];
+const ROOMS = [1,2,3,4,5,6,7];
+const ARANCEL = 35000;
+
+function mulberry(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const RND = mulberry(2026);
+const pick = (arr, w) => { if(!w) return arr[Math.floor(RND()*arr.length)]; const tot=w.reduce((a,b)=>a+b,0); let x=RND()*tot; for(let i=0;i<arr.length;i++){x-=w[i]; if(x<=0) return arr[i]} return arr[arr.length-1] };
+const addDays = n => { const d=new Date(TODAY); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10) };
+
+const AREAS = {
+  to:{n:'Terapia ocupacional', s:'TO'}, fono:{n:'Fonoaudiología', s:'Fono'}, psico:{n:'Psicología', s:'Psico'},
+  psicoped:{n:'Psicopedagogía', s:'Psicoped.'}, apoyo:{n:'Maestra de apoyo', s:'Apoyo'}, arte:{n:'Arte terapia', s:'Arte'}, taller:{n:'Taller de habilidades sociales', s:'Taller'}
+};
+const OBJETIVOS = {
+  to:['Se viste de forma autónoma','Tolera texturas nuevas en la comida','Toma el lápiz con pinza trípode'],
+  fono:['Articula /r/ y /rr/ en palabras','Sigue consignas de tres pasos','Arma oraciones de cinco palabras'],
+  psico:['Nombra y regula emociones en conflicto','Inicia juego con pares'],
+  psicoped:['Lee textos breves y los comprende','Organiza la tarea sin ayuda'],
+  apoyo:['Resuelve la tarea de matemática del grado','Sostiene la atención veinte minutos'],
+  arte:['Expresa emociones a través del dibujo','Participa en una obra grupal'],
+  taller:['Respeta turnos en el juego','Resuelve conflictos con palabras']
+};
+const PROS = [
+  {id:'pr1', n:'Profesional 1', area:'to',       room:1, pct:.65, mat:'M.P. 4512', matV:'2027-06-30', add:5000},
+  {id:'pr2', n:'Profesional 2', area:'fono',     room:3, pct:.70, mat:'M.P. 2871', matV:'2027-03-31', add:0},
+  {id:'pr3', n:'Profesional 3', area:'psico',    room:5, pct:.65, mat:'M.P. 9811', matV:'2027-09-30', add:3000},
+  {id:'pr4', n:'Profesional 4', area:'psicoped', room:6, pct:.60, mat:'M.P. 3360', matV:'2027-01-31', add:0},
+  {id:'pr5', n:'Profesional 5', area:'apoyo',    room:4, pct:.55, mat:'Reg. 1127', matV:'2027-12-31', add:0},
+  {id:'pr6', n:'Profesional 6', area:'arte',     room:2, pct:.60, mat:'M.P. 5120', matV:'2026-11-30', add:0},
+  {id:'pr7', n:'Profesional 7', area:'taller',   room:7, pct:.60, mat:'M.P. 7745', matV:'2027-05-31', add:0},
+  {id:'pr8', n:'Profesional 8', area:'to',       room:2, pct:.65, mat:'M.P. 6120', matV:'2027-08-31', add:0},
+];
+const proById = id => PROS.find(p=>p.id===id);
+const OBRAS = {
+  'IOMA':{cob:24000, sub:'Convenio discapacidad'}, 'OSDE':{cob:28000, sub:'Planes 210 a 410'},
+  'Swiss Medical':{cob:30000, sub:'Planes SMG20 a SMG50'}, 'OSECAC':{cob:22000, sub:'Plan médico obligatorio'},
+  'Particular':{cob:0, sub:'Factura B y recibo'}
+};
+const ORIGENES = ['Boca en boca','Pediatra o neurólogo','Escuela','Derivación interna','Web y redes','Otro'];
+const MESES = ['may','jun','jul','ago','sep','oct'];
+
+const PATIENTS = [];
+for(let i=1;i<=72;i++){
+  const id = 'p'+String(i).padStart(2,'0');
+  const os = pick(Object.keys(OBRAS), [34,22,14,12,18]);
+  const a1 = pick(['to','fono','psico','psicoped','apoyo','arte'], [34,26,14,12,7,7]);
+  let areas = [a1];
+  if(RND()<.55){ const a2 = pick(['to','fono','psico','psicoped','arte','taller'], [20,20,14,14,10,12]); if(a2!==a1) areas.push(a2) }
+  const mood = pick(['good','flat','bad'], [55,30,15]);
+  const pros = {}; areas.forEach(a=>{ const cands = PROS.filter(p=>p.area===a); pros[a] = cands[i % cands.length].id });
+  const docs = [];
+  if(os!=='Particular' && RND()<.8) docs.push({t:'Certificado de discapacidad (CUD)', v:addDays(Math.round(-15+RND()*520))});
+  if(os!=='Particular') docs.push({t:'Autorización '+os+' 2026', v:addDays(Math.round(-6+RND()*280))});
+  docs.push({t:'Prescripción médica', v:addDays(Math.round(-12+RND()*230))});
+  docs.push({t:'Consentimiento de tratamiento', v:null});
+  const objs = [];
+  areas.forEach(a=>{ OBJETIVOS[a].slice(0,2).forEach(t=>{
+    let v = mood==='good'?-1.6:mood==='flat'?-.3:.6; const s=[];
+    for(let m=0;m<6;m++){ v += (mood==='good'?.5:mood==='flat'?.05:-.35) + (RND()-.5)*.7; v=Math.max(-2,Math.min(2,v)); s.push(Math.round(v)) }
+    objs.push({a, t, s});
+  })});
+  const att = [0,1,2].map(()=>Array.from({length:8},()=>{ const b = mood==='good'?.78:mood==='flat'?.5:.28; const x=RND(); return x<b?'ok':x<b+.33?'warn':'bad' }));
+  const sesWeek = {}; areas.forEach(a=>{ sesWeek[a] = (a==='taller')?1:(RND()<.3?2:1) });
+  const copago = os==='Particular' ? ARANCEL : Math.max(0, ARANCEL + proById(pros[areas[0]]).add - OBRAS[os].cob);
+  PATIENTS.push({
+    id, n:'Paciente '+String(i).padStart(2,'0'), short:String(i).padStart(2,'0'), age:4+Math.floor(RND()*9), os, areas, pros, mood,
+    tutor:'Familia de Paciente '+String(i).padStart(2,'0'), origen:pick(ORIGENES,[38,27,14,11,6,4]), docs, objs, att, sesWeek, copago,
+    sept:{fam:RND()<.82, pro:areas.every(a=>pros[a]!=='pr1') ? RND()<.9 : false, inf:areas.every(a=>pros[a]!=='pr1') ? RND()<.9 : false},
+    pay:[{m:'Agosto', st:RND()<.9?'Pagado':'Vencido'},{m:'Septiembre', st:mood==='bad'&&RND()<.6?'Vencido':'Pagado'},{m:'Octubre', st:RND()<.45?'Pagado':'Pendiente'}],
+    notes:[], chat:[], req:{}, absStreak: mood==='bad' ? 2+Math.floor(RND()*2) : 0
+  });
+}
+const patById = id => PATIENTS.find(p=>p.id===id);
+
+/* Agenda de la semana: cada paciente tiene sus sesiones con su profesional, en el consultorio del profesional */
+const TURNOS = [];
+const busy = new Set();
+PATIENTS.forEach(p=>{
+  p.areas.forEach(a=>{
+    const pro = proById(p.pros[a]);
+    for(let k=0;k<p.sesWeek[a];k++){
+      for(let tries=0;tries<60;tries++){
+        const day = Math.floor(RND()*5);
+        const hour = pick(HOURS, [3,3,3,1,2,6,9,10,10,8,4]);
+        const room = tries<30 ? pro.room : ROOMS[Math.floor(RND()*7)];
+        const kR = `r${day}-${hour}-${room}`, kP = `p${day}-${hour}-${pro.id}`, kX = `x${day}-${hour}-${p.id}`;
+        if(busy.has(kR)||busy.has(kP)||busy.has(kX)) continue;
+        busy.add(kR); busy.add(kP); busy.add(kX);
+        let st = 'pend';
+        if(day<TODAY_IDX || (day===TODAY_IDX && hour<14)) st = (p.mood==='bad' ? RND()<.5 : RND()<.92) ? 'pres' : 'aus';
+        TURNOS.push({id:'t'+TURNOS.length, pid:p.id, pro:pro.id, area:a, day, hour, room, st});
+        break;
+      }
+    }
+  });
+});
+const WAITLIST = [
+  {id:'w1', n:'Paciente 73', area:'to', os:'IOMA', dias:34, pri:'Alta'},
+  {id:'w2', n:'Paciente 74', area:'fono', os:'OSDE', dias:21, pri:'Media'},
+  {id:'w3', n:'Paciente 75', area:'psicoped', os:'IOMA', dias:12, pri:'Normal'},
+  {id:'w4', n:'Paciente 76', area:'psico', os:'Particular', dias:5, pri:'Normal'},
+];
+
+/* Notas y conversaciones de muestra */
+PATIENTS.forEach(p=>{
+  const pro = proById(p.pros[p.areas[0]]);
+  p.notes.push({d:'14 oct', who:pro.n, area:p.areas[0], t: p.mood==='bad'
+    ? 'Llegó desregulado, costó sostener la actividad. Se conversa con la familia sobre las ausencias.'
+    : p.mood==='flat' ? 'Sesión estable. Sostiene lo logrado pero todavía no generaliza en casa.'
+    : 'Buena sesión. Completó la secuencia sin ayuda y pidió apoyo cuando lo necesitó.'});
+  if(p.areas.length>1){
+    const pro2 = proById(p.pros[p.areas[1]]);
+    p.chat.push({w:pro2.n, t:`Comparto el informe de septiembre de ${AREAS[p.areas[1]].s}. ¿Coordinamos objetivos en el próximo ateneo?`, at:'Lun 10:12'});
+    p.chat.push({w:pro.n, t:'Sí, lo sumo a la agenda del jueves.', at:'Lun 11:40', me:pro.id==='pr1'});
+  }
+  if(p.mood==='bad') p.chat.push({w:'Recepción', t:'La familia avisó que cambió el horario de trabajo. Ofrecimos pasar el turno a la tarde.', at:'Mar 09:05'});
+});
+
+/* Funciones derivadas */
+function docStatus(v){
+  if(!v) return {k:'ok', l:'Firmado'};
+  const d = Math.round((new Date(v+'T12:00:00') - TODAY)/864e5);
+  const f = new Date(v+'T12:00:00').toLocaleDateString('es-AR',{day:'numeric',month:'short',year:'numeric'});
+  if(d<0) return {k:'bad', l:'Vencido el '+f, d};
+  if(d<=30) return {k:'warn', l:'Vence el '+f, d};
+  return {k:'ok', l:'Vigente hasta '+f, d};
+}
+const prescOk = p => { const d=p.docs.find(x=>x.t.startsWith('Prescripción')); return docStatus(d.v).k!=='bad' };
+const READY_COLS = ['planilla','fam','pro','presc','inf'];
+function colOk(p,c){ if(c==='planilla') return true; if(c==='presc') return prescOk(p); return p.sept[c] }
+const isReady = p => READY_COLS.every(c=>colOk(p,c));
+function riskOf(p){
+  const recent = p.att.map(r=>r.slice(-4)).flat();
+  const bad = recent.filter(x=>x==='bad').length, last = p.objs.map(o=>o.s[5]);
+  const regress = last.filter(v=>v<0).length / last.length;
+  const debt = p.pay.some(x=>x.st==='Vencido');
+  const score = bad*1 + regress*4 + (debt?2:0) + p.absStreak*1.5;
+  return score>=6 ? 'bad' : score>=3 ? 'warn' : 'ok';
+}
+function riskReasons(p){
+  const r=[]; if(p.absStreak>=2) r.push(p.absStreak+' ausencias seguidas');
+  if(p.pay.some(x=>x.st==='Vencido')) r.push('copago vencido');
+  const reg = p.objs.filter(o=>o.s[5]<0).length; if(reg) r.push(reg+' objetivo'+(reg>1?'s':'')+' en retroceso');
+  if(!r.length) r.push('objetivos en meseta');
+  return r.join(' · ');
+}
+const sessionsMonth = pro => TURNOS.filter(t=>t.pro===pro.id).length * 4;
+function liquidacion(pro){
+  const ses = sessionsMonth(pro), arancel = ARANCEL + pro.add, bruto = ses*arancel;
+  return {ses, horas:Math.round(ses*0.75), arancel, bruto, prof:Math.round(bruto*pro.pct), centro:Math.round(bruto*(1-pro.pct))};
+}
+if(typeof module!=='undefined') module.exports = {PATIENTS, TURNOS, PROS, OBRAS, isReady, riskOf, liquidacion, docStatus};
+
+/* ===== Núcleo: utilidades, navegación, avisos y paneles ===== */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const money = n => '$' + Math.round(n).toLocaleString('es-AR');
+const mill = n => n >= 1e6 ? '$' + (n/1e6).toLocaleString('es-AR',{maximumFractionDigits:1}) + ' M' : money(n);
+const ico = (n, c='') => `<span class="ms ${c}" aria-hidden="true">${n}</span>`;
+const areaTag = a => `<span class="area" style="background:var(--a-${a}-bg);color:var(--a-${a})">${AREAS[a].s}</span>`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const checkSVG = (s=72) => `<svg width="${s}" height="${s}" viewBox="0 0 60 60" fill="none" aria-hidden="true"><circle class="c" cx="30" cy="30" r="26" stroke="var(--ok)" stroke-width="3.5"/><path class="k" d="M19 31l7.5 7.5L42 23" stroke="var(--ok)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const patsOf = proId => PATIENTS.filter(p => p.areas.some(a => p.pros[a] === proId));
+const turnoName = t => t.pid ? patById(t.pid).n : t.wl;
+
+const S = {
+  view:'tablero', heat:'sem', agDay:TODAY_IDX, armed:null, selT:null,
+  legPid:null, legTab:'evo', legF:'all', legQ:'',
+  osSel:'IOMA', osF:'all', osQ:'', osDisc:'', review:false, generated:null, packed:{}, reminded:{},
+  liq:{}, eqF:'all', alertsDone:{}, called:{},
+  nota:null, firma:{sel:null, step:'list', signed:false},
+  fam:{conf:false, res:null, showRes:false, paid:false, sheet:null, drawn:false}
+};
+
+/* Aviso */
+let toastT;
+function toast(msg, icon='check_circle'){
+  const t = $('#toast'); t.innerHTML = ico(icon,'fill') + `<span>${msg}</span>`;
+  t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 3000);
+}
+/* Números que suben */
+function countUp(root){
+  $$('[data-count]', root).forEach(el => {
+    const to = +el.dataset.count, fmt = el.dataset.fmt || 'int';
+    const f = v => fmt==='mill' ? mill(v) : fmt==='money' ? money(v) : fmt==='pct' ? Math.round(v)+'%' : Math.round(v).toLocaleString('es-AR');
+    if(reduce){ el.textContent = f(to); return }
+    const from = +(el.dataset.from || 0), t0 = performance.now(), D = 900;
+    (function step(t){ const k = Math.min(1,(t-t0)/D), e = 1-Math.pow(1-k,3); el.textContent = f(from + (to-from)*e); if(k<1) requestAnimationFrame(step) })(t0);
+  });
+}
+/* Barras que se llenan */
+function fill(root){ requestAnimationFrame(() => requestAnimationFrame(() => $$('[data-w]', root).forEach(i => i.style.width = i.dataset.w + '%'))) }
+/* Indicador deslizante bajo pestañas */
+function moveLine(container){
+  if(!container) return;
+  const line = $('.navline', container), on = $('[aria-current="page"],[aria-selected="true"]', container);
+  if(!line || !on) return; line.style.left = on.offsetLeft + 10 + 'px'; line.style.width = Math.max(0, on.offsetWidth - 20) + 'px';
+}
+/* Panel lateral */
+function drawer(title, body, foot=''){
+  $('#drawer').innerHTML = `<div class="dh"><h2>${title}</h2><button class="iconbtn" data-act="close-drawer" aria-label="Cerrar">${ico('close')}</button></div><div class="db">${body}</div>${foot?`<div class="df">${foot}</div>`:''}`;
+  $('#drawer').classList.add('on'); $('#scrim').classList.add('on');
+}
+function closeDrawer(){ $('#drawer').classList.remove('on'); $('#scrim').classList.remove('on') }
+/* Papel picado de festejo */
+function confetti(host){
+  if(reduce) return; const c = document.createElement('div'); c.className = 'confetti';
+  const cols = ['var(--primary)','var(--accent)','var(--mustard)','var(--a-fono)','var(--ok)'];
+  for(let i=0;i<34;i++){ const p = document.createElement('i'); p.style.left = Math.random()*100+'%'; p.style.background = cols[i%cols.length]; p.style.animationDelay = Math.random()*.4+'s'; p.style.transform = `rotate(${Math.random()*180}deg)`; c.appendChild(p) }
+  host.appendChild(c); setTimeout(() => c.remove(), 2200);
+}
+/* Botón con estado de carga */
+function busyBtn(b, label, ms, then){
+  b.disabled = true; b.innerHTML = `<span class="spin"></span>${label}`;
+  setTimeout(then, reduce ? 50 : ms);
+}
+
+/* Pendientes de la presentación (campana) */
+function pendCount(){ let n=0; PATIENTS.filter(p=>p.os!=='Particular').forEach(p => READY_COLS.forEach(c => { if(!colOk(p,c)) n++ })); return n }
+let lastPend = null;
+function refreshBadge(){
+  const n = pendCount(), el = $('#bell-n'); el.textContent = n; el.hidden = n===0;
+  if(lastPend !== null && n !== lastPend){ el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump') }
+  lastPend = n;
+}
+
+/* Navegación */
+const VIEWS = ['tablero','agenda','legajo','obras','equipo','nota','firmas','familia'];
+const R = {};
+function go(v, opts={}){
+  if(!VIEWS.includes(v)) v = 'tablero';
+  S.view = v; closeDrawer();
+  $$('.view').forEach(x => { if(x.id !== 'v-'+v) x.innerHTML = '' });
+  $$('.view').forEach(x => x.classList.toggle('on', x.id === 'v-'+v));
+  $$('#nav [data-v]').forEach(b => b.setAttribute('aria-current', b.dataset.v===v ? 'page' : 'false'));
+  moveLine($('#nav'));
+  R[v]();
+  if(!opts.keepScroll) window.scrollTo({top:0});
+  try{ history.replaceState(null,'','#'+v) }catch(e){}
+}
+function rerender(){ R[S.view](); refreshBadge() }
+
+/* Búsqueda global */
+function initSearch(){
+  const inp = $('#gs'), box = $('#gs-res');
+  const run = () => {
+    const q = inp.value.trim().toLowerCase();
+    if(!q){ box.classList.remove('on'); return }
+    const hits = PATIENTS.filter(p => (p.n+' '+p.os+' '+p.areas.map(a=>AREAS[a].n).join(' ')).toLowerCase().includes(q)).slice(0,6);
+    box.innerHTML = hits.length ? hits.map((p,i) => `<button data-pid="${p.id}" class="${i===0?'on':''}"><span class="av pat">${p.short}</span><span><b style="display:block;font-size:13px">${p.n}</b><small class="muted">${p.os} · ${p.areas.map(a=>AREAS[a].s).join(' + ')}</small></span></button>`).join('')
+      : `<div class="empty" style="padding:14px">Sin resultados para “${esc(inp.value)}”</div>`;
+    box.classList.add('on');
+  };
+  inp.addEventListener('input', run);
+  inp.addEventListener('keydown', e => { if(e.key==='Enter'){ const b = $('button', box); if(b) b.click() } if(e.key==='Escape'){ inp.value=''; run() } });
+  box.addEventListener('click', e => { const b = e.target.closest('[data-pid]'); if(!b) return; S.legPid = b.dataset.pid; S.legTab='evo'; inp.value=''; box.classList.remove('on'); go('legajo') });
+  document.addEventListener('click', e => { if(!e.target.closest('.gsearch')) box.classList.remove('on') });
+}
+
+/* ===== Tablero de dirección ===== */
+const A = {}; // acciones: data-act="nombre"
+
+R.tablero = function(){
+  const ses = TURNOS.length, slots = 5*HOURS.length*ROOMS.length, occ = ses/slots*100;
+  const fact = PROS.reduce((s,p)=>s+liquidacion(p).bruto,0);
+  const deuda = PATIENTS.reduce((s,p)=>s+p.pay.filter(x=>x.st==='Vencido').length*p.copago*4,0);
+  const risky = PATIENTS.filter(p=>riskOf(p)==='bad');
+  const kpi = (i,icon,bg,fg,l,v,fmt,sub,subc,extra='') => `<div class="card kpi" style="--i:${i}"><div class="khead"><span class="ic" style="background:${bg};color:${fg}">${ico(icon)}</span>${extra}</div><div class="v num" data-count="${v}" data-fmt="${fmt}">0</div><div class="l">${l}</div><div class="d" style="color:${subc}">${sub}</div></div>`;
+  // alertas
+  const alerts = [];
+  PATIENTS.forEach(p=>p.docs.forEach(d=>{ const s = docStatus(d.v); if(d.v && s.k!=='ok') alerts.push({k:s.k, d:s.d, pid:p.id, t:d.t, s:s.l}) }));
+  alerts.sort((a,b)=>a.d-b.d);
+  const top = alerts.slice(0,5);
+  const pr6 = proById('pr6'), m6 = docStatus(pr6.matV);
+  const heat = [];
+  ROOMS.forEach(r => HOURS.forEach(h => { const n = TURNOS.filter(t=>t.room===r && t.hour===h && (S.heat==='sem' || t.day===TODAY_IDX)).length; heat.push({r,h,v: S.heat==='sem' ? n/5 : n}) }));
+  const free = heat.filter(c=>c.v===0).length * (S.heat==='sem'?5:1);
+  const orig = ORIGENES.map(o => [o, PATIENTS.filter(p=>p.origen===o).length]);
+  const maxO = Math.max(...orig.map(x=>x[1]));
+
+  $('#v-tablero').innerHTML = `
+  <div class="vhead stg">
+    <div><div class="eyebrow">${ico('monitoring')} Gestión clínica y operativa</div><h1>Tablero de dirección</h1><p>Semana del 19 al 23 de octubre. Muestra de ${PATIENTS.length} pacientes y ${PROS.length} profesionales, con datos ficticios.</p></div>
+    <div class="row"><button class="btn" data-act="export">${ico('download')}Exportar informe</button><button class="btn pri" data-act="admision">${ico('person_add')}Nueva admisión</button></div>
+  </div>
+  <div class="kpis stg">
+    ${kpi(0,'event_available','var(--primary-soft)','var(--primary-deep)','Sesiones de la semana',ses,'int',ico('trending_up')+'6% vs. semana anterior','var(--ok)')}
+    ${kpi(1,'meeting_room','var(--a-psico-bg)','var(--a-psico)','Ocupación de consultorios',occ,'pct',`${free} horas libres para alquilar`,'var(--muted)')}
+    ${kpi(2,'payments','var(--mustard-soft)','var(--mustard)','Facturación estimada del mes',fact,'mill',ico('trending_up')+'9% vs. septiembre','var(--ok)')}
+    ${kpi(3,'account_balance_wallet','var(--accent-soft)','var(--accent-deep)','Copagos vencidos',deuda,'mill',`${PATIENTS.filter(p=>p.pay.some(x=>x.st==='Vencido')).length} familias con deuda`,'var(--accent-deep)')}
+    ${kpi(4,'crisis_alert','var(--bad-soft)','var(--bad)','Pacientes en riesgo de abandono',risky.length,'int','Ausencias, deuda u objetivos en baja','var(--bad)','<span class="dot bad pulse" style="margin-top:6px"></span>')}
+  </div>
+  <div class="grid g-2 stg" style="margin-top:16px">
+    <div class="card" style="--i:5">
+      <div class="chead"><div><h2>Ocupación por consultorio y hora</h2><p>${S.heat==='sem'?'Promedio de lunes a viernes':'Miércoles 21, hoy'}. Pasá el mouse para ver el detalle.</p></div>
+        <div class="seg" role="group" aria-label="Período"><button data-act="heat" data-k="sem" aria-pressed="${S.heat==='sem'}">Semana</button><button data-act="heat" data-k="hoy" aria-pressed="${S.heat==='hoy'}">Hoy</button></div></div>
+      <div class="scrollx"><div class="heat"><div></div>${HOURS.map(h=>`<div class="hh">${h}</div>`).join('')}
+        ${ROOMS.map(r=>`<div class="rr">${ico('door_front')}Cons. ${r}</div>`+heat.filter(c=>c.r===r).map((c,i)=>{ const pct = Math.round(Math.min(1,c.v)*100); return `<div class="c" style="--i:${r*11+i};background:${pct?`color-mix(in oklab, var(--primary) ${Math.max(14,pct)}%, var(--surface-2))`:'var(--surface-2)'}" title="Consultorio ${r}, ${c.h}:00 · ${pct}% ocupado"></div>`}).join('')).join('')}
+      </div></div>
+      <div class="legend">Libre <i style="background:var(--surface-2)"></i><i style="background:color-mix(in oklab, var(--primary) 30%, var(--surface-2))"></i><i style="background:color-mix(in oklab, var(--primary) 65%, var(--surface-2))"></i><i style="background:var(--primary)"></i> Lleno <span style="margin-left:auto">${ico('lightbulb')} Las mañanas tienen más lugar para admisiones y alquiler.</span></div>
+    </div>
+    <div class="card" style="--i:6">
+      <div class="chead"><div><h2>Para resolver esta semana</h2><p>Vencimientos que frenan el cobro a las obras sociales</p></div><span class="chip acc">${alerts.length} alertas</span></div>
+      <div>${top.map(a=>{ const p=patById(a.pid), key=a.pid+a.t, done=S.alertsDone[key]; return `<div class="li"><span class="ic-sq ${a.k}">${ico(a.k==='bad'?'error':'schedule')}</span><div class="grow"><b>${a.t.replace(/ 2026$/,'')}</b><small>${p.n} · ${a.s}</small></div><button class="btn sm ${done?'done':''}" data-act="alert" data-key="${key}" ${done?'disabled':''}>${done?ico('check')+'Avisado':'Avisar'}</button></div>`}).join('')}
+        <div class="li"><span class="ic-sq ${m6.k}">${ico('badge')}</span><div class="grow"><b>Matrícula profesional</b><small>${pr6.n} · ${m6.l}</small></div><button class="btn sm ${S.alertsDone.mat?'done':''}" data-act="alert" data-key="mat" ${S.alertsDone.mat?'disabled':''}>${S.alertsDone.mat?ico('check')+'Avisado':'Recordar'}</button></div>
+        <div class="li"><span class="ic-sq neu">${ico('draw')}</span><div class="grow"><b>Firmas de septiembre</b><small>${pendCount()} documentos pendientes · cierra el 5 de noviembre</small></div><button class="btn sm" data-go="obras">Ver</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="grid g-2e stg" style="margin-top:16px">
+    <div class="card" style="--i:7"><div class="chead"><div><h2>De dónde llegan los pacientes</h2><p>Origen de los ${PATIENTS.length} pacientes de la muestra</p></div></div>
+      <div class="bars">${orig.map(([o,n])=>`<div class="b"><span>${o}</span><div class="track ${o==='Derivación interna'?'bad':''}"><i data-w="${n/maxO*100}"></i></div><span class="num">${n}</span></div>`).join('')}</div>
+      <p class="muted" style="font-size:12.5px;margin-top:14px">${ico('info')} La derivación interna entre áreas es baja: es la venta cruzada más fácil de mejorar.</p></div>
+    <div class="card" style="--i:8"><div class="chead"><div><h2>Pacientes en riesgo</h2><p>El sistema los marca solo; nadie tiene que cargarlo</p></div><span class="chip bad">${risky.length}</span></div>
+      ${risky.slice(0,5).map(p=>`<div class="li"><span class="av pat">${p.short}</span><div class="grow"><b>${p.n}</b><small>${riskReasons(p)}</small></div><button class="btn sm ghost" data-act="open-leg" data-pid="${p.id}">Legajo</button><button class="btn sm ${S.called[p.id]?'done':''}" data-act="call" data-pid="${p.id}" ${S.called[p.id]?'disabled':''}>${S.called[p.id]?ico('check')+'Tarea creada':'Llamar'}</button></div>`).join('')}
+    </div>
+  </div>`;
+  countUp($('#v-tablero')); fill($('#v-tablero'));
+};
+A.heat = b => { S.heat = b.dataset.k; R.tablero() };
+A.alert = b => { S.alertsDone[b.dataset.key]=1; b.className='btn sm done'; b.disabled=true; b.innerHTML=ico('check')+'Avisado'; toast('Aviso enviado por WhatsApp y registrado en el legajo') };
+A.call = b => { S.called[b.dataset.pid]=1; b.className='btn sm done'; b.disabled=true; b.innerHTML=ico('check')+'Tarea creada'; toast('Tarea para Recepción: llamar a la '+patById(b.dataset.pid).tutor.toLowerCase(),'task_alt') };
+A['open-leg'] = b => { S.legPid=b.dataset.pid; S.legTab='evo'; go('legajo') };
+A.export = () => toast('Informe de octubre generado en PDF','description');
+A.admision = () => drawer('Nueva admisión', `
+  <p class="muted">La familia entra a la lista de espera y Recepción le asigna turno desde la agenda.</p>
+  <label class="eyebrow" for="ad-n">Nombre del paciente</label><input class="inp" id="ad-n" value="Paciente ${String(73+WAITLIST.length+ (S.admCount||0)).padStart(2,'0')}">
+  <label class="eyebrow" for="ad-a">Área</label><select class="inp" id="ad-a">${Object.keys(AREAS).map(a=>`<option value="${a}">${AREAS[a].n}</option>`).join('')}</select>
+  <label class="eyebrow" for="ad-o">Obra social</label><select class="inp" id="ad-o">${Object.keys(OBRAS).map(o=>`<option>${o}</option>`).join('')}</select>
+  <label class="eyebrow" for="ad-r">¿Cómo nos conoció?</label><select class="inp" id="ad-r">${ORIGENES.map(o=>`<option>${o}</option>`).join('')}</select>`,
+  `<button class="btn" data-act="close-drawer">Cancelar</button><button class="btn pri" style="flex:1" data-act="admision-ok">${ico('person_add')}Agregar a lista de espera</button>`);
+A['admision-ok'] = () => { S.admCount=(S.admCount||0)+1; WAITLIST.push({id:'w'+Date.now(), n:$('#ad-n').value||'Paciente nuevo', area:$('#ad-a').value, os:$('#ad-o').value, dias:0, pri:'Nueva'}); closeDrawer(); toast('Agregado a la lista de espera de la agenda','person_add') };
+
+/* ===== Consultorios y agenda ===== */
+R.agenda = function(){
+  const day = S.agDay, list = TURNOS.filter(t=>t.day===day);
+  const slots = HOURS.length*ROOMS.length, freeN = slots - list.length;
+  const sel = S.selT ? TURNOS.find(t=>t.id===S.selT) : null;
+  $('#v-agenda').innerHTML = `
+  <div class="vhead stg">
+    <div><div class="eyebrow">${ico('calendar_month')} Programación diaria</div><h1>Consultorios y agenda</h1><p>Turnos de 45 minutos en 7 consultorios. Marcá asistencia, asigná familias en espera y mirá los huecos libres.</p></div>
+    <div class="row"><span class="chip neu num">${list.length} turnos · ${freeN} libres</span><button class="btn pri" data-act="newturn">${ico('add')}Nuevo turno</button></div>
+  </div>
+  <div class="ag-tools stg"><div class="seg" role="group" aria-label="Día">${DAYS.map(d=>`<button data-act="agday" data-d="${d.k}" aria-pressed="${d.k===day}">${d.s}${d.k===TODAY_IDX?' · hoy':''}</button>`).join('')}</div>
+    <div class="row">${Object.keys(AREAS).map(areaTag).join('')}</div></div>
+  <div class="ag-wrap">
+    <div class="card flat stg" style="padding:0;overflow:hidden"><div class="scrollx ${S.armed?'armed':''}" id="calbox" style="max-height:calc(100vh - 250px);min-height:420px;overflow:auto">
+      <div class="cal"><div class="hd"></div>${ROOMS.map(r=>`<div class="hd">Consultorio ${r}<small>${PROS.filter(p=>p.room===r).map(p=>AREAS[p.area].s).join(' · ')||'Libre uso'}</small></div>`).join('')}
+      ${HOURS.map(h=>`<div class="hr num">${h}:00</div>`+ROOMS.map(r=>{ const t=list.find(x=>x.room===r&&x.hour===h);
+        if(!t) return `<div class="sl"><button class="free" data-act="free" data-r="${r}" data-h="${h}">${ico('add')}${S.armed?'Asignar':'Libre'}</button></div>`;
+        const pro=proById(t.pro);
+        return `<div class="sl"><button class="tn ${t.st==='aus'?'aus':''} ${S.selT===t.id?'sel':''} ${t.isNew?'new':''}" data-act="turno" data-t="${t.id}" style="background:var(--a-${t.area}-bg);color:var(--a-${t.area})"><b>${turnoName(t)}</b><small>${AREAS[t.area].s} · ${pro.n}</small>${t.st!=='pend'?`<span class="st ${t.st}">${ico(t.st==='pres'?'check':'close')}</span>`:''}</button></div>`}).join('')).join('')}
+      </div></div></div>
+    <div class="grid stg" style="gap:14px">
+      <div class="card" id="tdet">${sel ? turnoDetail(sel) : `<div class="eyebrow">Turno seleccionado</div><p class="muted" style="margin-top:8px">Tocá un turno para ver el detalle y marcar asistencia.</p>`}</div>
+      <div class="card"><div class="chead" style="margin-bottom:10px"><div><h2>Lista de espera</h2><p>${S.armed?'Ahora tocá un hueco de la grilla':'Tocá “Asignar” y después un hueco libre'}</p></div><span class="chip acc">${WAITLIST.length}</span></div>
+        <div class="wl">${WAITLIST.length?WAITLIST.map(w=>`<div class="w ${S.armed===w.id?'on':''}" id="wl-${w.id}"><span class="av pat">${(w.n.match(/\d+/)||['N'])[0]}</span><div class="grow"><b>${w.n}</b><small>${AREAS[w.area].s} · ${w.os} · ${w.dias?'espera '+w.dias+' días':'recién ingresada'}</small></div><button class="btn sm ${S.armed===w.id?'acc':''}" data-act="arm" data-w="${w.id}">${S.armed===w.id?'Cancelar':'Asignar'}</button></div>`).join(''):'<div class="empty">No hay familias en espera.</div>'}</div></div>
+    </div>
+  </div>`;
+  TURNOS.forEach(t=>delete t.isNew);
+};
+function turnoDetail(t){
+  const pro = proById(t.pro), p = t.pid ? patById(t.pid) : null;
+  return `<div class="eyebrow">Turno seleccionado</div>
+  <div class="row" style="margin-top:10px;flex-wrap:nowrap"><span class="av pat">${p?p.short:'N'}</span><div style="min-width:0"><h3>${turnoName(t)}</h3><small class="muted">${DAYS[t.day].l} · ${t.hour}:00 a ${t.hour}:45 · Consultorio ${t.room}</small></div></div>
+  <div class="row" style="margin-top:12px">${areaTag(t.area)}<span class="chip neu">${pro.n}</span>${p?`<span class="chip neu">${p.os}</span>`:''}</div>
+  <div class="eyebrow" style="margin-top:16px">Asistencia</div>
+  <div class="row" style="margin-top:8px"><button class="btn sm ${t.st==='pres'?'pri':''}" data-act="st" data-st="pres" data-t="${t.id}">${ico('check_circle')}Presente</button><button class="btn sm ${t.st==='aus'?'acc':''}" data-act="st" data-st="aus" data-t="${t.id}">${ico('cancel')}Ausente</button>${t.st!=='pend'?`<button class="btn sm ghost" data-act="st" data-st="pend" data-t="${t.id}">Deshacer</button>`:''}</div>
+  <p class="muted" style="font-size:12px;margin-top:12px">${ico('info')} La asistencia arma sola la planilla mensual de la obra social.</p>
+  ${p?`<div class="row" style="margin-top:14px"><button class="btn sm ghost" data-act="open-leg" data-pid="${p.id}">${ico('folder_shared')}Ver legajo</button>${t.pro==='pr1'?`<button class="btn sm ghost" data-act="go-nota" data-t="${t.id}">${ico('edit_note')}Cargar nota</button>`:''}</div>`:''}`;
+}
+A.agday = b => { S.agDay=+b.dataset.d; S.selT=null; R.agenda() };
+A.turno = b => { S.selT=b.dataset.t; $$('.tn.sel').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); const box=$('#tdet'); box.innerHTML=turnoDetail(TURNOS.find(t=>t.id===S.selT)); box.classList.remove('flash'); void box.offsetWidth; box.classList.add('flash') };
+A.st = b => { const t=TURNOS.find(x=>x.id===b.dataset.t); t.st=b.dataset.st; R.agenda();
+  toast(t.st==='pres'?'Presente. Ya suma a la planilla de la obra social.':t.st==='aus'?'Ausente. Se avisa a la familia y cuenta para el semáforo de riesgo.':'Asistencia en pendiente', t.st==='aus'?'notifications':'check_circle') };
+A.arm = b => { S.armed = S.armed===b.dataset.w ? null : b.dataset.w; R.agenda(); if(S.armed) toast('Tocá un hueco libre de la grilla para darle el turno','touch_app') };
+A.newturn = () => { if(!WAITLIST.length){ toast('No hay familias en la lista de espera','info'); return } S.armed=WAITLIST[0].id; R.agenda(); toast('Elegí un hueco libre para '+WAITLIST[0].n,'touch_app') };
+A.free = b => {
+  if(!S.armed){ toast('Primero tocá “Asignar” en una familia de la lista de espera','info'); const w=$('.wl'); w&&w.classList.add('shake'); setTimeout(()=>w&&w.classList.remove('shake'),450); return }
+  const w = WAITLIST.find(x=>x.id===S.armed), r=+b.dataset.r, h=+b.dataset.h;
+  const pro = PROS.find(p=>p.area===w.area) || PROS[0];
+  const el = $('#wl-'+w.id); if(el) el.classList.add('out');
+  setTimeout(()=>{ WAITLIST.splice(WAITLIST.indexOf(w),1); const t={id:'t'+TURNOS.length+'n', pid:null, wl:w.n, pro:pro.id, area:w.area, day:S.agDay, hour:h, room:r, st:'pend', isNew:true}; TURNOS.push(t); S.armed=null; S.selT=t.id; R.agenda(); toast(`Turno dado a ${w.n}: consultorio ${r}, ${h}:00. Aviso enviado por WhatsApp.`,'event_available') }, reduce?0:260);
+};
+A['go-nota'] = b => { const t=TURNOS.find(x=>x.id===b.dataset.t); S.nota=null; notaInit(t.pid); go('nota') };
+
+/* ===== Legajo ===== */
+R.legajo = function(){
+  if(!S.legPid) S.legPid = PATIENTS.find(p=>riskOf(p)==='bad').id;
+  $('#v-legajo').innerHTML = `
+  <div class="vhead stg"><div><div class="eyebrow">${ico('folder_shared')} Historia y seguimiento</div><h1>Pacientes y legajos</h1><p>Legajo único por paciente: evolución, documentos, equipo, pagos y comunicación interna.</p></div></div>
+  <div class="leg">
+    <div class="card stg" style="padding:16px">
+      <label class="sr" for="lq">Buscar paciente</label><div class="gsearch" style="max-width:none">${ico('search')}<input id="lq" placeholder="Buscar paciente u obra social" value="${esc(S.legQ)}" autocomplete="off"></div>
+      <div class="seg" role="group" aria-label="Filtro" style="margin-top:10px;width:100%"><button style="flex:1" data-act="legf" data-f="all" aria-pressed="${S.legF==='all'}">Todos (${PATIENTS.length})</button><button style="flex:1" data-act="legf" data-f="risk" aria-pressed="${S.legF==='risk'}">Con alerta (${PATIENTS.filter(p=>riskOf(p)!=='ok').length})</button></div>
+      <div class="plist" id="plist">${plistHTML()}</div>
+    </div>
+    <div class="card stg" id="pview"></div>
+  </div>`;
+  renderPatient(true);
+  const lq = $('#lq'); lq.addEventListener('input', () => { S.legQ = lq.value; $('#plist').innerHTML = plistHTML() });
+};
+function plistHTML(){
+  const q = S.legQ.toLowerCase();
+  const list = PATIENTS.filter(p => (S.legF==='all' || riskOf(p)!=='ok') && (!q || (p.n+' '+p.os).toLowerCase().includes(q)));
+  return list.map(p=>`<button data-act="pick" data-pid="${p.id}" aria-current="${p.id===S.legPid}"><span class="av pat">${p.short}</span><span class="grow"><b>${p.n}</b><small>${p.os} · ${p.areas.map(a=>AREAS[a].s).join(' + ')}</small></span><span class="dot ${riskOf(p)}"></span></button>`).join('') || '<div class="empty">Sin resultados</div>';
+}
+const riskTxt = {ok:'Avanza', warn:'En meseta', bad:'Riesgo alto'};
+function spark(s){
+  const W=140,H=36,x=i=>4+i*(W-8)/(s.length-1),y=v=>H/2-(v/2)*(H/2-5); const last=s[s.length-1], k=last>0?'ok':last<0?'bad':'warn';
+  const d = s.map((v,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1)).join(' ');
+  return `<svg class="spark" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true"><line x1="4" x2="${W-4}" y1="${H/2}" y2="${H/2}" stroke="var(--line-2)" stroke-dasharray="3 4"/><path class="ln" d="${d}" fill="none" stroke="var(--${k})" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><rect x="${x(s.length-1)-4}" y="${y(last)-4}" width="8" height="8" rx="2" fill="var(--${k})"/></svg>`;
+}
+function renderPatient(first){
+  const p = patById(S.legPid), rk = riskOf(p);
+  const tabs = [['evo','Evolución','monitoring'],['docs','Documentos','description'],['equipo','Equipo','groups'],['pagos','Pagos','payments'],['chat','Comunicación interna','forum']];
+  let body = '';
+  if(S.legTab==='evo') body = `
+    <div class="chead"><div><h3>Objetivos del plan de tratamiento</h3><p>Escala GAS de −2 a +2, de mayo a octubre</p></div></div>
+    <div>${p.objs.map(o=>{ const v=o.s[5]; return `<div class="obj"><div class="t">${areaTag(o.a)}<span>${o.t}</span></div>${spark(o.s)}<div class="gas num" style="color:var(--${v>0?'ok':v<0?'bad':'warn'})">${v>0?'+':''}${v}</div></div>`}).join('')}</div>
+    <div class="chead" style="margin-top:22px"><div><h3>Semáforo actitudinal</h3><p>Últimas 8 sesiones, cargado por los profesionales</p></div></div>
+    ${['Participación','Regulación emocional','Compromiso familiar'].map((l,r)=>`<div class="attrow"><span class="muted">${l}</span>${p.att[r].slice(-8).map((k,i)=>`<i class="${k}" style="--i:${i+r*8}" title="${k==='ok'?'Bien':k==='warn'?'Regular':'Difícil'}"></i>`).join('')}</div>`).join('')}
+    <div class="chead" style="margin-top:22px"><div><h3>Evoluciones recientes</h3></div></div>
+    <div class="tl">${p.notes.slice().reverse().slice(0,4).map((n,i)=>`<div class="note ${n.fresh&&i===0?'new':''}" style="--c:var(--a-${n.area})"><div class="nh"><span><b style="color:var(--ink)">${AREAS[n.area].n}</b> · ${n.who}</span><span>${n.d}</span></div>${esc(n.t)}</div>`).join('')}</div>`;
+  if(S.legTab==='docs') body = p.docs.map((d,i)=>{ const s=docStatus(d.v), req=p.req[i]; return `<div class="li"><span class="ic-sq ${s.k}">${ico(s.k==='ok'?'verified':s.k==='warn'?'schedule':'error')}</span><div class="grow"><b>${d.t}</b><small>${s.l}</small></div>${s.k==='ok'?`<button class="btn sm ghost" data-act="pdf">${ico('visibility')}Ver</button>`:`<button class="btn sm ${req?'done':'pri'}" data-act="renew" data-i="${i}" ${req?'disabled':''}>${req?ico('check')+'Pedida':'Pedir renovación'}</button>`}</div>`}).join('')
+    + `<div class="li"><span class="ic-sq ${p.sept.inf?'ok':'warn'}">${ico('summarize')}</span><div class="grow"><b>Informe mensual de septiembre</b><small>${p.sept.inf?'Aprobado y firmado':'Falta la firma del profesional'}</small></div><button class="btn sm ghost" data-act="pdf">${ico('visibility')}Ver</button></div>
+       <div class="li"><span class="ic-sq ${p.sept.fam?'ok':'warn'}">${ico('draw')}</span><div class="grow"><b>Planilla de asistencia de septiembre</b><small>${p.sept.fam?'Firmada por la familia':'Falta la firma de la familia'}</small></div></div>`;
+  if(S.legTab==='equipo') body = p.areas.map(a=>{ const pr=proById(p.pros[a]); return `<div class="li"><span class="av pro">${pr.n.replace('Profesional ','P')}</span><div class="grow"><b>${pr.n}</b><small>${AREAS[a].n} · ${pr.mat}</small></div>${areaTag(a)}<span class="chip neu">${p.sesWeek[a]}× semana</span></div>`}).join('')
+    + `<div class="li"><span class="av">${ico('family_restroom')}</span><div class="grow"><b>${p.tutor}</b><small>Usuario del portal de familias</small></div><button class="btn sm ghost" data-act="open-fam" data-pid="${p.id}">Ver su portal</button></div>`;
+  if(S.legTab==='pagos') body = `<p class="muted" style="margin-bottom:8px">Copago por sesión: <b style="color:var(--ink)">${money(p.copago)}</b> (${p.os==='Particular'?'paciente particular':'diferencia sobre lo que cubre '+p.os})</p>`
+    + p.pay.map((x,i)=>`<div class="li"><span class="ic-sq ${x.st==='Pagado'?'ok':x.st==='Vencido'?'bad':'warn'}">${ico(x.st==='Pagado'?'paid':'receipt_long')}</span><div class="grow"><b>Copago de ${x.m.toLowerCase()}</b><small class="num">${money(p.copago*4)} · 4 sesiones</small></div><span class="chip ${x.st==='Pagado'?'ok':x.st==='Vencido'?'bad':'warn'}">${x.st}</span>${x.st!=='Pagado'?`<button class="btn sm" data-act="paylink" data-i="${i}">${x.link?ico('check')+'Enviado':'Enviar link de pago'}</button>`:''}</div>`).join('');
+  if(S.legTab==='chat') body = `<div class="chat" id="chat">${p.chat.length?p.chat.map(m=>`<div class="msg ${m.me?'me':''}"><small><span>${m.w}</span><span>${m.at}</span></small>${esc(m.t).replace(/@(Profesional \d|Recepción)/g,'<span class="at">@$1</span>')}</div>`).join(''):'<div class="empty">Todavía no hay mensajes del equipo.</div>'}</div>
+    <form class="compose" data-form="chat"><label class="sr" for="chat-in">Mensaje</label><input class="inp" id="chat-in" placeholder="Escribí al equipo… usá @Profesional 2 para mencionar" autocomplete="off"><button class="btn pri">${ico('send')}Enviar</button></form>
+    <p class="muted" style="font-size:12px;margin-top:8px">${ico('lock')} Solo lo ven los profesionales que atienden a ${p.n}. La familia no ve este hilo.</p>`;
+  $('#pview').innerHTML = `
+    <div class="phead"><span class="av lg pat">${p.short}</span><div class="grow"><h2 style="font-size:24px">${p.n}</h2><p>${p.age} años · ${p.os} · ${p.tutor}</p><div class="row" style="margin-top:8px">${p.areas.map(areaTag).join('')}</div></div>
+      <div style="text-align:right"><div class="eyebrow">Riesgo de abandono</div><span class="chip ${rk}" style="margin-top:6px;height:28px;font-size:12.5px"><span class="dot ${rk} ${rk==='bad'?'pulse':''}"></span>${riskTxt[rk]}</span><div class="row" style="margin-top:10px;justify-content:flex-end"><button class="btn sm" data-act="pdf">${ico('picture_as_pdf')}Historia clínica</button></div></div></div>
+    ${rk!=='ok'?`<div class="li" style="margin-top:14px;padding:10px 12px;border:0;border-radius:var(--r2);background:var(--${rk}-soft)"><span class="ms" style="color:var(--${rk})">warning</span><div class="grow"><small style="color:var(--ink)">${riskReasons(p)}</small></div></div>`:''}
+    <div class="tabs" role="tablist">${tabs.map(([k,l,ic])=>`<button role="tab" data-act="ltab" data-k="${k}" aria-selected="${k===S.legTab}">${ico(ic)}${l}${k==='chat'&&p.chat.length?` <span class="chip neu" style="height:20px">${p.chat.length}</span>`:''}</button>`).join('')}<span class="navline"></span></div>
+    <div class="tabp">${body}</div>`;
+  requestAnimationFrame(()=>moveLine($('.tabs')));
+  const c = $('#chat'); if(c) c.scrollTop = c.scrollHeight;
+}
+A.legf = b => { S.legF=b.dataset.f; R.legajo() };
+A.pick = b => { S.legPid=b.dataset.pid; $$('#plist [aria-current]').forEach(x=>x.setAttribute('aria-current', x===b)); renderPatient() };
+A.ltab = b => { S.legTab=b.dataset.k; renderPatient() };
+A.renew = b => { const p=patById(S.legPid); p.req[b.dataset.i]=1; renderPatient(); toast('Pedido enviado a la '+p.tutor.toLowerCase()+' por WhatsApp','send') };
+A.pdf = () => toast('PDF generado','picture_as_pdf');
+A.paylink = b => { const p=patById(S.legPid); p.pay[b.dataset.i].link=1; renderPatient(); toast('Link de pago enviado por WhatsApp','send') };
+A['open-fam'] = b => { S.famPid=b.dataset.pid; S.fam={conf:false,res:null,showRes:false,paid:false,sheet:null,drawn:false}; go('familia') };
+function sendChat(){
+  const i=$('#chat-in'); const v=i.value.trim(); if(!v){ i.classList.add('shake'); setTimeout(()=>i.classList.remove('shake'),450); return }
+  patById(S.legPid).chat.push({w:'Profesional 1', t:v, at:'Ahora', me:true}); renderPatient(); $('#chat-in').focus(); toast('Mensaje enviado al equipo','forum');
+}
+
+/* ===== Presentación a obras sociales ===== */
+const OSN = ['IOMA','OSDE','Swiss Medical','OSECAC'];
+function osStats(o){
+  const ps = PATIENTS.filter(p=>p.os===o), ready = ps.filter(isReady);
+  const monto = ps.reduce((s,p)=>s+p.areas.reduce((a,ar)=>a+p.sesWeek[ar],0)*4*OBRAS[o].cob,0);
+  const apto = ready.reduce((s,p)=>s+p.areas.reduce((a,ar)=>a+p.sesWeek[ar],0)*4*OBRAS[o].cob,0);
+  return {ps, ready:ready.length, pct: ps.length ? Math.round(ready.length/ps.length*100) : 0, monto, apto};
+}
+function osTotals(){
+  let n=0,r=0,m=0,a=0; OSN.forEach(o=>{ const s=osStats(o); n+=s.ps.length; r+=s.ready; m+=s.monto; a+=s.apto });
+  const ps = PATIENTS.filter(p=>p.os!=='Particular');
+  return {n, r, m, a, pct:Math.round(r/n*100), fam:ps.filter(p=>!p.sept.fam).length, presc:ps.filter(p=>!prescOk(p)).length, pro:ps.filter(p=>!p.sept.pro).length};
+}
+R.obras = function(){
+  const T = osTotals();
+  const kpi = (i,icon,bg,fg,l,v,fmt,sub,subc,small='') => `<div class="card kpi" style="--i:${i}"><div class="khead"><span class="ic" style="background:${bg};color:${fg}">${ico(icon)}</span></div><div class="v num"><span data-count="${v}" data-fmt="${fmt}">0</span>${small}</div><div class="l">${l}</div><div class="d" style="color:${subc}">${sub}</div></div>`;
+  $('#v-obras').innerHTML = `
+  ${S.generated?`<div class="banner">${checkSVG(28)}<span>Paquete de septiembre generado: ${S.generated} expedientes en ${OSN.length} carpetas, una por obra social, con carátula y resumen de facturación.</span></div>`:''}
+  <div class="vhead stg">
+    <div><div class="row" style="margin-bottom:10px"><span class="alertpill"><span class="dot bad pulse"></span>Cierre del 5 de noviembre · faltan 15 días</span></div><h1>Presentación a obras sociales</h1><p>Septiembre 2026. Cada expediente necesita planilla, firma de la familia, firma del profesional, prescripción vigente e informe.</p></div>
+    <div class="row"><button class="btn soft-acc" data-act="mass">${ico('chat')}Recordatorio masivo a familias</button><button class="btn pri" data-act="to-bar">${ico('inventory_2')}Generar paquete del mes <span class="pct num">${T.pct}%</span></button></div>
+  </div>
+  <div class="kpis stg" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+    ${kpi(0,'folder_check','var(--primary-soft)','var(--primary-deep)','Expedientes completos',T.r,'int',`<div class="track" style="width:100%"><i data-w="${T.pct}"></i></div>`,'var(--ok)',`<small>/ ${T.n}</small>`)}
+    ${kpi(1,'payments','var(--mustard-soft)','var(--mustard)','Monto a facturar en septiembre',T.m,'mill',`${mill(T.a)} ya aptos para emitir`,'var(--ok)')}
+    ${kpi(2,'draw','var(--accent-soft)','var(--accent-deep)','Planillas sin firma de la familia',T.fam,'int',`${Object.keys(S.reminded).length} avisos reenviados hoy`,'var(--accent-deep)')}
+    ${kpi(3,'medication','var(--bad-soft)','var(--bad)','Prescripciones vencidas',T.presc,'int','Hay que pedirlas al médico','var(--bad)')}
+  </div>
+  <div class="chead" style="margin:28px 0 12px"><div><h2>Obras sociales y prepagas</h2><p>Elegí una para ver sus expedientes</p></div></div>
+  <div class="oscards stg">
+    ${OSN.map((o,i)=>{ const s=osStats(o), k=s.pct>=75?'':s.pct>=45?'warn':'bad'; return `<div class="oscard" role="button" tabindex="0" style="--i:${i}" data-act="os" data-os="${o}" aria-pressed="${o===S.osSel}">
+      <div class="h"><div><h3>${o}</h3><small class="muted">${OBRAS[o].sub}</small></div><span class="chip ${k||'ok'} num">${s.pct}%</span></div>
+      <div class="n"><span>${s.ps.length} pacientes</span><b class="num">${mill(s.monto)}</b></div>
+      <div class="track ${k}"><i data-w="${s.pct}"></i></div><small class="muted num">${s.ready} de ${s.ps.length} expedientes completos</small>
+      ${S.packed[o]?`<span class="chip ok" style="justify-content:center;height:30px">${ico('check')}Paquete generado</span>`:`<button class="btn sm ${o===S.osSel?'pri':''}" data-act="pack" data-os="${o}">${ico('inventory_2')}Generar paquete ${o}</button>`}</div>`}).join('')}
+    <div class="oscard" style="--i:4;cursor:default"><div class="h"><div><h3>Particulares</h3><small class="muted">${OBRAS.Particular.sub}</small></div><span class="chip neu">${PATIENTS.filter(p=>p.os==='Particular').length}</span></div>
+      <div class="n"><span>Se cobra a la familia</span><b class="num">${mill(PATIENTS.filter(p=>p.os==='Particular').length*ARANCEL*4)}</b></div><div class="track"><i data-w="70"></i></div><small class="muted">No se presentan a obra social</small>
+      <button class="btn sm ${S.compr?'done':''}" data-act="compr" ${S.compr?'disabled':''}>${S.compr?ico('check')+'Comprobantes enviados':ico('receipt_long')+'Generar comprobantes'}</button></div>
+  </div>
+  <div class="card fbar">
+    <div class="gsearch">${ico('search')}<label class="sr" for="osq">Buscar expediente</label><input id="osq" placeholder="Buscar paciente" value="${esc(S.osQ)}" autocomplete="off"></div>
+    <div class="fchips" id="osf"></div>
+    <label class="sr" for="osd">Disciplina</label><select class="inp" id="osd" style="width:auto;margin-left:auto"><option value="">Todas las disciplinas</option>${Object.keys(AREAS).map(a=>`<option value="${a}" ${S.osDisc===a?'selected':''}>${AREAS[a].n}</option>`).join('')}</select>
+  </div>
+  <div class="card flat" style="padding:0;margin-top:12px;overflow:hidden"><div class="scrollx"><table class="ostable"><thead><tr><th><span class="sr">Listo</span></th><th>Paciente</th><th>Sesiones del mes</th><th>Planilla</th><th>Firma de la familia</th><th>Firma del profesional</th><th>Prescripción</th><th>Informe</th></tr></thead><tbody id="ostb"></tbody></table></div><div class="tfoot" id="osfoot"></div></div>
+  <div class="abar" id="abar"></div>`;
+  osTable(); osBar(); countUp($('#v-obras')); fill($('#v-obras'));
+  const q=$('#osq'); q.addEventListener('input',()=>{ S.osQ=q.value; osTable() });
+  $('#osd').addEventListener('change',e=>{ S.osDisc=e.target.value; osTable() });
+};
+function osTable(){
+  const all = PATIENTS.filter(p=>p.os===S.osSel), q = S.osQ.toLowerCase();
+  const cnt = {all:all.length, ready:all.filter(isReady).length, act:all.filter(p=>!isReady(p)).length};
+  $('#osf').innerHTML = `<button data-act="osf" data-f="all" aria-pressed="${S.osF==='all'}">Todos (${cnt.all})</button><button data-act="osf" data-f="ready" aria-pressed="${S.osF==='ready'}">Listos (${cnt.ready})</button><button class="act" data-act="osf" data-f="act" aria-pressed="${S.osF==='act'}">Requieren acción (${cnt.act})</button>`;
+  const rows = all.filter(p => (S.osF==='all' || (S.osF==='ready'?isReady(p):!isReady(p))) && (!q || p.n.toLowerCase().includes(q)) && (!S.osDisc || p.areas.includes(S.osDisc)));
+  $('#ostb').innerHTML = rows.length ? rows.map((p,i)=>{
+    const ok = isReady(p), pres = p.docs.find(d=>d.t.startsWith('Prescripción')), ps = docStatus(pres.v), ses = p.areas.reduce((a,ar)=>a+p.sesWeek[ar],0)*4;
+    const pros = [...new Set(p.areas.map(a=>proById(p.pros[a]).n))];
+    return `<tr class="${S.flash&&S.flash.includes(p.id)?'flash':''}" style="animation:rise .4s var(--ease) backwards;animation-delay:${i*30}ms">
+      <td><input type="checkbox" class="chk" aria-label="${p.n} listo" ${ok?'checked':''} disabled></td>
+      <td><div class="pat"><span class="av pat">${p.short}</span><div class="cs"><b>${p.n}</b><small>${p.age} años · ${p.areas.map(a=>AREAS[a].s).join(' + ')}</small></div></div></td>
+      <td><div class="cs"><b class="num" style="font-size:15px">${ses}</b><small>${ses===4?'1 por semana':ses/4+' por semana'}</small></div></td>
+      <td><span class="chip ok">${ico('check')}Generada</span></td>
+      <td><div class="cs">${p.sept.fam?`<span class="chip ok">${ico('verified')}Firmada</span><small>${p.tutor}</small>`:`<span class="chip bad">Pendiente</span>${S.reminded[p.id]?'<small>Aviso reenviado</small>':`<button class="linkbtn" data-act="remind" data-pid="${p.id}">${ico('refresh')}Reiterar aviso</button>`}`}</div></td>
+      <td><div class="cs">${p.sept.pro?`<span class="chip ok">${ico('verified')}Firmada</span>`:`<span class="chip neu">En lote de firma</span>`}<small>${pros.join(' / ')}</small></div></td>
+      <td><div class="cs"><span class="chip ${ps.k==='bad'?'bad':ps.k==='warn'?'warn':'neu'}">${ps.k==='bad'?'Vencida':ps.k==='warn'?'Por vencer':'Vigente'}</span><small>${ps.l.replace(/^(Vigente hasta|Vence el|Vencido el) /,'')}</small></div></td>
+      <td><div class="cs">${p.sept.inf?`<span class="chip ok">${ico('check')}Aprobado</span><small>Escala GAS adjunta</small>`:`<span class="chip warn">Borrador</span><small>Falta firma</small>`}</div></td></tr>`}).join('')
+    : `<tr><td colspan="8"><div class="empty">No hay expedientes con este filtro.</div></td></tr>`;
+  $('#osfoot').innerHTML = `<span>${rows.length} de ${all.length} expedientes de ${S.osSel}</span><span>Datos ficticios de muestra</span>`;
+  S.flash = null;
+}
+function osBar(){
+  const T = osTotals();
+  $('#abar').innerHTML = `<div class="m"><span class="ic-sq ok" style="width:42px;height:42px">${ico('inventory_2')}</span><div><b class="num">${T.r} expedientes listos para presentar</b><small class="num">Total a facturar ${mill(T.a)} · ${T.n-T.r} quedan retenidos hasta completarse</small></div></div>
+    <label for="rev"><input type="checkbox" class="chk" id="rev" ${S.review?'checked':''} data-act="review">Revisé las carátulas y los retenidos</label>
+    <button class="btn pri lg" id="genbtn" data-act="gen" ${S.review&&!S.generated?'':'disabled'}>${S.generated?ico('check')+'Paquete generado':ico('inventory_2')+'Generar paquete y carátulas'}</button>`;
+}
+A.os = b => { if(b.tagName!=='DIV') return; S.osSel=b.dataset.os; S.osF='all'; $$('.oscard[data-os]').forEach(c=>{ c.setAttribute('aria-pressed', c===b); const btn=$('[data-act="pack"]',c); if(btn) btn.classList.toggle('pri', c===b) }); osTable() };
+A.osf = b => { S.osF=b.dataset.f; osTable() };
+A.pack = b => busyBtn(b,'Generando…',900,()=>{ S.packed[b.dataset.os]=1; R.obras(); toast('Paquete de '+b.dataset.os+' listo con los expedientes completos','inventory_2') });
+A.compr = b => busyBtn(b,'Generando…',800,()=>{ S.compr=1; R.obras(); toast('Comprobantes enviados a las familias por mail','receipt_long') });
+A.remind = b => { S.reminded[b.dataset.pid]=1; osTable(); toast('Aviso reenviado por WhatsApp con el link para firmar','send') };
+A.mass = () => { PATIENTS.filter(p=>!p.sept.fam).forEach(p=>S.reminded[p.id]=1); R.obras(); toast('Recordatorio enviado a '+osTotals().fam+' familias con planillas sin firmar','send') };
+A['to-bar'] = () => { $('#abar').scrollIntoView({behavior:reduce?'auto':'smooth', block:'end'}); const a=$('#abar'); a.classList.remove('flash'); void a.offsetWidth; a.classList.add('flash') };
+A.review = el => { S.review=el.checked; $('#genbtn').disabled=!S.review||!!S.generated };
+A.gen = b => busyBtn(b,'Generando carpetas…',1300,()=>{ S.generated=osTotals().r; OSN.forEach(o=>S.packed[o]=1); R.obras(); window.scrollTo({top:0,behavior:reduce?'auto':'smooth'}); toast('Paquete del mes generado','inventory_2') });
+
+/* ===== Equipo y liquidaciones ===== */
+R.equipo = function(){
+  const L = PROS.map(p=>({p, l:liquidacion(p), st:S.liq[p.id]||'Pendiente', m:docStatus(p.matV)}));
+  const tot = L.reduce((s,x)=>s+x.l.prof,0), horas = L.reduce((s,x)=>s+x.l.horas,0), centro = L.reduce((s,x)=>s+x.l.centro,0), maxS = Math.max(...L.map(x=>x.l.ses));
+  const rows = L.filter(x => S.eqF==='all' || (S.eqF==='pend' ? x.st!=='Liquidado' : x.st==='Liquidado'));
+  const kpi = (i,icon,bg,fg,l,v,fmt,sub) => `<div class="card kpi" style="--i:${i}"><div class="khead"><span class="ic" style="background:${bg};color:${fg}">${ico(icon)}</span></div><div class="v num" data-count="${v}" data-fmt="${fmt}">0</div><div class="l">${l}</div><div class="d muted">${sub}</div></div>`;
+  $('#v-equipo').innerHTML = `
+  <div class="vhead stg"><div><div class="eyebrow">${ico('groups')} Equipo</div><h1>Equipo y liquidaciones</h1><p>Septiembre 2026. Horas y sesiones salen de la agenda; el porcentaje depende del área.</p></div>
+    <div class="row"><button class="btn" data-act="export">${ico('download')}Exportar</button><button class="btn pri" data-act="liq-all">${ico('done_all')}Liquidar todos</button></div></div>
+  <div class="kpis stg" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+    ${kpi(0,'payments','var(--primary-soft)','var(--primary-deep)','Total a liquidar a profesionales',tot,'mill',`${L.filter(x=>x.st==='Liquidado').length} de ${PROS.length} liquidados`)}
+    ${kpi(1,'schedule','var(--a-psico-bg)','var(--a-psico)','Horas de atención en el mes',horas,'int',`${L.reduce((s,x)=>s+x.l.ses,0)} sesiones de 45 minutos`)}
+    ${kpi(2,'account_balance','var(--mustard-soft)','var(--mustard)','Margen del centro',centro,'mill','Después de liquidar a profesionales')}
+  </div>
+  <div class="row" style="margin:22px 0 12px;justify-content:space-between"><h2>Profesionales</h2><div class="seg" role="group" aria-label="Estado"><button data-act="eqf" data-f="all" aria-pressed="${S.eqF==='all'}">Todos</button><button data-act="eqf" data-f="pend" aria-pressed="${S.eqF==='pend'}">Pendientes</button><button data-act="eqf" data-f="done" aria-pressed="${S.eqF==='done'}">Liquidados</button></div></div>
+  <div class="card flat stg" style="padding:0;overflow:hidden"><div class="scrollx"><table class="eqtable"><thead><tr><th>Profesional</th><th>Matrícula</th><th>Sesiones</th><th>Horas</th><th>% del área</th><th>Adicional</th><th>A liquidar</th><th>Estado</th></tr></thead><tbody>
+    ${rows.map((x,i)=>`<tr data-act="liq-open" data-id="${x.p.id}" style="animation:rise .4s var(--ease) backwards;animation-delay:${i*35}ms">
+      <td><div class="pat"><span class="av pro">${x.p.n.replace('Profesional ','P')}</span><div class="cs"><b>${x.p.n}</b>${areaTag(x.p.area)}</div></div></td>
+      <td><div class="cs"><span>${x.p.mat}</span><span class="chip ${x.m.k==='ok'?'neu':x.m.k}">${x.m.k==='ok'?'Vigente':x.m.l}</span></div></td>
+      <td><span class="mini"><i data-w="${x.l.ses/maxS*100}"></i></span><b class="num">${x.l.ses}</b></td>
+      <td class="num">${x.l.horas} h</td><td class="num">${Math.round(x.p.pct*100)}%</td><td class="num">${x.p.add?money(x.p.add):'—'}</td>
+      <td><b class="num" style="font-size:14.5px">${money(x.l.prof)}</b></td>
+      <td><span class="chip ${x.st==='Liquidado'?'ok':'warn'}">${x.st==='Liquidado'?ico('check'):''}${x.st}</span></td></tr>`).join('') || `<tr><td colspan="8"><div class="empty">No hay profesionales con este estado.</div></td></tr>`}
+  </tbody></table></div></div>
+  <p class="muted" style="font-size:12.5px;margin-top:12px">${ico('touch_app')} Tocá una fila para ver el detalle del cálculo.</p>`;
+  countUp($('#v-equipo')); fill($('#v-equipo'));
+};
+A.eqf = b => { S.eqF=b.dataset.f; R.equipo() };
+A['liq-open'] = b => {
+  const p = proById(b.dataset.id), l = liquidacion(p), st = S.liq[p.id]||'Pendiente', m = docStatus(p.matV);
+  drawer(p.n, `
+    <div class="row">${areaTag(p.area)}<span class="chip neu">${p.mat}</span><span class="chip ${m.k==='ok'?'ok':m.k}">${m.l}</span></div>
+    <dl class="kv"><dt>Consultorio habitual</dt><dd>${p.room}</dd><dt>Pacientes a cargo</dt><dd>${patsOf(p.id).length}</dd><dt>Sesiones en septiembre</dt><dd class="num">${l.ses}</dd><dt>Horas</dt><dd class="num">${l.horas} h</dd></dl>
+    <div class="calc"><div class="eyebrow" style="margin-bottom:6px">Cálculo</div>
+      <div class="ln"><span>Arancel mínimo del centro</span><span class="num">${money(ARANCEL)}</span></div>
+      <div class="ln"><span>Adicional del profesional</span><span class="num">${money(p.add)}</span></div>
+      <div class="ln"><span>Arancel por sesión</span><b class="num">${money(l.arancel)}</b></div>
+      <div class="ln"><span>× ${l.ses} sesiones</span><span class="num">${money(l.bruto)}</span></div>
+      <div class="ln"><span>Porcentaje de ${AREAS[p.area].s}</span><span class="num">${Math.round(p.pct*100)}%</span></div>
+      <div class="ln tot"><span>A liquidar</span><span class="num">${money(l.prof)}</span></div>
+      <div class="ln"><span class="muted">Queda para el centro</span><span class="num muted">${money(l.centro)}</span></div></div>
+    <p class="muted" style="font-size:12px">${ico('info')} La parte que paga la obra social y el copago de la familia se concilian en Facturación.</p>`,
+    `<button class="btn" data-act="close-drawer">Cerrar</button><button class="btn pri" style="flex:1" data-act="liq-do" data-id="${p.id}" ${st==='Liquidado'?'disabled':''}>${st==='Liquidado'?ico('check')+'Liquidado':ico('payments')+'Marcar como liquidado'}</button>`);
+};
+A['liq-do'] = b => busyBtn(b,'Registrando…',700,()=>{ S.liq[b.dataset.id]='Liquidado'; closeDrawer(); R.equipo(); toast(proById(b.dataset.id).n+' liquidado. Se le envía el resumen por mail.','payments') });
+A['liq-all'] = b => busyBtn(b,'Liquidando…',1000,()=>{ PROS.forEach(p=>S.liq[p.id]='Liquidado'); R.equipo(); toast('Todos los profesionales liquidados','done_all') });
+
+/* ===== Vistas de celular ===== */
+const phone = (time, body) => `<div class="phone"><div class="screen" id="scr"><div class="sbar"><span class="num">${time}</span><span class="isl"></span><span>${ico('signal_cellular_alt')}${ico('battery_full')}</span></div><div class="sbody" id="sbody">${body}</div></div></div>`;
+const explain = (tag, title, text, steps) => `<div class="explain stg"><span class="proto">${tag}</span><h2>${title}</h2><p>${text}</p><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const LABELS = [['ok','Bien'],['warn','Regular'],['bad','Difícil']];
+const SEMS = ['Participación','Regulación emocional','Compromiso familiar'];
+const DICT = {
+  to:'Trabajamos la secuencia de vestido con la campera. Subió el cierre sin ayuda en dos de tres intentos. Se frustró al final y retomamos con respiración. La familia cuenta que practica en casa todas las mañanas.',
+  fono:'Juegos de discriminación auditiva con pictogramas. Produjo /r/ en posición inicial en ocho de diez palabras. Se sugiere reforzar con cuentos en casa.',
+  psico:'Trabajamos nombrar emociones con tarjetas. Pudo identificar enojo y frustración en una situación de juego. Buena disposición.',
+  psicoped:'Lectura compartida de un texto breve. Respondió preguntas literales sin ayuda y una inferencial con apoyo.',
+  apoyo:'Tarea de matemática del grado. Sostuvo la atención quince minutos con una pausa activa.',
+  arte:'Producción con témperas sobre la semana. Eligió colores oscuros al hablar de la escuela; se conversa con el equipo.',
+  taller:'Juego grupal de turnos. Esperó su turno en cuatro de cinco rondas y resolvió un conflicto con palabras.'
+};
+
+/* --- Nota de sesión (Profesional 1, TO) --- */
+const todayPr1 = () => TURNOS.filter(t=>t.pro==='pr1' && t.day===TODAY_IDX && t.pid).sort((a,b)=>a.hour-b.hour);
+function notaInit(pid){
+  const list = todayPr1(); const t = list.find(x=>x.pid===pid) || list.find(x=>!x.noted) || list[0];
+  S.nota = {tid:t.id, v:[null,null,null], txt:'', saved:false, t0:Date.now()};
+}
+let notaTimer;
+R.nota = function(){
+  if(!S.nota) notaInit();
+  $('#v-nota').innerHTML = `<div class="stage">${phone('15:02','')}${explain('Celular del profesional','Nota de sesión en menos de dos minutos','Si cargar una sesión lleva más que eso, nadie lo hace y el sistema queda vacío. Por eso son tres toques y un dictado.',['Elegí un paciente del día.','Marcá los tres indicadores.','Tocá “Dictar la nota” y guardá. El reloj mide cuánto tardaste.','Abrí el legajo del paciente: la nota y los indicadores ya están ahí.'])}</div>`;
+  notaBody();
+  clearInterval(notaTimer); notaTimer = setInterval(()=>{ const el=$('#ntimer'); if(!el||!S.nota||S.nota.saved) return; const s=Math.floor((Date.now()-S.nota.t0)/1000); el.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0') }, 500);
+};
+function notaBody(){
+  const N = S.nota, t = TURNOS.find(x=>x.id===N.tid), p = patById(t.pid), list = todayPr1(), b = $('#sbody');
+  if(N.saved){
+    b.innerHTML = `<div class="success">${checkSVG(84)}<h2 style="font-size:21px">Nota guardada</h2><p class="muted">Ya está en el legajo de ${p.n} y suma a su semáforo.</p><span class="timer" style="margin-top:6px">${ico('timer')}Tardaste ${N.time}</span></div>
+      <button class="btn pri lg block" data-act="nota-next">${ico('arrow_forward')}Siguiente paciente</button><button class="btn lg block" data-act="open-leg" data-pid="${p.id}">${ico('folder_shared')}Ver legajo</button>`;
+    confetti($('#scr')); return;
+  }
+  const ready = !N.v.includes(null);
+  b.innerHTML = `
+    <div class="mhead"><div><small class="subtle" style="font-weight:700">Profesional 1 · TO</small><h2>Hoy, miércoles 21</h2></div><span class="timer">${ico('timer')}<span id="ntimer" class="num">0:00</span></span></div>
+    <div class="pchips" role="group" aria-label="Pacientes de hoy">${list.map(x=>`<button data-act="nota-pick" data-t="${x.id}" aria-pressed="${x.id===N.tid}" class="${x.noted?'done':''}"><small>${x.hour}:00${x.noted?' · ✓':''}</small><b>${patById(x.pid).n.replace('Paciente','Pac.')}</b></button>`).join('')}</div>
+    <div class="mcard row" style="flex-wrap:nowrap"><span class="av pat">${p.short}</span><div style="flex:1;min-width:0"><b>${p.n}</b><small class="muted" style="display:block">${t.hour}:00 · Consultorio ${t.room} · ${p.os}</small></div><span class="chip ok">${ico('check')}Presente</span></div>
+    <div class="mcard">${SEMS.map((l,i)=>`<div class="sem"><b>${l}</b><div class="opts">${LABELS.map(([k,lab])=>`<button class="${k}" data-act="nota-v" data-i="${i}" data-k="${k}" aria-pressed="${N.v[i]===k}"><i></i>${lab}</button>`).join('')}</div></div>`).join('')}</div>
+    <button class="mic" id="mic" data-act="dictar">${ico('mic')}<span class="wave"><i></i><i></i><i></i><i></i><i></i></span><span id="mic-l">Dictar la nota</span></button>
+    <label class="sr" for="ntxt">Nota de la sesión</label><textarea class="inp" id="ntxt" placeholder="Escribí o dictá cómo fue la sesión">${esc(N.txt)}</textarea>
+    <button class="btn pri lg block" data-act="nota-save" ${ready?'':'disabled'}>${ico('save')}Guardar nota</button>
+    <p class="muted" style="text-align:center;font-size:12px">${ready?'Listo para guardar':'Marcá los tres indicadores para guardar'}</p>`;
+  const ta = $('#ntxt'); ta.addEventListener('input', ()=>{ N.txt = ta.value });
+}
+A['nota-pick'] = b => { S.nota = {tid:b.dataset.t, v:[null,null,null], txt:'', saved:false, t0:Date.now()}; notaBody() };
+A['nota-v'] = b => { S.nota.txt = $('#ntxt').value; S.nota.v[+b.dataset.i] = b.dataset.k; const ready = !S.nota.v.includes(null);
+  $$(`[data-act="nota-v"][data-i="${b.dataset.i}"]`).forEach(x=>x.setAttribute('aria-pressed', x===b));
+  const sv=$('[data-act="nota-save"]'); sv.disabled=!ready; sv.nextElementSibling.textContent = ready?'Listo para guardar':'Marcá los tres indicadores para guardar' };
+A.dictar = b => {
+  if(b.classList.contains('rec')) return; const t = TURNOS.find(x=>x.id===S.nota.tid), full = DICT[t.area] || DICT.to, ta = $('#ntxt');
+  b.classList.add('rec'); $('#mic-l').textContent = 'Escuchando…'; ta.value = ''; let i = 0;
+  setTimeout(function tick(){ i = Math.min(full.length, i + (reduce?full.length:3)); ta.value = full.slice(0,i); S.nota.txt = ta.value; ta.scrollTop = ta.scrollHeight;
+    if(i < full.length) setTimeout(tick, 24); else { b.classList.remove('rec'); $('#mic-l').textContent = 'Dictado listo · tocá para repetir'; toast('Dictado transcripto y ordenado','mic') } }, reduce?0:500);
+};
+A['nota-save'] = b => {
+  const N = S.nota, t = TURNOS.find(x=>x.id===N.tid), p = patById(t.pid);
+  N.txt = $('#ntxt').value.trim() || 'Sesión sin observaciones.';
+  busyBtn(b,'Guardando…',600,()=>{
+    p.notes.push({d:'21 oct', who:'Profesional 1', area:t.area, t:N.txt, fresh:true});
+    N.v.forEach((k,i)=>p.att[i].push(k)); t.st='pres'; t.noted=true;
+    const s = Math.floor((Date.now()-N.t0)/1000); N.time = Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); N.saved = true; S.legPid = p.id; S.legTab='evo'; notaBody();
+  });
+};
+A['nota-next'] = () => { const next = todayPr1().find(x=>!x.noted); if(!next){ toast('Ya cargaste las notas de todos los pacientes de hoy','task_alt'); return } S.nota = {tid:next.id, v:[null,null,null], txt:'', saved:false, t0:Date.now()}; notaBody() };
+
+/* --- Firmas del profesional --- */
+function firmaDocs(){ const out=[]; patsOf('pr1').forEach(p=>{ out.push({pid:p.id, t:'Planilla de asistencia'}); out.push({pid:p.id, t:'Informe mensual'}) }); return out }
+R.firmas = function(){
+  $('#v-firmas').innerHTML = `<div class="stage">${phone('19:40','')}${explain('Celular del profesional','Todas las firmas del mes de una vez','Hoy cada profesional firma en papel planillas e informes, uno por uno. Acá el sistema los arma con la asistencia real y se firman juntos.',['Revisá la lista o quitá algún documento.','Tocá “Firmar” y confirmá con el código que llega por WhatsApp.','Pasá a Obras sociales: los expedientes de estos pacientes ya figuran firmados.'])}</div>`;
+  firmaBody();
+};
+function firmaBody(){
+  const F = S.firma, docs = firmaDocs(), b = $('#sbody'); if(!F.sel) F.sel = new Set(docs.map((_,i)=>i));
+  if(F.signed && F.step!=='done'){ b.innerHTML = `<div class="success">${checkSVG(84)}<h2 style="font-size:21px">Septiembre está firmado</h2><p class="muted">No tenés documentos pendientes. Te avisamos cuando cierre octubre.</p></div><button class="btn lg block" data-go="obras">${ico('inventory_2')}Ver presentación</button>`; return }
+  if(F.step==='done'){ b.innerHTML = `<div class="success">${checkSVG(84)}<h2 style="font-size:21px">${F.n} documentos firmados</h2><p class="muted">Recepción ya los ve en la presentación de septiembre.</p></div><button class="btn pri lg block" data-act="firma-go">${ico('inventory_2')}Ver presentación a obras sociales</button>`; confetti($('#scr')); return }
+  b.innerHTML = `
+    <div class="mhead"><div><small class="subtle" style="font-weight:700">Profesional 1 · TO</small><h2>Firmas de septiembre</h2></div><span class="chip acc">Cierra 5 nov</span></div>
+    <div class="mcard row" style="flex-wrap:nowrap"><input type="checkbox" class="chk" id="fall" data-act="firma-all" ${F.sel.size===docs.length?'checked':''}><label for="fall" style="flex:1"><b>Seleccionar todos</b><small class="muted" style="display:block">${patsOf('pr1').length} pacientes · planilla e informe</small></label><b class="num" id="fcount">${F.sel.size}/${docs.length}</b></div>
+    <div class="mcard" style="padding:4px 14px">${docs.map((d,i)=>{ const p=patById(d.pid); return `<label class="doc"><input type="checkbox" class="chk" data-act="firma-one" data-i="${i}" ${F.sel.has(i)?'checked':''}><span class="ic-sq neu" style="width:30px;height:30px">${ico(d.t.startsWith('Planilla')?'fact_check':'summarize')}</span><span class="grow"><b>${p.n}</b><small>${d.t} · ${p.os}</small></span></label>`}).join('')}</div>
+    <div class="fixbot"><button class="btn pri lg block" id="fsign" data-act="firma-sign" ${F.sel.size?'':'disabled'}>${ico('draw')}Firmar ${F.sel.size} documentos</button></div>
+    ${F.step==='code'?codeSheet():''}`;
+  if(F.step==='code') setTimeout(()=>{ const c=$('.codeinp input'); c&&c.focus() },350);
+}
+function codeSheet(){ return `<div class="sheet" id="sheet"><div class="sh"><span class="grab"></span><h2>Confirmá tu firma</h2><p class="muted">Te mandamos un código por WhatsApp al 223 ••• 4471.</p>
+  <div class="codeinp">${[0,1,2,3,4,5].map(i=>`<input inputmode="numeric" maxlength="1" aria-label="Dígito ${i+1}" data-ci="${i}">`).join('')}</div>
+  <button class="btn ghost sm" data-act="code-demo" style="align-self:center">Usar código de ejemplo</button>
+  <button class="btn pri lg block" data-act="code-ok">${ico('verified')}Firmar ${S.firma.sel.size} documentos</button><button class="btn lg block" data-act="code-cancel">Cancelar</button>
+  <p class="muted" style="font-size:11.5px">Queda registro de fecha, hora y documentos firmados.</p></div></div>` }
+A['firma-all'] = el => { const n = firmaDocs().length; S.firma.sel = el.checked ? new Set([...Array(n).keys()]) : new Set(); $$('[data-act="firma-one"]').forEach(c=>c.checked=el.checked); firmaCount() };
+A['firma-one'] = el => { el.checked ? S.firma.sel.add(+el.dataset.i) : S.firma.sel.delete(+el.dataset.i); $('#fall').checked = S.firma.sel.size===firmaDocs().length; firmaCount() };
+function firmaCount(){ const n=S.firma.sel.size; $('#fcount').textContent = n+'/'+firmaDocs().length; const b=$('#fsign'); b.disabled=!n; b.innerHTML = ico('draw')+'Firmar '+n+' documentos' }
+A['firma-sign'] = () => { S.firma.step='code'; firmaBody(); $('#sbody').scrollTop=0 };
+A['code-cancel'] = () => { S.firma.step='list'; firmaBody() };
+A['code-demo'] = () => { const ins=$$('.codeinp input'); '482913'.split('').forEach((d,i)=>setTimeout(()=>{ ins[i].value=d; ins[i].focus() }, reduce?0:i*90)) };
+A['code-ok'] = b => {
+  const v = $$('.codeinp input').map(i=>i.value).join('');
+  if(!/^\d{6}$/.test(v)){ const c=$('.codeinp'); c.classList.add('shake'); setTimeout(()=>c.classList.remove('shake'),450); toast('Ingresá los 6 dígitos del código','error'); return }
+  busyBtn(b,'Firmando…',900,()=>{ const docs=firmaDocs(); const ids=new Set(); [...S.firma.sel].forEach(i=>{ const d=docs[i], p=patById(d.pid); if(d.t.startsWith('Planilla')) p.sept.pro=true; else p.sept.inf=true; ids.add(p.id) });
+    S.flash=[...ids]; S.firma.n=S.firma.sel.size; S.firma.step='done'; S.firma.signed=true; firmaBody(); refreshBadge() });
+};
+A['firma-go'] = () => { S.firma.step='list'; const f=S.flash; const p=f&&patById(f[0]); if(p&&OSN.includes(p.os)) S.osSel=p.os; go('obras'); S.flash=f; osTable() };
+
+/* --- Portal de familias --- */
+const famPat = () => patById(S.famPid || (S.famPid = (PATIENTS.find(p=>p.os!=='Particular' && !p.sept.fam && p.areas.length>1) || PATIENTS.find(p=>p.os!=='Particular') ).id));
+R.familia = function(){
+  const p = famPat();
+  $('#v-familia').innerHTML = `<div class="stage">${phone('09:15','')}${explain('Celular de la familia','Todo lo de su hijo en un solo lugar','La familia entra desde un link por WhatsApp, sin descargar nada. Confirma turnos, paga el copago y firma la planilla mensual.',['Tocá “Revisar y firmar” y firmá con el dedo o el mouse.','Confirmá o reprogramá el próximo turno.','Pagá el copago.','Pasá a Obras sociales: la firma de '+p.n+' ya figura.'])}</div>`;
+  famBody();
+};
+function famBody(){
+  const F = S.fam, p = famPat(), b = $('#sbody');
+  const next = TURNOS.filter(t=>t.pid===p.id && t.st==='pend').sort((a,c)=>a.day-c.day||a.hour-c.hour)[0];
+  const up = p.objs.filter(o=>o.s[5]>0).length;
+  const sep = []; p.areas.forEach(a=>{ for(let w=0;w<4;w++) for(let k=0;k<p.sesWeek[a];k++) sep.push({d:2+w*7+k*2+(a==='fono'?1:0), a}) }); sep.sort((x,y)=>x.d-y.d);
+  if(sep.length>2) sep[2].aus = true;
+  b.innerHTML = `
+    <div class="mhead"><div><small class="subtle" style="font-weight:700">CTP · Portal de familias</small><h2>Hola, familia</h2></div><span class="av pat">${p.short}</span></div>
+    <div class="hero"><p>${p.n} · ${p.areas.map(a=>AREAS[a].s).join(' + ')}</p><h3>${up} de ${p.objs.length} objetivos avanzan este mes</h3><div class="track"><i data-w="${up/p.objs.length*100}"></i></div></div>
+    ${p.sept.fam ? `<div class="mcard row" style="flex-wrap:nowrap"><span class="ic-sq ok">${ico('verified')}</span><div><b>Planilla de septiembre firmada</b><small class="muted" style="display:block">Ya está en la presentación a ${p.os}</small></div></div>`
+      : `<div class="mcard cta"><b style="font-size:15px">Firmá la planilla de septiembre</b><p class="muted" style="margin:4px 0 12px;font-size:13px">La necesitamos para presentarla a ${p.os}. Son ${sep.length} sesiones.</p><button class="btn acc lg block" data-act="fam-sheet">${ico('draw')}Revisar y firmar</button></div>`}
+    ${next?`<div class="mcard"><div class="eyebrow">Próximo turno</div><h3 style="margin-top:6px">${F.res||DAYS[next.day].l+' · '+next.hour+':00'}</h3><p class="muted" style="font-size:13px;margin:2px 0 12px">${AREAS[next.area].n} con ${proById(next.pro).n} · Consultorio ${next.room}</p>
+      ${F.conf?`<span class="chip ok">${ico('check')}Confirmado</span>`:`<div class="row"><button class="btn pri sm" data-act="fam-conf">${ico('check')}Confirmar</button><button class="btn sm" data-act="fam-res">${ico('event_repeat')}Reprogramar</button></div>`}
+      ${F.showRes?`<div class="slots">${['Jueves 22 · 16:00','Jueves 22 · 18:00','Viernes 23 · 15:00'].map(s=>`<button class="btn sm" data-act="fam-slot" data-s="${s}">${s}</button>`).join('')}</div>`:''}</div>`:''}
+    <div class="mcard"><div class="eyebrow">Copago de octubre</div><div class="row" style="justify-content:space-between;margin-top:6px"><h3 class="num" style="font-size:20px">${money(p.copago*4)}</h3>${F.paid?`<span class="chip ok">${ico('check')}Pagado</span>`:'<span class="chip warn">Antes de la próxima sesión</span>'}</div>
+      <p class="muted" style="font-size:12.5px;margin:4px 0 12px">${p.os==='Particular'?'4 sesiones particulares':'Diferencia entre la sesión y lo que cubre '+p.os+', 4 sesiones'}</p>${F.paid?'':`<button class="btn lg block" data-act="fam-pay">${ico('credit_card')}Pagar con Mercado Pago o transferencia</button>`}</div>
+    <div class="mcard"><div class="eyebrow" style="margin-bottom:6px">Informe de septiembre</div>${p.objs.map(o=>{ const v=o.s[5]; return `<div class="goal"><div class="gh"><span>${o.t}</span>${areaTag(o.a)}</div><div class="track ${v<0?'bad':v===0?'warn':''}"><i data-w="${(v+2)/4*100}"></i></div><small class="muted">${v>0?'Avanza muy bien':v===0?'Va en el camino esperado':'Necesita más práctica en casa'}</small></div>`}).join('')}
+      <p style="margin-top:12px;font-size:13px">“${p.notes[p.notes.length-1].t}”</p><small class="muted">${p.notes[p.notes.length-1].who} · ${AREAS[p.areas[0]].n}</small></div>
+    ${F.sheet?famSheet(p, sep):''}`;
+  fill(b);
+  if(F.sheet==='sign') initSig();
+}
+function famSheet(p, sep){
+  if(S.fam.sheet==='done') return `<div class="sheet"><div class="sh"><div class="success">${checkSVG(84)}<h2 style="font-size:21px">¡Gracias!</h2><p class="muted">La planilla de septiembre de ${p.n} quedó firmada y ya está en la presentación a ${p.os}.</p></div><button class="btn pri lg block" data-act="fam-close">Volver al inicio</button><button class="btn lg block" data-act="fam-os">${ico('inventory_2')}Ver en Obras sociales</button></div></div>`;
+  return `<div class="sheet"><div class="sh"><span class="grab"></span><div class="row" style="justify-content:space-between"><h2>Planilla de septiembre</h2><button class="iconbtn" data-act="fam-close" aria-label="Cerrar">${ico('close')}</button></div>
+    <p class="muted" style="font-size:12.5px">${p.n} · ${p.os}</p>
+    <div class="mcard" style="padding:2px 14px">${sep.map(x=>`<div class="doc"><span class="grow"><b>${x.d} de septiembre</b><small>${AREAS[x.a].n}</small></span><span class="chip ${x.aus?'warn':'ok'}">${x.aus?'Ausente con aviso':'Presente'}</span></div>`).join('')}</div>
+    <div class="row" style="justify-content:space-between"><b>Firmá con el dedo</b><button class="btn ghost sm" data-act="sig-clear">${ico('ink_eraser')}Borrar</button></div>
+    <canvas class="sig" id="sig" aria-label="Recuadro para firmar"></canvas>
+    <button class="btn pri lg block" id="sigok" data-act="sig-ok" disabled>${ico('draw')}Firmar planilla</button>
+    <p class="muted" style="font-size:11.5px">Firma electrónica con validación por código al celular y registro de fecha y hora.</p></div></div>`;
+}
+function initSig(){
+  const c = $('#sig'); if(!c) return; const r = c.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  c.width = r.width*dpr; c.height = r.height*dpr; const x = c.getContext('2d'); x.scale(dpr,dpr);
+  x.lineWidth = 2.6; x.lineCap = 'round'; x.lineJoin = 'round'; x.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#2E2924';
+  let down = false, last = null; const pos = e => { const b = c.getBoundingClientRect(); return [e.clientX-b.left, e.clientY-b.top] };
+  c.addEventListener('pointerdown', e => { down = true; c.setPointerCapture(e.pointerId); last = pos(e) });
+  c.addEventListener('pointermove', e => { if(!down) return; const p = pos(e); x.beginPath(); x.moveTo(...last); x.lineTo(...p); x.stroke(); last = p; if(!S.fam.drawn){ S.fam.drawn = true; $('#sigok').disabled = false } });
+  const up = () => { down = false }; c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
+}
+A['fam-sheet'] = () => { S.fam.sheet='sign'; S.fam.drawn=false; $('#sbody').scrollTop=0; famBody() };
+A['fam-close'] = () => { S.fam.sheet=null; famBody() };
+A['sig-clear'] = () => { S.fam.drawn=false; famBody() };
+A['sig-ok'] = b => busyBtn(b,'Firmando…',800,()=>{ const p=famPat(); p.sept.fam=true; S.flash=[p.id]; S.fam.sheet='done'; famBody(); confetti($('#scr')); refreshBadge() });
+A['fam-os'] = () => { const p=famPat(); S.osSel=p.os; S.osF='all'; const f=[p.id]; go('obras'); S.flash=f; osTable() };
+A['fam-conf'] = () => { S.fam.conf=true; S.fam.showRes=false; famBody(); toast('Turno confirmado. Te recordamos un día antes.','event_available') };
+A['fam-res'] = () => { S.fam.showRes=!S.fam.showRes; famBody() };
+A['fam-slot'] = b => { S.fam.res=b.dataset.s; S.fam.conf=true; S.fam.showRes=false; famBody(); toast('Turno pasado al '+b.dataset.s.toLowerCase()+'. Se liberó el horario anterior.','event_repeat') };
+A['fam-pay'] = b => busyBtn(b,'Procesando pago…',1100,()=>{ S.fam.paid=true; famPat().pay[2].st='Pagado'; famBody(); toast('Pago recibido. Comprobante enviado por mail.','paid') });
+
+/* ===== Eventos e inicio ===== */
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]'); if(g){ go(g.dataset.go); return }
+  const v = e.target.closest('#nav [data-v]'); if(v){ go(v.dataset.v); return }
+  const a = e.target.closest('[data-act]'); if(!a) return;
+  if(a.tagName === 'INPUT') return; // los checkbox se manejan en 'change'
+  const k = a.dataset.act;
+  if(k === 'close-drawer'){ closeDrawer(); return }
+  if(A[k]){ e.preventDefault(); A[k](a, e) }
+});
+document.addEventListener('change', e => { const a = e.target.closest('input[data-act]'); if(a && A[a.dataset.act]) A[a.dataset.act](a, e) });
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeDrawer();
+  const c = e.target.closest('.oscard[data-act]'); if(c && (e.key === 'Enter' || e.key === ' ') && e.target === c){ e.preventDefault(); A.os(c) }
+});
+document.addEventListener('submit', e => { if(e.target.dataset.form === 'chat'){ e.preventDefault(); sendChat() } });
+document.addEventListener('input', e => {
+  const ci = e.target.closest('.codeinp input'); if(!ci) return;
+  ci.value = ci.value.replace(/\D/g,'').slice(-1); if(ci.value){ const n = ci.nextElementSibling; if(n) n.focus() }
+});
+document.addEventListener('keydown', e => { const ci = e.target.closest('.codeinp input'); if(ci && e.key === 'Backspace' && !ci.value){ const p = ci.previousElementSibling; if(p) p.focus() } });
+$('#scrim').addEventListener('click', closeDrawer);
+window.addEventListener('resize', () => { moveLine($('#nav')); const t = $('.tabs'); if(t) moveLine(t) });
+$('#bell').addEventListener('click', () => go('obras'));
+
+initSearch();
+refreshBadge();
+let start = 'tablero'; try{ const h = location.hash.slice(1); if(VIEWS.includes(h)) start = h }catch(e){}
+go(start);
+document.fonts && document.fonts.ready.then(() => { moveLine($('#nav')); const t = $('.tabs'); if(t) moveLine(t) });
+
+</script>
+
+</body>
+</html>
