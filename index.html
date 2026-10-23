@@ -529,6 +529,28 @@ body.locked{overflow:hidden}
 @media (max-width:900px){ .login{grid-template-columns:minmax(0,1fr)} .lside{display:none} .me .who{max-width:120px} }
 @media (max-width:560px){ .accs{grid-template-columns:minmax(0,1fr)} .me .who{display:none} }
 
+
+/* Recorrido guiado */
+.tour{position:fixed; inset:0; z-index:90; pointer-events:none}
+.tour.dim{background:rgba(30,26,22,.55); pointer-events:auto; animation:fade-in .3s}
+.tour-hole{position:fixed; border-radius:var(--r4); box-shadow:0 0 0 9999px rgba(30,26,22,.5), 0 0 0 3px var(--accent); transition:left .45s var(--ease), top .45s var(--ease), width .45s var(--ease), height .45s var(--ease); pointer-events:none}
+.tour-card{position:fixed; right:max(24px, env(safe-area-inset-right,0px)); bottom:calc(24px + env(safe-area-inset-bottom,0px)); width:min(390px, calc(100% - 32px)); background:var(--surface); border:1px solid var(--line); border-radius:var(--r4); box-shadow:var(--sh3); padding:18px 20px; pointer-events:auto; display:flex; flex-direction:column; gap:10px; animation:rise .4s var(--ease)}
+.tour-card.left{right:auto; left:max(24px, env(safe-area-inset-left,0px))}
+.tour-card.center{left:50%; top:50%; right:auto; bottom:auto; transform:translate(-50%,-50%); width:min(480px, calc(100% - 32px)); padding:26px 28px; animation:pop-center .4s var(--ease)}
+.tour-card.center h3{font-size:22px}
+@keyframes pop-center{from{opacity:0; transform:translate(-50%,-44%)}}
+.tour-top{display:flex; justify-content:space-between; align-items:center}
+.tour-top .eyebrow{color:var(--accent-deep)}
+.tour-prog{height:4px; border-radius:2px; background:var(--surface-3); overflow:hidden}
+.tour-prog i{display:block; height:100%; background:var(--accent); transition:width .5s var(--ease)}
+.tour-card h3{font-size:17px}
+.tour-card p{color:var(--muted); font-size:13.5px; line-height:1.55}
+.tour-pain{display:flex; gap:10px; align-items:flex-start; background:var(--accent-soft); color:var(--ink); border-radius:var(--r2); padding:10px 12px; font-size:13px; font-weight:600}
+.tour-pain .ms{color:var(--accent-deep)}
+.tour-pain small{display:block; font-size:10.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-deep)}
+.tour-actions{display:flex; gap:8px; align-items:center; margin-top:4px}
+@media (max-width:900px){ .tour-card,.tour-card.left{left:16px; right:16px; width:auto; bottom:calc(16px + env(safe-area-inset-bottom,0px))} .tour-card.center{left:50%; right:auto; width:calc(100% - 32px)} }
+
 /* Toast */
 .toast{position:fixed; left:50%; bottom:calc(22px + env(safe-area-inset-bottom,0px)); transform:translate(-50%,30px); background:var(--ink); color:var(--bg); padding:11px 16px 11px 12px; border-radius:var(--r3); display:flex; gap:10px; align-items:center; font-weight:600; font-size:13px; opacity:0; pointer-events:none; transition:opacity .3s, transform .35s var(--ease); z-index:80; max-width:calc(100% - 32px); box-shadow:var(--sh3)}
 .toast.on{opacity:1; transform:translate(-50%,0)}
@@ -562,7 +584,7 @@ body.locked{overflow:hidden}
       <div class="gsearch top-s"><span class="ms" aria-hidden="true">search</span><label class="sr" for="gs">Buscar paciente</label><input id="gs" placeholder="Buscar paciente, área u obra social" autocomplete="off"><div class="results" id="gs-res"></div></div>
       <button class="iconbtn" id="bell" aria-label="Pendientes de la presentación"><span class="ms" aria-hidden="true">notifications</span><span class="count num" id="bell-n">0</span></button>
       <div class="mewrap"><button class="me" data-act="me-menu" aria-haspopup="menu" aria-label="Mi cuenta"><span class="av pro" id="me-av">–</span><span class="who"><b id="me-name">Sin sesión</b><span id="me-role"></span></span><span class="ms subtle" aria-hidden="true">expand_more</span></button>
-        <div class="memenu" id="me-menu" role="menu" hidden><button role="menuitem" data-act="logout"><span class="ms" aria-hidden="true">switch_account</span>Cambiar de usuario</button><button role="menuitem" data-act="logout"><span class="ms" aria-hidden="true">logout</span>Cerrar sesión</button></div></div>
+        <div class="memenu" id="me-menu" role="menu" hidden><button role="menuitem" data-act="tour-start"><span class="ms" aria-hidden="true">slideshow</span>Recorrido guiado</button><button role="menuitem" data-act="logout"><span class="ms" aria-hidden="true">switch_account</span>Cambiar de usuario</button><button role="menuitem" data-act="logout"><span class="ms" aria-hidden="true">logout</span>Cerrar sesión</button></div></div>
     </div>
     <nav class="nav" id="nav" aria-label="Vistas">
       <button data-v="tablero"><span class="ms" aria-hidden="true">space_dashboard</span>Tablero</button>
@@ -593,6 +615,7 @@ body.locked{overflow:hidden}
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-label="Detalle"></aside>
 <div class="login" id="login" hidden></div>
+<div class="tour" id="tour" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 /* ===== Datos de muestra (anonimizados) — misma forma que tendrán las tablas reales ===== */
@@ -1263,7 +1286,8 @@ function captureHTML(N, t){
         <b>Sacale una foto a tu hoja de notas</b><small class="muted">Con la planilla de CTP también se leen los semáforos que marcaste a mano.</small>
         <label class="btn pri block" for="ph-in" style="margin-top:4px">${ico('photo_camera')}Sacar o subir foto</label>
         <input type="file" id="ph-in" accept="image/*" capture="environment" class="sr">
-        <button class="btn block" data-act="photo-demo">${ico('image')}Usar foto de ejemplo</button></div>`;
+        <button class="btn block" data-act="photo-demo">${ico('image')}Usar foto de ejemplo</button>
+        <a class="btn ghost sm" href="planilla-nota-de-sesion-ctp.pdf" target="_blank" rel="noopener">${ico('picture_as_pdf')}Ver la planilla de papel para imprimir</a></div>`;
     if(N.phase==='scan') return `<div class="scan">${N.img?`<img src="${N.img}" alt="Foto de la hoja de notas">`:`<div class="noimg">${ico('description')}</div>`}<i class="beam"></i><span class="chip neu scanlbl"><span class="spin"></span>Leyendo la hoja…</span></div>`;
   }
   if(N.mode==='audio'){
@@ -1676,6 +1700,7 @@ function loginHTML(){
       <button class="btn pri lg block" id="lg-btn">${ico('login')}Ingresar</button>
     </form>
     <div class="lnote">${ico('info')}<span>Cuentas de prueba: tocá una para entrar. La contraseña de todas es <b>${DEMO_PASS}</b>. Es un prototipo: no hay seguridad real.</span></div>
+    <button class="btn soft-acc lg block" data-act="tour-start">${ico('slideshow')}Ver el recorrido guiado (5 minutos)</button>
     <div class="eyebrow">Administración</div><div class="accs">${adm.map(btn).join('')}</div>
     <div class="eyebrow">Profesionales</div><div class="accs">${pros.map(btn).join('')}</div>
   </div></div>`;
@@ -1757,6 +1782,73 @@ A['user-del'] = b => { const u = CUSTOM.find(x=>x.id===b.dataset.id); if(!u) ret
   CUSTOM = CUSTOM.filter(x=>x.id!==u.id); if(u.role==='pro'){ const i = PROS.findIndex(p=>p.id===u.proId); if(i>=0) PROS.splice(i,1) }
   store.set('ctp-users', CUSTOM); R.equipo(); toast(`${u.n} eliminado`, 'delete') };
 A['user-as'] = b => { const acc = ACCOUNTS().find(a=>a.email===b.dataset.email); enterAs(acc) };
+
+/* ===== Recorrido guiado para presentar al cliente ===== */
+const acct = email => ACCOUNTS().find(a=>a.email===email);
+function tourPatient(){
+  const t = TURNOS.filter(x=>x.pro==='pr1' && x.day===TODAY_IDX && x.pid && patById(x.pid).os!=='Particular').sort((a,b)=>a.hour-b.hour)[0]
+         || TURNOS.find(x=>x.pro==='pr1' && x.pid);
+  return {t, p:patById(t.pid)};
+}
+const TOUR = [
+  {moment:'', title:'Un día en CTP con la plataforma', text:'En cinco minutos seguimos a un mismo paciente en tres momentos: la sesión, la familia y el cierre del mes. Cada paso muestra qué problema de hoy resuelve.', center:true,
+   go(){ enterAs(acct('admin1@ctp.prueba'), {silent:true, view:'tablero'}) }},
+  {moment:'1 · La sesión', title:'Cada profesional ve solo su día', text:'Entra con su usuario y ve sus turnos, sus consultorios y sus pacientes. Nada más.', pain:'Desorganización general y falta de coordinación interna',
+   go(){ enterAs(acct('profesional1@ctp.prueba'), {silent:true, view:'agenda'}) }, target:'.mylist'},
+  {moment:'1 · La sesión', title:'La nota se carga con una foto', text:'Al terminar, la profesional fotografía su hoja. La IA lee el texto y los semáforos marcados a mano, y ella revisa antes de guardar. Probá tocar “Usar foto de ejemplo”.', pain:'Todo está en papel y las evoluciones no se ven',
+   go(){ const {t}=TOUR_CTX; S.nota = newNota(t.id); go('nota') }, target:'.phone'},
+  {moment:'1 · La sesión', title:'Todo el equipo ve la evolución', text:'La nota entra al legajo con los objetivos, el semáforo y un canal interno para las profesionales que comparten al paciente.', pain:'Pacientes compartidos sin comunicación entre profesionales',
+   go(){ S.legPid = TOUR_CTX.p.id; S.legTab = 'evo'; go('legajo') }, target:'#pview'},
+  {moment:'2 · La familia', title:'La familia firma desde WhatsApp', text:'Recibe un link, sin descargar nada. Confirma el turno, paga el copago y firma la planilla del mes con el dedo. Probá “Revisar y firmar”.', pain:'Firmas en papel mes a mes, avisos de turnos y pagos',
+   go(){ S.famPid = TOUR_CTX.p.id; S.fam = {conf:false, res:null, showRes:false, paid:false, sheet:null, drawn:false}; go('familia') }, target:'.phone'},
+  {moment:'3 · El cierre del mes', title:'El informe se escribe solo', text:'La IA arma el borrador para la familia, la obra social y la escuela con las notas del mes. Cada párrafo muestra de qué nota sale, y la profesional lo aprueba.', pain:'Informes a los padres que hoy no existen o se arman a mano',
+   go(){ enterAs(acct('admin1@ctp.prueba'), {silent:true, view:'tablero'}); S.infPid = TOUR_CTX.p.id; S.infVer = 'fam'; go('informes') }, target:'#infmain'},
+  {moment:'3 · El cierre del mes', title:'El paquete para la obra social, completo', text:'Antes de presentar, el sistema muestra qué expediente está completo y cuál no: planilla, firmas, prescripción vigente e informe. Lo que falta se reclama con un clic.', pain:'Sesiones que no se cobran por papeles vencidos o sin firmar',
+   go(){ S.osSel = TOUR_CTX.p.os; S.osF = 'all'; go('obras') }, target:'.oscards'},
+  {moment:'3 · El cierre del mes', title:'Las dueñas ven todo el centro', text:'Ocupación de consultorios, horas libres para alquilar, deuda, vencimientos y pacientes en riesgo de dejar. Sin pedirle nada a nadie.', pain:'No saben si el lugar está bien aprovechado ni de dónde llegan los pacientes',
+   go(){ go('tablero') }, target:'.kpis'},
+  {moment:'', title:'¿Cómo seguimos?', text:'Proponemos empezar con un área y unos 20 pacientes durante un mes, en paralelo con el papel. Así medimos el ahorro real antes de sumar al resto del centro.', center:true,
+   go(){ go('tablero') }}
+];
+let TOUR_CTX = null, tourI = 0, tourTimer;
+function startTour(){
+  TOUR_CTX = tourPatient(); TOUR_CTX.p.sept.fam = false;
+  ['fam','os','esc'].forEach(v=>{ delete S.inf[infKey(TOUR_CTX.p.id,v)] });
+  tourI = 0; $('#me-menu') && ($('#me-menu').hidden = true);
+  document.body.classList.add('touring'); clearInterval(tourTimer); tourTimer = setInterval(placeHole, 400); showTourStep();
+}
+function showTourStep(){
+  const s = TOUR[tourI]; s.go();
+  const box = $('#tour'); box.hidden = false; box.className = 'tour' + (s.center ? ' dim' : '');
+  box.innerHTML = `<div class="tour-hole" id="tour-hole" ${s.center?'hidden':''}></div>
+    <div class="tour-card ${s.center?'center':''}" role="dialog" aria-modal="false" aria-labelledby="tour-t">
+      <div class="tour-top"><span class="eyebrow">${s.moment || 'Recorrido'}</span><span class="num subtle" style="font-size:12px">${tourI+1} de ${TOUR.length}</span></div>
+      <div class="tour-prog"><i style="width:${(tourI+1)/TOUR.length*100}%"></i></div>
+      <h3 id="tour-t">${s.title}</h3><p>${s.text}</p>
+      ${s.pain?`<div class="tour-pain">${ico('healing')}<span><small>Dolor que resuelve</small>${s.pain}</span></div>`:''}
+      <div class="tour-actions"><button class="btn ghost sm" data-act="tour-exit">Salir</button><span style="flex:1"></span>
+        ${tourI>0?`<button class="btn sm" data-act="tour-prev">${ico('arrow_back')}Anterior</button>`:''}
+        <button class="btn pri sm" data-act="tour-next">${tourI===TOUR.length-1?'Terminar':tourI===0?'Empezar':'Siguiente'}${ico(tourI===TOUR.length-1?'check':'arrow_forward')}</button></div>
+    </div>`;
+  const tgt = s.target && $(s.target);
+  if(tgt){ tgt.scrollIntoView({block:'center', behavior:reduce?'auto':'smooth'}); setTimeout(placeHole, reduce?0:420) }
+  const nx = $('[data-act="tour-next"]'); nx && nx.focus({preventScroll:true});
+}
+function placeHole(){
+  const s = TOUR[tourI], h = $('#tour-hole'), tgt = s && s.target && $(s.target); if(!h || !tgt) return;
+  const r = tgt.getBoundingClientRect(), pad = 8;
+  Object.assign(h.style, {left:(r.left-pad)+'px', top:(r.top-pad)+'px', width:(r.width+pad*2)+'px', height:(r.height+pad*2)+'px'});
+  const card = $('.tour-card'); if(card && window.innerWidth>900){ card.classList.toggle('left', r.left + r.width/2 > window.innerWidth/2) }
+}
+function endTour(){ clearInterval(tourTimer); const box=$('#tour'); box.hidden = true; box.innerHTML = ''; document.body.classList.remove('touring') }
+A['tour-start'] = () => startTour();
+A['tour-next'] = () => { if(tourI >= TOUR.length-1){ endTour(); toast('Fin del recorrido. Podés seguir explorando como Administración.','flag'); return } tourI++; showTourStep() };
+A['tour-prev'] = () => { if(tourI>0){ tourI--; showTourStep() } };
+A['tour-exit'] = () => endTour();
+window.addEventListener('scroll', () => { if(document.body.classList.contains('touring')) placeHole() }, {passive:true});
+window.addEventListener('resize', () => { if(document.body.classList.contains('touring')) placeHole() });
+document.addEventListener('keydown', e => { if(!document.body.classList.contains('touring')) return;
+  if(e.key==='Escape') endTour(); if(e.key==='ArrowRight' && !e.target.closest('input,textarea,[contenteditable]')) A['tour-next'](); if(e.key==='ArrowLeft' && !e.target.closest('input,textarea,[contenteditable]')) A['tour-prev']() });
 
 /* ===== Eventos e inicio ===== */
 document.addEventListener('click', e => {
