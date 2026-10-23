@@ -455,6 +455,80 @@ tbody tr:hover{background:color-mix(in oklab, var(--surface-2) 55%, transparent)
 .live{min-height:84px; width:100%; padding:10px 12px; border-radius:var(--r2); background:var(--surface-2); font-size:13px; color:var(--muted); text-align:left}
 .note-warn{font-size:12px; color:var(--warn); background:var(--warn-soft); padding:8px 10px; border-radius:var(--r2)}
 
+
+/* Informes */
+.infgrid{display:grid; grid-template-columns:260px minmax(0,1fr) 300px; gap:16px; align-items:start}
+.infgrid .plist{max-height:calc(100vh - 300px)}
+#infsrc{position:sticky; top:150px; max-height:calc(100vh - 170px); overflow:auto}
+.draftbar{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+.draft{border:1px solid var(--line); border-radius:var(--r3); padding:22px 24px; background:var(--bg); min-height:300px; line-height:1.65; font-size:14px; transition:box-shadow .2s, border-color .2s}
+.draft[contenteditable="true"]:focus{outline:none; border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-soft); background:var(--surface)}
+.draft.locked{background:var(--surface)}
+.rblock{margin-bottom:16px; animation:rise .45s var(--ease) backwards; animation-delay:calc(var(--i)*110ms)}
+.rblock h4{font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--primary-deep); margin-bottom:5px}
+.rblock ul{margin:0; padding-left:18px}
+.rblock [data-src]{border-radius:6px; transition:background .2s; padding:1px 3px; margin:0 -3px}
+.rblock .hlp{background:var(--primary-soft)}
+.rkv{display:grid; grid-template-columns:auto 1fr; gap:4px 16px; margin:0}
+.rkv dt{color:var(--muted)} .rkv dd{margin:0; font-weight:600}
+.rwarn{background:var(--warn-soft)!important}
+.rflag{display:flex; gap:8px; align-items:center; flex-wrap:wrap; font-size:12px; color:var(--warn); margin-top:6px; padding:8px 10px; border:1px dashed color-mix(in oklab, var(--warn) 45%, transparent); border-radius:var(--r2); user-select:none}
+.rflag span:not(.ms){flex:1; min-width:180px}
+.rsign{display:flex; gap:6px; align-items:center; color:var(--muted); font-size:12.5px; border-top:1px dashed var(--line-2); padding-top:12px; margin-top:6px}
+.skel{display:flex; flex-direction:column; gap:12px}
+.skel .sk-label{display:flex; gap:8px; align-items:center; font-size:12.5px; color:var(--muted); margin-bottom:6px}
+.skel .sk-label .ms{font-size:16px}
+.skel i{display:block; height:12px; border-radius:6px; background:linear-gradient(90deg, var(--surface-2), var(--surface-3), var(--surface-2)); background-size:200% 100%; animation:shimmer 1.2s linear infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+.srcs{display:flex; flex-direction:column; gap:8px}
+.src{border:1px solid var(--line); border-left:3px solid var(--c, var(--line-2)); border-radius:var(--r2); padding:9px 11px; font-size:12.5px; display:flex; flex-direction:column; gap:3px; transition:background .2s, border-color .2s, transform .2s var(--ease)}
+.src small{color:var(--subtle); font-size:11px; font-weight:600}
+.src.meta{flex-direction:row; gap:9px; align-items:center; border-left-color:var(--primary)}
+.src.meta b{display:block; font-size:12.5px} .src.meta small{display:block}
+.src.hl{background:var(--primary-soft); border-color:var(--primary); transform:translateX(-4px)}
+@media (max-width:1180px){ .infgrid{grid-template-columns:minmax(0,1fr)} #infsrc{position:static; max-height:none} .infgrid .plist{max-height:240px} }
+
+
+/* Acceso y cuenta */
+body.locked{overflow:hidden}
+.login{position:fixed; inset:0; z-index:100; background:var(--bg); display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); overflow:auto; transition:opacity .35s, transform .35s var(--ease)}
+.login.out{opacity:0; transform:scale(1.02); pointer-events:none}
+.lside{position:relative; overflow:hidden; background:var(--primary); color:var(--primary-ink); display:flex; flex-direction:column; justify-content:space-between; gap:24px; padding-block:max(40px, env(safe-area-inset-top,0px)) 40px; padding-left:max(44px, env(safe-area-inset-left,0px)); padding-right:44px}
+.lside::before,.lside::after{content:""; position:absolute; border-radius:48px; background:color-mix(in oklab, var(--primary-ink) 9%, transparent); animation:float 9s ease-in-out infinite}
+.lside::before{width:260px; height:260px; right:-70px; top:16%; transform:rotate(18deg)}
+.lside::after{width:180px; height:180px; left:-50px; bottom:12%; transform:rotate(-12deg); animation-delay:-4s}
+@keyframes float{50%{translate:0 -16px}}
+.lside .brand b{color:inherit}
+.lpitch{position:relative; z-index:1; max-width:24ch; animation:rise .6s var(--ease) .1s backwards}
+.lpitch h1{font-size:40px; line-height:1.08; letter-spacing:-.03em}
+.lpitch p{opacity:.85; margin-top:14px; font-size:15px; line-height:1.55}
+.lmain{display:flex; justify-content:center; align-items:flex-start; padding-block:max(48px, env(safe-area-inset-top,0px)) 48px; padding-left:24px; padding-right:max(24px, env(safe-area-inset-right,0px))}
+.lcard{width:min(460px,100%); display:flex; flex-direction:column; gap:12px; animation:rise .5s var(--ease) backwards}
+.lform{display:flex; flex-direction:column; gap:8px; margin-top:4px}
+.lform .btn{margin-top:6px}
+.lerr{color:var(--bad); background:var(--bad-soft); font-size:12.5px; padding:8px 10px; border-radius:var(--r2); margin:0}
+.lnote{display:flex; gap:8px; align-items:flex-start; font-size:12.5px; color:var(--muted); background:var(--surface-2); padding:10px 12px; border-radius:var(--r2); margin-top:6px}
+.lnote .ms{font-size:18px; color:var(--primary)}
+.accs{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px}
+.acc{display:flex; gap:9px; align-items:center; border:1px solid var(--line); background:var(--surface); border-radius:var(--r2); padding:8px 9px; text-align:left; min-width:0; transition:border-color .2s, transform .2s var(--ease), box-shadow .2s}
+.acc:hover{border-color:var(--primary); transform:translateY(-2px); box-shadow:var(--sh2)}
+.acc .av{width:32px; height:32px; font-size:11px}
+.acc .grow{flex:1; min-width:0}
+.acc b{display:block; font-size:12.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.acc small{display:block; font-size:11px; color:var(--subtle); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.acc .chip{height:20px; font-size:10.5px; padding:0 6px}
+.mewrap{position:relative; flex:none}
+.me{display:flex; align-items:center; gap:9px; border:0; background:none; padding:4px 8px 4px 4px; border-radius:var(--r2); text-align:left; transition:background .2s}
+.me:hover{background:var(--surface-2)}
+.me .who{display:flex; flex-direction:column; max-width:170px}
+.me .who b{font-size:13px; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.me .who span{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.memenu{position:absolute; right:0; top:calc(100% + 6px); min-width:210px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r3); box-shadow:var(--sh2); padding:6px; z-index:5; animation:pop-in .18s var(--ease)}
+.memenu button{display:flex; width:100%; gap:9px; align-items:center; border:0; background:none; padding:9px 10px; border-radius:var(--r2); text-align:left; font-weight:600; font-size:13px}
+.memenu button:hover{background:var(--surface-2)}
+@media (max-width:900px){ .login{grid-template-columns:minmax(0,1fr)} .lside{display:none} .me .who{max-width:120px} }
+@media (max-width:560px){ .accs{grid-template-columns:minmax(0,1fr)} .me .who{display:none} }
+
 /* Toast */
 .toast{position:fixed; left:50%; bottom:calc(22px + env(safe-area-inset-bottom,0px)); transform:translate(-50%,30px); background:var(--ink); color:var(--bg); padding:11px 16px 11px 12px; border-radius:var(--r3); display:flex; gap:10px; align-items:center; font-weight:600; font-size:13px; opacity:0; pointer-events:none; transition:opacity .3s, transform .35s var(--ease); z-index:80; max-width:calc(100% - 32px); box-shadow:var(--sh3)}
 .toast.on{opacity:1; transform:translate(-50%,0)}
@@ -487,12 +561,14 @@ tbody tr:hover{background:color-mix(in oklab, var(--surface-2) 55%, transparent)
       <span class="proto">Prototipo interno</span>
       <div class="gsearch top-s"><span class="ms" aria-hidden="true">search</span><label class="sr" for="gs">Buscar paciente</label><input id="gs" placeholder="Buscar paciente, área u obra social" autocomplete="off"><div class="results" id="gs-res"></div></div>
       <button class="iconbtn" id="bell" aria-label="Pendientes de la presentación"><span class="ms" aria-hidden="true">notifications</span><span class="count num" id="bell-n">0</span></button>
-      <div class="me"><span class="av pro" id="me-av">D</span><div class="who"><label for="role" class="eyebrow" style="display:block;font-size:10px">Ver como</label><select id="role" class="rolesel"><option value="dir">Dirección (ve todo)</option></select></div></div>
+      <div class="mewrap"><button class="me" data-act="me-menu" aria-haspopup="menu" aria-label="Mi cuenta"><span class="av pro" id="me-av">–</span><span class="who"><b id="me-name">Sin sesión</b><span id="me-role"></span></span><span class="ms subtle" aria-hidden="true">expand_more</span></button>
+        <div class="memenu" id="me-menu" role="menu" hidden><button role="menuitem" data-act="logout"><span class="ms" aria-hidden="true">switch_account</span>Cambiar de usuario</button><button role="menuitem" data-act="logout"><span class="ms" aria-hidden="true">logout</span>Cerrar sesión</button></div></div>
     </div>
     <nav class="nav" id="nav" aria-label="Vistas">
       <button data-v="tablero"><span class="ms" aria-hidden="true">space_dashboard</span>Tablero</button>
       <button data-v="agenda"><span class="ms" aria-hidden="true">calendar_month</span>Agenda</button>
       <button data-v="legajo"><span class="ms" aria-hidden="true">folder_shared</span>Legajos</button>
+      <button data-v="informes"><span class="ms" aria-hidden="true">auto_awesome</span>Informes</button>
       <button data-v="obras"><span class="ms" aria-hidden="true">inventory_2</span>Obras sociales</button>
       <button data-v="equipo"><span class="ms" aria-hidden="true">groups</span>Equipo</button>
       <span class="sep"></span><span class="grp">Celular</span>
@@ -507,6 +583,7 @@ tbody tr:hover{background:color-mix(in oklab, var(--surface-2) 55%, transparent)
   <section class="view" id="v-tablero" aria-label="Tablero"></section>
   <section class="view" id="v-agenda" aria-label="Agenda"></section>
   <section class="view" id="v-legajo" aria-label="Legajos"></section>
+  <section class="view" id="v-informes" aria-label="Informes"></section>
   <section class="view" id="v-obras" aria-label="Obras sociales"></section>
   <section class="view" id="v-equipo" aria-label="Equipo"></section>
   <section class="view" id="v-nota" aria-label="Nota de sesión"></section>
@@ -515,6 +592,7 @@ tbody tr:hover{background:color-mix(in oklab, var(--surface-2) 55%, transparent)
 </main>
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-label="Detalle"></aside>
+<div class="login" id="login" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 /* ===== Datos de muestra (anonimizados) — misma forma que tendrán las tablas reales ===== */
@@ -688,7 +766,7 @@ const patsOf = proId => PATIENTS.filter(p => p.areas.some(a => p.pros[a] === pro
 const turnoName = t => t.pid ? patById(t.pid).n : t.wl;
 
 const S = {
-  view:'tablero', role:'dir', agPro:'', heat:'sem', agDay:TODAY_IDX, armed:null, selT:null,
+  view:'tablero', role:'dir', infPid:null, infVer:'fam', inf:{}, infOpen:{}, infGen:{}, infHTML:{}, infEdited:{}, infRev:{}, infSchool:{}, infHasWarn:false, agPro:'', heat:'sem', agDay:TODAY_IDX, armed:null, selT:null,
   legPid:null, legTab:'evo', legF:'all', legQ:'',
   osSel:'IOMA', osF:'all', osQ:'', osDisc:'', review:false, generated:null, packed:{}, reminded:{},
   liq:{}, eqF:'all', alertsDone:{}, called:{},
@@ -749,7 +827,7 @@ function refreshBadge(){
 }
 
 /* Navegación */
-const VIEWS = ['tablero','agenda','legajo','obras','equipo','nota','firmas','familia'];
+const VIEWS = ['tablero','agenda','legajo','informes','obras','equipo','nota','firmas','familia'];
 const R = {};
 function go(v, opts={}){
   if(!VIEWS.includes(v)) v = 'tablero';
@@ -911,6 +989,7 @@ A['go-nota'] = b => { const t=TURNOS.find(x=>x.id===b.dataset.t); S.nota=null; n
 
 /* ===== Legajo ===== */
 R.legajo = function(){
+  if(!legBase().length){ $('#v-legajo').innerHTML = `<div class="vhead stg"><div><h1>Pacientes y legajos</h1></div></div><div class="card empty stg" style="padding:56px 20px">${ico('folder_off')}<p style="margin-top:8px">Todavía no tenés pacientes asignados. Cuando Dirección te asigne uno, aparece acá.</p></div>`; return; }
   if(!S.legPid || !legBase().some(p=>p.id===S.legPid)) S.legPid = (legBase().find(p=>riskOf(p)==='bad') || legBase()[0]).id;
   $('#v-legajo').innerHTML = `
   <div class="vhead stg"><div><div class="eyebrow">${ico('folder_shared')} Historia y seguimiento</div><h1>Pacientes y legajos</h1><p>${S.role==='dir' ? 'Legajo único por paciente: evolución, documentos, equipo, pagos y comunicación interna.' : 'Ves solo a tus '+legBase().length+' pacientes.'}</p></div></div>
@@ -1344,7 +1423,7 @@ function famBody(){
       ${F.showRes?`<div class="slots">${['Jueves 22 · 16:00','Jueves 22 · 18:00','Viernes 23 · 15:00'].map(s=>`<button class="btn sm" data-act="fam-slot" data-s="${s}">${s}</button>`).join('')}</div>`:''}</div>`:''}
     <div class="mcard"><div class="eyebrow">Copago de octubre</div><div class="row" style="justify-content:space-between;margin-top:6px"><h3 class="num" style="font-size:20px">${money(p.copago*4)}</h3>${F.paid?`<span class="chip ok">${ico('check')}Pagado</span>`:'<span class="chip warn">Antes de la próxima sesión</span>'}</div>
       <p class="muted" style="font-size:12.5px;margin:4px 0 12px">${p.os==='Particular'?'4 sesiones particulares':'Diferencia entre la sesión y lo que cubre '+p.os+', 4 sesiones'}</p>${F.paid?'':`<button class="btn lg block" data-act="fam-pay">${ico('credit_card')}Pagar con Mercado Pago o transferencia</button>`}</div>
-    <div class="mcard"><div class="eyebrow" style="margin-bottom:6px">Informe de septiembre</div>${p.objs.map(o=>{ const v=o.s[5]; return `<div class="goal"><div class="gh"><span>${o.t}</span>${areaTag(o.a)}</div><div class="track ${v<0?'bad':v===0?'warn':''}"><i data-w="${(v+2)/4*100}"></i></div><small class="muted">${v>0?'Avanza muy bien':v===0?'Va en el camino esperado':'Necesita más práctica en casa'}</small></div>`}).join('')}
+    <div class="mcard"><div class="eyebrow" style="margin-bottom:6px">${S.inf[p.id+':fam']?'Informe de octubre · nuevo':'Informe de septiembre'}</div>${p.objs.map(o=>{ const v=o.s[5]; return `<div class="goal"><div class="gh"><span>${o.t}</span>${areaTag(o.a)}</div><div class="track ${v<0?'bad':v===0?'warn':''}"><i data-w="${(v+2)/4*100}"></i></div><small class="muted">${v>0?'Avanza muy bien':v===0?'Va en el camino esperado':'Necesita más práctica en casa'}</small></div>`}).join('')}
       <p style="margin-top:12px;font-size:13px">“${p.notes[p.notes.length-1].t}”</p><small class="muted">${p.notes[p.notes.length-1].who} · ${AREAS[p.areas[0]].n}</small></div>
     ${F.sheet?famSheet(p, sep):''}`;
   fill(b);
@@ -1411,6 +1490,274 @@ function setRole(v){
   toast(v==='dir' ? 'Viendo como Dirección: acceso a todo' : `Viendo como ${proById(v).n}: solo sus turnos y pacientes`, 'switch_account');
 }
 
+/* ===== Informes mensuales: borrador con IA a partir de las notas del mes ===== */
+const POOL = {
+  to:{good:['Completó el circuito motor sin ayuda y pidió pasar al siguiente nivel.','Se abrochó la campera sin ayuda en dos de tres intentos.','Tomó el lápiz con pinza trípode durante diez minutos seguidos.','La familia cuenta que en casa practica la secuencia de vestido todas las mañanas.'],
+      flat:['Sostiene lo logrado en vestido, pero todavía necesita ayuda con los botones.','Toleró una textura nueva con apoyo visual.','Le costó la transición al final de la sesión; se usó un temporizador.','Se acordó con la familia practicar en casa la secuencia de vestido con fotos.'],
+      bad:['Llegó desregulado y costó sostener la actividad.','Faltó la semana anterior y se notó en la secuencia de vestido.','Rechazó las texturas nuevas; se volvió a las conocidas.','Se conversó con la familia sobre la importancia de sostener la frecuencia.']},
+  fono:{good:['Produjo /r/ en posición inicial en ocho de diez palabras.','Siguió consignas de tres pasos sin repetición.','Armó oraciones de cinco palabras al describir láminas.','Se sugirió leer cuentos en casa marcando los sonidos trabajados.'],
+      flat:['Produce /r/ en palabras aisladas, pero no en frases.','Necesitó apoyo visual para seguir consignas de tres pasos.','Buena disposición, con avance lento en la armado de oraciones.','Se acordó con la familia jugar en casa a nombrar objetos con /r/.'],
+      bad:['Poca tolerancia a la frustración en los juegos de sonidos.','Dos ausencias seguidas cortaron la continuidad del trabajo.','Se volvió a consignas de dos pasos.','Se pidió a la familia retomar la práctica en casa.']},
+  psico:{good:['Pudo nombrar el enojo en una situación de juego y pedir una pausa.','Inició un juego con un par sin intervención del adulto.','Contó una situación de la escuela y propuso cómo resolverla.','La familia refiere menos berrinches en casa.'],
+      flat:['Identifica emociones en láminas, pero le cuesta en situaciones reales.','Juega en paralelo; todavía no inicia el juego compartido.','Sesión estable, con buena disposición.','Se sugirió a la familia nombrar las emociones en casa cuando aparecen.'],
+      bad:['Sesión con mucha irritabilidad; se priorizó la regulación.','Evitó hablar de la escuela.','Se observan más conductas de oposición que el mes anterior.','Se propuso una entrevista con la familia.']},
+  psicoped:{good:['Leyó un texto breve y respondió las preguntas literales sin ayuda.','Organizó la tarea con una agenda visual por su cuenta.','Hizo una inferencia simple con apoyo mínimo.','Se sugirió a la familia leer diez minutos por día en casa.'],
+      flat:['Lee con fluidez, pero le cuesta recuperar la idea principal.','Necesita ayuda para empezar la tarea.','Avance lento en comprensión inferencial.','Se acordó con la familia sostener la lectura compartida en casa.'],
+      bad:['Rechazó la lectura; se trabajó con juegos de palabras.','Desorganización marcada en la tarea.','Dos faltas cortaron la secuencia de trabajo.','Se pidió coordinar con la escuela.']},
+  apoyo:{good:['Resolvió la tarea de matemática del grado con una sola ayuda.','Sostuvo la atención veinte minutos.','Se anticipó a la evaluación y repasó por su cuenta.','La familia acompaña la tarea en casa con la rutina acordada.'],
+      flat:['Resuelve la tarea con apoyo constante.','Sostiene la atención quince minutos con una pausa activa.','Avanza en sumas, todavía no en restas con dificultad.','Se acordó una rutina de tarea en casa.'],
+      bad:['Llegó cansado y no pudo sostener la tarea.','Pendientes acumulados de la escuela.','Se trabajó solo organización.','Se pidió a la familia revisar los horarios de descanso.']},
+  arte:{good:['Expresó con el dibujo una situación de la semana y pudo ponerle palabras.','Participó en la obra grupal respetando el espacio de los demás.','Eligió materiales nuevos con entusiasmo.','La familia comenta que dibuja más en casa.'],
+      flat:['Dibuja con libertad, pero le cuesta poner en palabras lo que hizo.','Participa en lo grupal con apoyo.','Sesión tranquila, con producción breve.','Se sugirió dejar materiales de dibujo a mano en casa.'],
+      bad:['Eligió colores oscuros al hablar de la escuela; se conversa con el equipo.','Rompió una producción al frustrarse.','Se trabajó contención.','Se informó al equipo para coordinar.']},
+  taller:{good:['Esperó su turno en cuatro de cinco rondas.','Resolvió un conflicto con palabras.','Propuso un juego al grupo.','La familia cuenta que juega mejor con los hermanos.'],
+      flat:['Respeta turnos con recordatorios.','Se integra al grupo, pero se retira en los juegos de competencia.','Sesión estable.','Se sugirió practicar juegos de mesa en casa.'],
+      bad:['Se enojó al perder y abandonó el juego.','Le costó integrarse al grupo.','Se trabajó de manera individual.','Se pidió a la familia sostener la asistencia.']}
+};
+const ODATES = ['1 oct','8 oct','14 oct','21 oct'];
+function monthNotes(p, a){
+  const n = p.absStreak>0 ? 2 : 4, src = POOL[a][p.mood];
+  const list = Array.from({length:n}, (_,i)=>({id:`${p.id}-${a}-${i}`, d:ODATES[i], a, who:proById(p.pros[a]).n, t:src[i % src.length]}));
+  p.notes.filter(x=>x.fresh && x.area===a).forEach((x,i)=>list.push({id:`${p.id}-${a}-u${i}`, d:x.d, a, who:x.who, t:x.t, real:true}));
+  return list;
+}
+const repAreas = p => S.role==='dir' ? p.areas : p.areas.filter(a=>p.pros[a]===S.role);
+function attendance(p, a){ const tot=p.sesWeek[a]*4, aus=p.mood==='bad'?2:p.mood==='flat'?1:0; return {tot, pres:tot-aus, aus} }
+function buildReport(p, ver){
+  const areas = repAreas(p), P = [], notes = areas.flatMap(a=>monthNotes(p,a));
+  const objs = p.objs.filter(o=>areas.includes(o.a)), up = objs.filter(o=>o.s[5]>o.s[4] || o.s[5]>0);
+  const att = areas.map(a=>({a, ...attendance(p,a)})), pres = att.reduce((s,x)=>s+x.pres,0), tot = att.reduce((s,x)=>s+x.tot,0);
+  const home = notes.filter(n=>/casa/i.test(n.t));
+  const pros = [...new Set(areas.map(a=>proById(p.pros[a])))];
+  if(ver==='fam'){
+    P.push({t:`Este es el resumen de octubre del trabajo de ${p.n} en ${areas.map(a=>AREAS[a].n.toLowerCase()).join(' y ')}.`, src:[]});
+    P.push({h:'Cómo viene', t:`Vino a ${pres} de ${tot} sesiones${tot-pres?` (faltó a ${tot-pres})`:''}. ${up.length} de ${objs.length} objetivos avanzan respecto de septiembre.`, src:['asist','gas']});
+    const good = notes.filter(n=>!/(costó|cuesta|faltó|ausencias|rechazó|desregulado|irritab|enojó|rompió|cansado)/i.test(n.t) && !/casa/i.test(n.t));
+    if(good.length) P.push({h:'Lo que logró este mes', list:good.slice(0,3).map(n=>({t:n.t, src:[n.id]}))});
+    const work = objs.filter(o=>o.s[5]<=0);
+    if(work.length) P.push({h:'En qué seguimos trabajando', list:work.map(o=>({t:`${o.t}. Vamos de a poco y con más práctica.`, src:['gas']}))});
+    P.push(home.length ? {h:'Para practicar en casa', t:home[0].t, src:[home[0].id]} : {h:'Para practicar en casa', t:'Sugerencia para practicar en casa.', src:[], warn:'Ninguna nota del mes trae una indicación para casa. Completala vos o borrá este párrafo.'});
+    P.push({sign:pros.map(x=>`${x.n} · ${AREAS[x.area].n}`).join(' / ')});
+  }
+  if(ver==='os'){
+    P.push({h:'Informe de evolución mensual', kv:[['Beneficiario',p.n],['Obra social',p.os],['Período','Octubre 2026'],['Prestación',areas.map(a=>AREAS[a].n).join(' + ')],['Frecuencia',areas.map(a=>`${p.sesWeek[a]} por semana`).join(' + ')],['Sesiones realizadas',`${pres} de ${tot}`]], src:['asist']});
+    P.push({h:'Objetivos terapéuticos (escala GAS de −2 a +2)', list:objs.map(o=>({t:`${o.t}: ${fmtG(o.s[4])} en septiembre, ${fmtG(o.s[5])} en octubre.`, src:['gas']}))});
+    P.push({h:'Evolución del período', t:notes.filter(n=>!/casa/i.test(n.t)).map(n=>n.t).join(' '), src:notes.filter(n=>!/casa/i.test(n.t)).map(n=>n.id)});
+    const reg = objs.filter(o=>o.s[5]<o.s[4]);
+    P.push({h:'Plan para el próximo período', t:`Continuar con los objetivos vigentes y la frecuencia actual${reg.length?`. Revisar la estrategia para: ${reg.map(o=>o.t.toLowerCase()).join('; ')}`:''}.`, src:['gas'], warn:'Lo propone la IA a partir de los objetivos. El plan lo decide el profesional: confirmalo o cambialo.'});
+    P.push({sign:pros.map(x=>`${x.n} · ${AREAS[x.area].n} · ${x.mat}`).join(' / ')});
+  }
+  if(ver==='esc'){
+    P.push({t:`Sugerencias del equipo de CTP para acompañar a ${p.n} en el aula durante noviembre.`, src:[]});
+    P.push({h:'Qué funcionó en las sesiones', list:notes.filter(n=>!/(costó|cuesta|faltó|ausencias|rechazó|desregulado|irritab|enojó|rompió|cansado|casa)/i.test(n.t)).slice(0,2).map(n=>({t:n.t, src:[n.id]}))});
+    P.push({h:'Sugerencias para el aula', t:'Anticipar los cambios de actividad, dar consignas cortas de a una y ofrecer una pausa breve cuando aparece la frustración.', src:[], warn:'Son sugerencias generales que propone la IA. Ajustalas a este paciente antes de aprobar.'});
+    P.push({sign:pros.map(x=>`${x.n} · ${AREAS[x.area].n}`).join(' / ')});
+  }
+  return {P, notes};
+}
+const fmtG = v => (v>0?'+':'')+v;
+function reportHTML(P){
+  return P.map((x,i)=>{
+    const src = x.src ? ` data-src="${x.src.join(' ')}"` : '';
+    if(x.sign) return `<p class="rsign">${ico('draw')}${x.sign}</p>`;
+    let body = '';
+    if(x.kv) body = `<dl class="rkv"${src}>${x.kv.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>`;
+    else if(x.list) body = `<ul>${x.list.map(l=>`<li data-src="${l.src.join(' ')}">${esc(l.t)}</li>`).join('')}</ul>`;
+    else body = `<p${src} class="${x.warn?'rwarn':''}">${esc(x.t)}</p>`;
+    return `<div class="rblock" style="--i:${i}">${x.h?`<h4>${x.h}</h4>`:''}${body}${x.warn?`<p class="rflag" contenteditable="false">${ico('flag')}<span>${x.warn}</span><button class="btn sm" data-act="inf-flag">Ya lo revisé</button></p>`:''}</div>`;
+  }).join('');
+}
+const INF_VERS = [['fam','Para la familia','family_restroom'],['os','Para la obra social','inventory_2'],['esc','Para la escuela','school']];
+const infKey = (pid, v) => pid+':'+v;
+function infStatus(p){
+  const f = S.inf[infKey(p.id,'fam')], o = S.inf[infKey(p.id,'os')];
+  if(f && o) return ['ok','Aprobado'];
+  if(f || o || S.infOpen[p.id]) return ['warn','En revisión'];
+  return ['neu','Borrador listo'];
+}
+R.informes = function(){
+  if(!legBase().some(p=>repAreas(p).length)){ $('#v-informes').innerHTML = `<div class="vhead stg"><div><h1>Informes de octubre</h1></div></div><div class="card empty stg" style="padding:56px 20px">${ico('description')}<p style="margin-top:8px">No hay informes para armar: todavía no tenés pacientes asignados.</p></div>`; return; }
+  if(!S.infPid || !legBase().some(p=>p.id===S.infPid)) S.infPid = (legBase().find(p=>p.areas.length>1 && repAreas(p).length) || legBase()[0]).id;
+  const base = legBase().filter(p=>repAreas(p).length), appr = base.filter(p=>infStatus(p)[0]==='ok').length, few = base.filter(p=>p.absStreak>0).length;
+  $('#v-informes').innerHTML = `
+  <div class="vhead stg"><div><div class="eyebrow">${ico('auto_awesome')} Informes del mes</div><h1>Informes de octubre</h1><p>La IA arma el borrador con las notas, los objetivos y la asistencia del mes. Vos lo revisás, lo corregís y lo aprobás. Pasá el mouse por un párrafo para ver de qué nota sale.</p></div>
+    <div class="row"><span class="chip neu num">${base.length} borradores</span><span class="chip ok num">${appr} aprobados</span>${few?`<span class="chip warn num">${few} con pocas notas</span>`:''}</div></div>
+  <div class="infgrid">
+    <div class="card stg" style="padding:14px"><div class="eyebrow" style="margin-bottom:8px">${S.role==='dir'?'Todos los pacientes':'Tus pacientes'}</div><div class="plist" id="inflist" style="margin-top:0">${base.map(p=>{ const [k,l]=infStatus(p); return `<button data-act="inf-pick" data-pid="${p.id}" aria-current="${p.id===S.infPid}"><span class="av pat">${p.short}</span><span class="grow"><b>${p.n}</b><small>${repAreas(p).map(a=>AREAS[a].s).join(' + ')}</small></span><span class="chip ${k}" style="height:20px;font-size:10.5px">${l}</span></button>`}).join('')}</div></div>
+    <div class="card stg" id="infmain"></div>
+    <div class="card stg" id="infsrc"></div>
+  </div>`;
+  infRender();
+};
+function infRender(){
+  const p = patById(S.infPid), v = S.infVer, key = infKey(p.id, v), {P, notes} = buildReport(p, v), appr = S.inf[key];
+  S.infOpen[p.id] = true;
+  const locked = v==='esc' && !S.infSchool[p.id];
+  $('#infmain').innerHTML = `
+    <div class="phead"><span class="av pat lg" style="width:48px;height:48px;font-size:16px">${p.short}</span><div class="grow"><h2>${p.n}</h2><p>${p.os} · ${repAreas(p).map(a=>AREAS[a].n).join(' + ')}</p></div>${p.absStreak>0?`<span class="chip warn">${ico('warning')}Pocas notas este mes</span>`:''}</div>
+    <div class="tabs" role="tablist" style="margin:16px 0 14px">${INF_VERS.map(([k,l,ic])=>`<button role="tab" data-act="inf-ver" data-k="${k}" aria-selected="${k===v}">${ico(ic)}${l}${S.inf[infKey(p.id,k)]?` <span class="ms" style="color:var(--ok);font-size:17px">check_circle</span>`:''}</button>`).join('')}<span class="navline"></span></div>
+    ${locked ? `<div class="empty" style="padding:40px 20px">${ico('lock')}<p style="margin:8px 0 14px">La familia todavía no autorizó compartir información con la escuela.</p>${S.infSchool[p.id+'pend']?`<span class="chip warn"><span class="spin" style="width:12px;height:12px"></span>Esperando respuesta de la familia</span>`:`<button class="btn pri" data-act="inf-askschool">${ico('send')}Pedir autorización por WhatsApp</button>`}</div>`
+    : `<div class="draftbar"><span class="chip ${appr?'ok':S.infEdited[key]?'acc':'neu'}">${appr?ico('verified')+'Aprobado':S.infEdited[key]?ico('edit')+'Editado por vos':ico('auto_awesome')+'Borrador de la IA'}</span>
+        <div class="row">${appr?'':`<button class="btn sm ghost" data-act="inf-regen">${ico('refresh')}${S.infEdited[key]?'Regenerar (perdés tus cambios)':'Regenerar'}</button>`}<button class="btn sm ghost" data-act="pdf">${ico('picture_as_pdf')}Vista PDF</button></div></div>
+      <div class="draft ${appr?'locked':''}" id="draft" ${appr?'':'contenteditable="true" spellcheck="false"'}>${S.infGen[key] ? (S.infHTML[key] || reportHTML(P)) : skeleton()}</div>
+      ${appr ? `<div class="banner" style="margin:14px 0 0">${checkSVG(26)}<span>${v==='fam'?'Aprobado. La familia lo ve en su portal y le llega el aviso por WhatsApp.':v==='os'?'Aprobado. Pasa al lote de firmas del mes y a la presentación a la obra social.':'Aprobado. Se envía a la escuela con la autorización de la familia.'}</span></div>`
+      : `<label class="rev" for="infrev" style="margin-top:14px"><input type="checkbox" class="chk" id="infrev" data-act="inf-rev" ${S.infRev[key]?'checked':''}><span>Revisé el borrador: todo lo que dice sale de mis notas y lo puedo firmar.</span></label>
+        <div class="row" style="margin-top:12px;justify-content:flex-end"><button class="btn pri" id="infok" data-act="inf-approve" ${S.infRev[key]&&!S.infHasWarn?'':'disabled'}>${ico('task_alt')}Aprobar ${v==='os'?'y mandar a firma':'y enviar'}</button></div>
+        <p class="muted" id="infhint" style="font-size:12px;text-align:right;margin-top:6px"></p>`}`}`;
+  requestAnimationFrame(()=>moveLine($('#infmain .tabs')));
+  $('#infsrc').innerHTML = `<div class="eyebrow" style="margin-bottom:10px">Fuentes del borrador</div>
+    <div class="srcs"><div class="src meta" id="src-asist">${ico('event_available')}<span><b>Asistencia de octubre</b><small>Sale de la agenda</small></span></div>
+    <div class="src meta" id="src-gas">${ico('monitoring')}<span><b>Objetivos (escala GAS)</b><small>Valores de septiembre y octubre</small></span></div>
+    ${notes.map(n=>`<div class="src" id="src-${n.id}" style="--c:var(--a-${n.a})"><small>${n.d} · ${AREAS[n.a].s} · ${n.who}${n.real?' · cargada hoy':''}</small><span>${esc(n.t)}</span></div>`).join('')}</div>
+    <p class="muted" style="font-size:12px;margin-top:12px">${ico('shield')} La IA solo usa lo que está acá. No diagnostica ni agrega datos.</p>`;
+  if(!locked && !S.infGen[key]){
+    setTimeout(()=>{ if(S.view!=='informes' || S.infPid!==p.id || S.infVer!==v) return; S.infGen[key]=true; const d=$('#draft'); if(!d) return; d.innerHTML=reportHTML(P); d.classList.add('stg'); infHint() }, reduce?30:1100);
+  } else infHint();
+}
+function skeleton(){ return `<div class="skel"><span class="sk-label"><span class="spin"></span>La IA está armando el borrador con ${ico('description')} notas, objetivos y asistencia…</span>${[90,70,95,60,85,40].map(w=>`<i style="width:${w}%"></i>`).join('')}</div>` }
+function infHint(){
+  const d = $('#draft'), btn = $('#infok'), h = $('#infhint'); if(!d || !btn) return;
+  const warns = $$('.rwarn', d).length + $$('.rflag', d).length; S.infHasWarn = $$('.rflag', d).length > 0;
+  const key = infKey(S.infPid, S.infVer);
+  btn.disabled = !S.infRev[key] || S.infHasWarn || !S.infGen[key];
+  h.textContent = !S.infGen[key] ? '' : S.infHasWarn ? 'Resolvé los párrafos marcados: editalos y borrá el aviso, o borrá el párrafo.' : !S.infRev[key] ? 'Confirmá que lo revisaste para aprobar.' : '';
+}
+A['inf-pick'] = b => { S.infPid=b.dataset.pid; S.infVer='fam'; $$('#inflist [aria-current]').forEach(x=>x.setAttribute('aria-current', x===b)); infRender() };
+A['inf-ver'] = b => { saveDraft(); S.infVer=b.dataset.k; infRender() };
+A['inf-regen'] = () => { const key=infKey(S.infPid,S.infVer); delete S.infHTML[key]; delete S.infEdited[key]; S.infGen[key]=false; S.infRev[key]=false; infRender(); toast('Generando un borrador nuevo','auto_awesome') };
+A['inf-rev'] = el => { S.infRev[infKey(S.infPid,S.infVer)] = el.checked; infHint() };
+A['inf-approve'] = b => { saveDraft(); const key=infKey(S.infPid,S.infVer); busyBtn(b,'Aprobando…',700,()=>{ S.inf[key]=true; infRender(); const it=$(`#inflist [data-pid="${S.infPid}"] .chip`); if(it){ const [k,l]=infStatus(patById(S.infPid)); it.className='chip '+k; it.textContent=l } toast(S.infVer==='fam'?'Informe enviado a la familia':S.infVer==='os'?'Informe aprobado y en el lote de firmas':'Informe enviado a la escuela','task_alt') }) };
+A['inf-askschool'] = () => { const pid=S.infPid; S.infSchool[pid+'pend']=true; infRender(); toast('Pedido de autorización enviado a la familia','send'); setTimeout(()=>{ S.infSchool[pid]=true; if(S.view==='informes' && S.infPid===pid && S.infVer==='esc') infRender(); toast('La familia autorizó compartir con la escuela','verified') }, reduce?50:2200) };
+function saveDraft(){ const d=$('#draft'); if(d && S.infGen[infKey(S.infPid,S.infVer)]) S.infHTML[infKey(S.infPid,S.infVer)] = d.innerHTML }
+document.addEventListener('input', e => { if(e.target.closest && e.target.closest('#draft')){ const key=infKey(S.infPid,S.infVer); if(!S.infEdited[key]){ S.infEdited[key]=true; const c=$('#infmain .draftbar .chip'); if(c){ c.className='chip acc'; c.innerHTML=ico('edit')+'Editado por vos' } } infHint() } });
+document.addEventListener('mouseover', e => {
+  const el = e.target.closest && e.target.closest('#draft [data-src]'); $$('.src.hl').forEach(x=>x.classList.remove('hl')); $$('#draft .hlp').forEach(x=>x.classList.remove('hlp'));
+  if(!el) return; el.classList.add('hlp'); const ids = el.dataset.src.split(' ').filter(Boolean); let first = null;
+  ids.forEach(id=>{ const s=$('#src-'+id); if(s){ s.classList.add('hl'); first = first || s } });
+  if(first && window.innerWidth>1180) first.scrollIntoView({block:'nearest', behavior:reduce?'auto':'smooth'});
+});
+A['inf-flag'] = b => { const f=b.closest('.rflag'), blk=f.closest('.rblock'); f.remove(); $$('.rwarn',blk).forEach(x=>x.classList.remove('rwarn')); const key=infKey(S.infPid,S.infVer); S.infEdited[key]=true; saveDraft(); const c=$('#infmain .draftbar .chip'); if(c){ c.className='chip acc'; c.innerHTML=ico('edit')+'Editado por vos' } infHint() };
+
+/* ===== Acceso con usuarios de prueba (simulado, sin seguridad real) ===== */
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d }catch(e){ return d } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k) }catch(e){} }
+};
+const DEMO_PASS = 'ctp2026';
+const AREA_PCT = {to:.65, fono:.70, psico:.65, psicoped:.60, apoyo:.55, arte:.60, taller:.60};
+const BASE_ACCOUNTS = [
+  {id:'adm1', n:'Administrador de prueba 1', email:'admin1@ctp.prueba', role:'dir', ini:'A1'},
+  {id:'adm2', n:'Administrador de prueba 2', email:'admin2@ctp.prueba', role:'dir', ini:'A2'},
+  ...PROS.map((p,i)=>({id:'acc-'+p.id, n:p.n, email:`profesional${i+1}@ctp.prueba`, role:'pro', proId:p.id, ini:'P'+(i+1)}))
+];
+let CUSTOM = store.get('ctp-users', []);
+CUSTOM.forEach(u => { if(u.role==='pro' && !PROS.some(p=>p.id===u.proId)) PROS.push(newPro(u)) });
+function newPro(u){ return {id:u.proId, n:u.n, area:u.area, room:1, pct:AREA_PCT[u.area]||.6, mat:'A completar', matV:'2027-12-31', add:0} }
+const ACCOUNTS = () => [...BASE_ACCOUNTS, ...CUSTOM];
+const roleLabel = a => a.role==='dir' ? 'Administración' : AREAS[proById(a.proId).area].n;
+const initials = n => n.split(/\s+/).filter(w=>/^[A-ZÁÉÍÓÚÑ0-9]/.test(w)).map(w=>w[0]).join('').slice(0,2).toUpperCase() || n.slice(0,2).toUpperCase();
+
+function loginHTML(){
+  const accs = ACCOUNTS(), adm = accs.filter(a=>a.role==='dir'), pros = accs.filter(a=>a.role==='pro');
+  const btn = a => `<button class="acc" data-act="login-acc" data-email="${esc(a.email)}"><span class="av ${a.role==='dir'?'pro':'pat'}">${esc(a.ini)}</span><span class="grow"><b>${esc(a.n)}</b><small>${esc(a.email)}</small></span><span class="chip ${a.role==='dir'?'acc':'neu'}">${a.role==='dir'?'Admin':AREAS[proById(a.proId).area].s}</span></button>`;
+  return `
+  <div class="lside">
+    <div class="brand"><span class="logo" style="background:var(--primary-ink);color:var(--primary)">CTP</span><div><b>CTP</b><span style="color:inherit;opacity:.8">Consultorio Terapéutico Psicofísico</span></div></div>
+    <div class="lpitch"><h1>Todo el centro en un solo lugar.</h1><p>Agenda, legajos, notas de sesión, informes y obras sociales, con acceso según el rol de cada persona.</p></div>
+    <small style="opacity:.75">Prototipo interno de sobrinos · datos ficticios</small>
+  </div>
+  <div class="lmain"><div class="lcard">
+    <div><div class="eyebrow" style="color:var(--primary)">Ingresar</div><h2 style="font-size:24px;margin-top:4px">Entrá con tu usuario</h2></div>
+    <form id="login-form" class="lform" novalidate>
+      <label class="eyebrow" for="lg-email">Email</label><input class="inp" id="lg-email" type="email" autocomplete="username" placeholder="nombre@ctp.prueba">
+      <label class="eyebrow" for="lg-pass">Contraseña</label><input class="inp" id="lg-pass" type="password" autocomplete="current-password" placeholder="••••••••">
+      <p class="lerr" id="lg-err" hidden></p>
+      <button class="btn pri lg block" id="lg-btn">${ico('login')}Ingresar</button>
+    </form>
+    <div class="lnote">${ico('info')}<span>Cuentas de prueba: tocá una para entrar. La contraseña de todas es <b>${DEMO_PASS}</b>. Es un prototipo: no hay seguridad real.</span></div>
+    <div class="eyebrow">Administración</div><div class="accs">${adm.map(btn).join('')}</div>
+    <div class="eyebrow">Profesionales</div><div class="accs">${pros.map(btn).join('')}</div>
+  </div></div>`;
+}
+function showLogin(){
+  closeDrawer(); const l = $('#login'); l.innerHTML = loginHTML(); l.hidden = false; l.classList.remove('out');
+  document.body.classList.add('locked'); setTimeout(()=>{ const e=$('#lg-email'); if(e) e.focus() }, 50);
+}
+function hideLogin(){ const l = $('#login'); l.classList.add('out'); document.body.classList.remove('locked'); setTimeout(()=>{ l.hidden = true; l.innerHTML = '' }, reduce?0:350) }
+function tryLogin(email, pass){
+  const acc = ACCOUNTS().find(a => a.email.toLowerCase() === String(email).trim().toLowerCase());
+  if(!acc || pass !== (acc.pass || DEMO_PASS)){
+    const err = $('#lg-err'); err.textContent = 'El email o la contraseña no coinciden con ninguna cuenta de prueba.'; err.hidden = false;
+    const f = $('#login-form'); f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake'); return;
+  }
+  const b = $('#lg-btn'); busyBtn(b, 'Ingresando…', 650, () => enterAs(acc));
+}
+function enterAs(acc, opts={}){
+  S.user = acc; store.set('ctp-session', acc.email);
+  S.role = acc.role==='dir' ? 'dir' : acc.proId;
+  S.nota = null; S.firma = {sel:null, step:'list', signed:false}; S.selT = null; S.agPro = ''; S.legQ = ''; S.legF = 'all'; S.infPid = null;
+  applyRole();
+  let v = opts.view || (S.role==='dir' ? 'tablero' : 'agenda'); if(S.role!=='dir' && ADMIN_VIEWS.includes(v)) v = 'agenda';
+  hideLogin(); go(v); refreshBadge();
+  if(!opts.silent) toast(`Hola, ${acc.n}. ${S.role==='dir' ? 'Tenés acceso a todo.' : 'Ves solo tus turnos y pacientes.'}`, 'waving_hand');
+}
+function applyRole(){
+  const isDir = S.role==='dir', u = S.user;
+  $$('#nav [data-v]').forEach(b => b.hidden = !isDir && ADMIN_VIEWS.includes(b.dataset.v));
+  $('#bell').hidden = !isDir;
+  if(u){ $('#me-av').textContent = u.ini; $('#me-av').className = 'av ' + (isDir ? 'pro' : 'pat'); $('#me-name').textContent = u.n; $('#me-role').textContent = roleLabel(u) }
+  requestAnimationFrame(() => moveLine($('#nav')));
+}
+A['login-acc'] = b => { const acc = ACCOUNTS().find(a=>a.email===b.dataset.email); $('#lg-email').value = acc.email; $('#lg-pass').value = acc.pass || DEMO_PASS; $('#lg-err').hidden = true; tryLogin(acc.email, acc.pass || DEMO_PASS) };
+A['me-menu'] = () => { const m = $('#me-menu'); m.hidden = !m.hidden };
+A.logout = () => { $('#me-menu').hidden = true; store.del('ctp-session'); S.user = null; showLogin(); toast('Sesión cerrada', 'logout') };
+document.addEventListener('submit', e => { if(e.target.id==='login-form'){ e.preventDefault(); tryLogin($('#lg-email').value, $('#lg-pass').value) } });
+document.addEventListener('click', e => { if(!e.target.closest('.mewrap')){ const m = $('#me-menu'); if(m) m.hidden = true } });
+
+/* --- Usuarios de la plataforma (dentro de Equipo, solo Administración) --- */
+function usersSection(){
+  const accs = ACCOUNTS();
+  return `<div class="row" style="margin:30px 0 12px;justify-content:space-between"><div><h2>Usuarios de la plataforma</h2><p class="muted" style="font-size:12.5px;margin-top:3px">Cuentas de prueba. Las que creás quedan guardadas solo en este navegador.</p></div><button class="btn pri" data-act="user-new">${ico('person_add')}Crear usuario</button></div>
+  <div class="card flat stg" style="padding:0;overflow:hidden"><div class="scrollx"><table style="min-width:680px"><thead><tr><th>Usuario</th><th>Email</th><th>Rol</th><th>Acceso</th><th><span class="sr">Acciones</span></th></tr></thead><tbody>
+  ${accs.map((a,i)=>`<tr style="animation:rise .4s var(--ease) backwards;animation-delay:${i*25}ms" class="${a.isNew?'flash':''}"><td><div class="pat"><span class="av ${a.role==='dir'?'pro':'pat'}">${esc(a.ini)}</span><div class="cs"><b>${esc(a.n)}</b>${a.custom?'<small>Creado por vos</small>':''}</div></div></td>
+    <td class="num">${esc(a.email)}</td><td><span class="chip ${a.role==='dir'?'acc':'neu'}">${a.role==='dir'?'Administración':AREAS[proById(a.proId).area].s}</span></td>
+    <td><small class="muted">${a.role==='dir'?'Todo el centro':'Sus turnos y pacientes'}</small></td>
+    <td style="text-align:right">${S.user&&S.user.email===a.email?'<span class="chip ok">Sesión actual</span>':`<button class="btn sm ghost" data-act="user-as" data-email="${esc(a.email)}">${ico('login')}Entrar como</button>${a.custom?`<button class="btn sm ghost" data-act="user-del" data-id="${a.id}" aria-label="Eliminar ${esc(a.n)}">${ico('delete')}</button>`:''}`}</td></tr>`).join('')}
+  </tbody></table></div></div>`;
+}
+const _renderEquipo = R.equipo;
+R.equipo = function(){ _renderEquipo(); $('#v-equipo').insertAdjacentHTML('beforeend', usersSection()); CUSTOM.forEach(u=>delete u.isNew) };
+A['user-new'] = () => drawer('Crear usuario de prueba', `
+  <p class="muted">El usuario entra con su email y la contraseña temporal. En la versión real recibe una invitación por mail y elige su contraseña.</p>
+  <label class="eyebrow" for="un-name">Nombre</label><input class="inp" id="un-name" placeholder="Por ejemplo, Recepción de prueba">
+  <label class="eyebrow" for="un-email">Email</label><input class="inp" id="un-email" type="email" placeholder="nombre@ctp.prueba">
+  <div class="eyebrow">Rol</div>
+  <div class="seg" role="group" aria-label="Rol" style="display:flex"><button style="flex:1" data-act="un-role" data-k="dir" aria-pressed="false">${ico('admin_panel_settings')} Administración</button><button style="flex:1" data-act="un-role" data-k="pro" aria-pressed="true">${ico('stethoscope')} Profesional</button></div>
+  <div id="un-areabox"><label class="eyebrow" for="un-area">Área</label><select class="inp" id="un-area">${Object.keys(AREAS).map(a=>`<option value="${a}">${AREAS[a].n}</option>`).join('')}</select></div>
+  <div class="calc"><div class="ln"><span>Contraseña temporal</span><b class="num">${DEMO_PASS}</b></div></div>
+  <p class="lerr" id="un-err" hidden></p>`,
+  `<button class="btn" data-act="close-drawer">Cancelar</button><button class="btn pri" style="flex:1" data-act="user-create">${ico('person_add')}Crear usuario</button>`);
+A['un-role'] = b => { $$('[data-act="un-role"]').forEach(x=>x.setAttribute('aria-pressed', x===b)); $('#un-areabox').hidden = b.dataset.k==='dir' };
+A['user-create'] = b => {
+  const n = $('#un-name').value.trim(), email = $('#un-email').value.trim().toLowerCase(), role = $('[data-act="un-role"][aria-pressed="true"]').dataset.k, area = $('#un-area').value, err = $('#un-err');
+  const fail = m => { err.textContent = m; err.hidden = false; const d=$('#drawer .db'); d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake') };
+  if(!n) return fail('Escribí el nombre del usuario.');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail('Escribí un email válido, por ejemplo nombre@ctp.prueba.');
+  if(ACCOUNTS().some(a=>a.email===email)) return fail('Ya existe un usuario con ese email.');
+  busyBtn(b, 'Creando…', 600, () => {
+    const id = 'u' + Date.now(), u = {id, n, email, role, ini:initials(n), custom:true, isNew:true};
+    if(role==='pro'){ u.area = area; u.proId = 'pr-' + id; PROS.push(newPro(u)) }
+    CUSTOM.push(u); store.set('ctp-users', CUSTOM.map(({isNew, ...x})=>x));
+    closeDrawer(); R.equipo(); toast(`${n} creado. Entra con ${email} y la contraseña ${DEMO_PASS}.`, 'person_add');
+  });
+};
+A['user-del'] = b => { const u = CUSTOM.find(x=>x.id===b.dataset.id); if(!u) return;
+  if(b.dataset.confirm !== '1'){ b.dataset.confirm = '1'; b.className = 'btn sm acc'; b.innerHTML = ico('delete') + 'Confirmar'; setTimeout(()=>{ if(b.isConnected && b.dataset.confirm==='1'){ b.dataset.confirm=''; b.className='btn sm ghost'; b.innerHTML=ico('delete') } }, 3000); return }
+  CUSTOM = CUSTOM.filter(x=>x.id!==u.id); if(u.role==='pro'){ const i = PROS.findIndex(p=>p.id===u.proId); if(i>=0) PROS.splice(i,1) }
+  store.set('ctp-users', CUSTOM); R.equipo(); toast(`${u.n} eliminado`, 'delete') };
+A['user-as'] = b => { const acc = ACCOUNTS().find(a=>a.email===b.dataset.email); enterAs(acc) };
+
 /* ===== Eventos e inicio ===== */
 document.addEventListener('click', e => {
   const g = e.target.closest('[data-go]'); if(g){ go(g.dataset.go); return }
@@ -1437,13 +1784,12 @@ window.addEventListener('resize', () => { moveLine($('#nav')); const t = $('.tab
 $('#bell').addEventListener('click', () => go('obras'));
 
 initSearch();
-$('#role').insertAdjacentHTML('beforeend', PROS.map(p=>`<option value="${p.id}">${p.n} · ${AREAS[p.area].s}</option>`).join(''));
-$('#role').addEventListener('change', e => setRole(e.target.value));
 document.addEventListener('change', e => { if(e.target.id==='agpro'){ S.agPro = e.target.value; R.agenda() } });
 applyRole();
 refreshBadge();
 let start = 'tablero'; try{ const h = location.hash.slice(1); if(VIEWS.includes(h)) start = h }catch(e){}
-go(start);
+const sess = store.get('ctp-session', null), acc0 = sess && ACCOUNTS().find(a=>a.email===sess);
+if(acc0) enterAs(acc0, {silent:true, view:start}); else showLogin();
 document.fonts && document.fonts.ready.then(() => { moveLine($('#nav')); const t = $('.tabs'); if(t) moveLine(t) });
 
 </script>
